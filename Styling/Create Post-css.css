@@ -1,0 +1,448 @@
+/*======= Google fonts =======*/
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+/*======= Main CSS =======*/
+
+/* Apply styles to all elements, set box model to border-box, and use 'Poppins' font-family */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Remove outline on focus for all elements */
+*:focus {
+    outline: none;
+}
+
+/* Set background color for the body */
+body {
+    background: #EFF0F6;
+   
+}
+
+
+/*======= Header navigation bar =======*/
+
+/* Style the fixed header bar */
+header {
+    z-index: 999;
+    position: fixed;
+    width: 100%;
+    min-height: 1em;
+    background: #fff;
+}
+
+/* Style the navigation bar inside the header */
+header .nav-bar {
+    position: relative;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    height: 4em;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 100px;
+    transition: 0.5s ease;
+}
+
+/* Style the links and separator inside the header */
+.header-links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Style individual header links */
+.header-link {
+    color: #210060;
+    font-size: 1.2em;
+    text-decoration: none;
+    margin-right: 20px;
+    font-weight: 500;
+    text-transform: uppercase;
+    transition: color 0.3s;
+}
+
+/* Change link color on hover */
+.header-link:hover {
+    color: #fff;
+}
+
+/* Style the separator between links */
+.separator {
+    margin: 0 10px;
+    color: #210060;
+    font-size: 1.2em;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+/* Style the logo inside the navigation bar */
+.nav-bar .logo img {
+    width: 250px;
+    height: auto;
+    float: left;
+    margin-left: -80px;
+}
+
+/* Style navigation items */
+.navigation .nav-items a {
+    color: #fff;
+    font-size: 1em;
+    text-decoration: none;
+}
+
+/* Add margin to navigation items except the last one */
+.navigation .nav-items a:not(:last-child) {
+    margin-right: 10px;
+}
+
+
+/* Style navigation close and menu buttons */
+.nav-close-btn, .nav-menu-btn {
+    display: none;
+}
+
+/* Style the navigation menu button */
+.nav-menu-btn {
+    display: block;
+    color: #210060;
+    font-size: 1.5em;
+    cursor: pointer;
+    transition: color 0.3s, transform 0.3s;
+}
+
+/* Apply rotation on button click */
+.nav-menu-btn:active {
+    transform: rotate(180deg);
+}
+
+/* Change button color on hover */
+.nav-menu-btn:hover {
+    color: #fff;
+}
+
+/* Style the navigation menu */
+.navigation {
+    z-index: 99999;
+    position: fixed;
+    background: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.3s ease;
+}
+
+/* Show the navigation menu when active */
+.navigation.active {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Style the navigation items container */
+.navigation .nav-items {
+    position: relative;
+    background: #fff;
+    width: 400px;
+    max-width: 400px;
+    display: grid;
+    place-content: center;
+    margin: 20px;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.8);
+    transform: translateY(-200px);
+    transition: 0.3s ease;
+}
+
+/* Show the navigation items when active */
+.navigation.active .nav-items {
+    transform: translateY(0);
+}
+
+/* Style navigation links */
+.navigation .nav-items a {
+    color: #222;
+    font-size: 1em;
+    margin: 15px 50px;
+    transition: color 0.3s;
+}
+
+/* Change link color on hover */
+.navigation .nav-items a:hover {
+    color: #210060;
+}
+
+/* Style navigation close button */
+.nav-close-btn {
+    display: block;
+    color: #222;
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 1.3em;
+    margin: 10px;
+    cursor: pointer;
+    transition: color 0.3s, transform 0.3s;
+}
+
+/* Apply rotation to close button on hover */
+.nav-close-btn:hover {
+    transform: rotate(90deg);
+}
+
+
+/*======= Seacrh bar and Profile =======*/
+
+/* Style the search bar */
+.search-bar {
+    display: inline-block;
+    position: relative;
+    width: 300px;
+}
+  
+.search-bar input {
+    width: 100%;
+    padding: 5px 20px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    outline: none;
+    background: #EFF0F6;
+    text-align: left;
+    position: relative;
+    margin-left: 50px;
+  }
+  
+  .search-bar i {
+    position: absolute;
+    top: 50%;
+    right: -40px;
+    transform: translateY(-50%);
+    color: #000;
+    cursor: pointer;
+  }
+  
+  
+/* Style the profile link */
+.header-links a:last-child {
+    color: #210060;
+    font-size: 1.3em;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+    margin-right: -200px;
+    margin-left: 400px;
+}
+  
+.header-links a:last-child:hover {
+    color: #fff;
+}
+
+
+/*======= Create a New Post Styling =======*/
+
+
+/* Style the new post container */
+.post-container {
+    background-color: white;
+    max-width: 1000px;
+    width: 100%;
+    margin-top: 9em; /* Push the container down by the height of the header */
+    padding: 20px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    border-radius: 20.05px;
+    position: fixed;
+    align-items: center;
+    left: 15%;  
+}
+
+.post-container h1 {
+    color: #333; /* Set the text color of the heading */
+    text-align: left; 
+    margin-bottom: 20px; 
+    margin-left: 10px;
+}
+
+.input-field {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    
+}
+
+.input-field label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+/*======= Add Title =======*/
+
+.input-title {
+    padding: 10px; /* Add some padding for spacing */
+    border-radius: 8px; /* Rounded corners */
+    margin-bottom: 10px; /* Adjust margin as needed */
+}
+
+.input-title label {
+    display: none; /* Hide the label by default */
+}
+
+.input-title input[type="text"] {
+    width: 100%;
+    padding: 8px; /* Adjust padding as needed */
+    border: 0px solid #ccc; /* Add a border for a clean look */
+    border-radius: 15px; /* Rounded corners for the input */
+    box-sizing: border-box; /* Include padding and border in the input's total width */
+    background: #b9bcd6;
+}
+
+/* Show label when the input is focused (clicked) */
+.input-title input[type="text"]:focus + label {
+    display: block;
+}
+
+/*======= Post Content =======*/
+
+.input-text {
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.input-text label {
+    display: none;
+}
+
+
+.input-text textarea {
+    width: 100%;
+    padding: 10px;
+    border: 0px solid #ccc;
+    border-radius: 15px;
+    box-sizing: border-box;
+    background: #E9EAF3;
+    resize: none; /* Disable textarea resizing(the 3 stripes on the bottom left corner) */
+}
+
+/* Show label when the textarea is focused (clicked) */
+.input-text textarea:focus + label {
+    display: block;
+}
+
+/*======= Tags =======*/
+
+.input-tag,
+.input-type {
+    position: relative;
+    display: inline-block;
+    width: calc(20% - 20px); /* Set the width to 50% and adjust for margin */
+    margin-right: 2px; /* Adjust the margin between the two selects */
+    margin-left: 10px;
+}
+
+.select-tag,
+.select-type {
+    position: relative;
+    width: 100%;
+    padding: 8px;
+    background: #E9EAF3;
+    border: 0px solid #ccc;
+    border-radius: 10px;
+    color: #555;
+    box-sizing: border-box;
+    appearance: none;
+    cursor: pointer;
+    overflow-y: auto; /* Allow scrolling if needed */
+}
+
+.select-tag option {
+    height: 20px; /* Set the height for each option */
+}
+
+.uil-angle-down {
+    position: absolute;
+    top: 50%;
+    right: 10px; /* Adjust the right spacing as needed */
+    transform: translateY(-50%);
+    font-size: 18px; /* Adjust the font size as needed */
+    color: #555; /* Set the color of the arrow */
+}
+
+
+/*======= Anonymous Post  =======*/
+
+
+.input-hide {
+    display: flex;
+    align-items: center;
+    width: 18%;
+    padding: 8px;
+    background: #E9EAF3;
+    border: 0px solid #ccc;
+    border-radius: 10px;
+    box-sizing: border-box;
+    cursor: pointer;
+    margin-left: 10px;
+    margin-top: 20px;
+}
+
+.input-hide label {
+    display: block;
+    cursor: pointer;
+    margin-right: 10px;
+    color: #555;
+}
+
+.input-hide input[type="checkbox"] {
+    width: 14px; /* Set the width to make it smaller */
+    height: 14px; /* Set the height to make it smaller */
+    cursor: pointer;
+    appearance: none;
+    border: 2px solid #ccc;
+    border-radius: 3px; /* Smaller border-radius */
+    margin-left: 30px;
+}
+
+
+/* Style the checkbox when checked */
+.input-hide input[type="checkbox"]:checked {
+    background-color: #555;
+}
+
+
+/*======= Post Button =======*/
+
+#post-button {
+    background-color: #E9EAF3;
+    color: #555;
+    padding: 8px 30px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    margin-bottom: 50px;
+    margin-top: 20px;
+    float: right;
+    text-align: left;
+    position: relative; /* Position relative for icon placement */
+}
+
+#post-button:hover {
+    background-color: #555;
+    color: #fff;
+}
+
+#post-button i {
+    margin-left: 5px; /* Adjust the margin as needed */
+}
+
+

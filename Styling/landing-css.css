@@ -1,0 +1,896 @@
+/*======= Google fonts =======*/
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+/*======= Main CSS =======*/
+
+/* Apply styles to all elements, set box model to border-box, and use 'Poppins' font-family */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Remove outline on focus for all elements */
+*:focus {
+    outline: none;
+}
+
+/* Set background color for the body */
+body {
+    background: #fff;
+}
+
+/*======= Header navigation bar =======*/
+
+/* Style the fixed header bar */
+header {
+    z-index: 999;
+    position: fixed;
+    width: 100%;
+}
+
+/* Style the navigation bar inside the header */
+header .nav-bar {
+    position: relative;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    height: 4em;
+    border-bottom: 0px solid rgba(255, 255, 255, 0.1);
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 100px;
+    transition: 0.5s ease;
+}
+
+/* Style the links and separator inside the header */
+.header-links {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+}
+
+/* Style individual header links */
+.header-link {
+    color: #210060;
+    font-size: 1.2em;
+    text-decoration: none;
+    margin-right: auto;
+    font-weight: 500;
+    text-transform: uppercase;
+    transition: color 0.3s;
+}
+
+/* Change link color on hover */
+.header-link:hover {
+    color: #996DEE;
+}
+
+/* Style the separator between links */
+.separator {
+    margin: 0 10px;
+    color: #210060;
+    font-size: 1.2em;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+
+/* Style the logo inside the navigation bar */
+.nav-bar .logo img {
+    width: 250px;
+    height: auto;
+    float: left;
+    margin-left: -30px;
+}
+
+/* Style navigation items */
+.navigation .nav-items a {
+    color: #fff;
+    font-size: 1em;
+    text-decoration: none;
+}
+
+/* Add margin to navigation items except the last one */
+.navigation .nav-items a:not(:last-child) {
+    margin-right: 50px;
+}
+
+/*======= Home =======*/
+
+/* Style sections with left-aligned text and padding */
+section {
+    text-align: left;
+    font-size: 1em;
+    padding: 10px 100px;
+    transition: 0.2s ease;
+    transition-property: padding;
+}
+
+/* Style the home section */
+.home {
+    position: relative;
+    min-height: 110vh;
+    overflow: hidden;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+/* Apply background image and animation to the home section */
+.home::before {
+    content: "";
+    background: url(1.png.webp);
+    background-size: 1100px;
+    background-position: right;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    animation: scrollRotateZoomBackground 60s linear infinite; /* Adjust the animation duration */
+    z-index: -1;
+}
+
+/* Define the scroll, rotate, and zoom animation for the background image */
+@keyframes scrollRotateZoomBackground {
+    0% {
+        transform: translateX(0) rotate(0deg) scale(1);
+    }
+    100% {
+        transform: translateX(-30%) rotate(30deg) scale(1.4);
+    }
+}
+
+/* Apply the animation to your background element (if you have one) */
+.your-background-element {
+    animation: scrollRotateZoomBackground 10s linear infinite; /* Adjust the animation duration */
+}
+
+
+
+/* Style buttons, headings, and text inside the home section */
+.home h1 {
+    color: #210060;
+    font-size: 4em;
+    font-weight: 600;
+    margin: 100px 0 0 0;
+}
+
+.home p {
+    color: #210060;
+    font-size: 1.5em;
+    margin: 20px 0;
+    margin-right: 100px;
+}
+
+/* Style specific text with a different color */
+.home .different-color {
+    color: #996DEE;
+}
+
+/* Apply initial opacity and transform to the home section for animation */
+.home {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+/* Apply opacity and transform for scroll animation */
+.home.scroll-animation {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Style the "Get Started" button */
+.home .get-started-button {
+    display: block;
+    background: #210060;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: bold;
+    margin-top: 20px;
+    transition: background 0.3s;
+    margin-left: 0;
+
+}
+
+.home .get-started-button {
+    background: #210060;
+    transition: transform 0.5s ease; 
+}
+
+.home .get-started-button:hover {
+    transform: scale(1.1); 
+    background: #996DEE ;
+}
+
+/* Apply hover effect to the button */
+.home .get-started-button:hover {
+    transform: scale(1.2);
+    background: #996DEE;
+}
+
+/*======= Content section =======*/
+
+/* Style headings and paragraphs inside the content section */
+.content h1 {
+    color: #210060;
+    font-size: 3.5em;
+    margin: 30px;
+    margin-left: 0;
+}
+
+.content p {
+    color: #210060;
+    font-size: 1.2em;
+    margin: 30px 0;
+}
+
+/* Apply initial opacity and transform to the content section for animation */
+.content {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 1s ease, transform 1s ease;
+}
+
+/* Apply opacity and transform for scroll animation */
+.content.scroll-animation {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Style feature section with alternating images and text */
+.feature {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+}
+
+/* Apply opacity and transform for scroll animation */
+.feature.scroll-animation {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Style images inside the feature section */
+.feature img {
+    width: 300px;
+    height: auto;
+    animation: moveUpDown 3s infinite alternate;
+}
+
+/* Apply a move up and down animation to images */
+@keyframes moveUpDown {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Style strong text inside feature section */
+.feature strong {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+/* Style text inside feature section */
+.feature .text {
+    font-size: 1.4em;
+    color: #210060;
+}
+
+/* Reverse the order and add margin to alternate feature sections */
+.feature:nth-child(even) .image {
+    order: -1;
+    margin-right: 10px;
+}
+
+/*======= Scroll bar =======*/
+
+/* Style the scrollbar and scrollbar thumb */
+::-webkit-scrollbar {
+    background: #fff;
+    width: 11px;
+    border-radius: 2em;
+}
+
+/* Style the scrollbar thumb on hover */
+::-webkit-scrollbar-thumb {
+    background: #282f4e;
+    width: 100%;
+    border-radius: 2em;
+}
+
+/* Style the scrollbar thumb when hovering */
+::-webkit-scrollbar-thumb:hover {
+    background: #454f6d;
+}
+
+/*======= Scroll indicator bar =======*/
+
+/* Style the scroll indicator container */
+.scroll-indicator-container {
+    width: 100%;
+    height: 5px;
+}
+
+/* Style the scroll indicator bar */
+.scroll-indicator-bar {
+    background: #210060;
+    width: 0%;
+    height: 100%;
+    box-shadow: 0 5px 25px #996DEE, 0 5px 50px #996DEE;
+}
+
+/* Style navigation close and menu buttons */
+.nav-close-btn, .nav-menu-btn {
+    display: none;
+}
+
+/* Style the navigation menu button */
+.nav-menu-btn {
+    display: block;
+    color: #210060;
+    font-size: 1.5em;
+    cursor: pointer;
+    transition: color 0.3s, transform 0.3s;
+}
+
+/* Apply rotation on button click */
+.nav-menu-btn:active {
+    transform: rotate(180deg);
+}
+
+/* Change button color on hover */
+.nav-menu-btn:hover {
+    color: #996DEE;
+}
+
+/* Style the navigation menu */
+.navigation {
+    z-index: 99999;
+    position: fixed;
+    background: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.3s ease;
+}
+
+/* Show the navigation menu when active */
+.navigation.active {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Style the navigation items container */
+.navigation .nav-items {
+    position: relative;
+    background: #fff;
+    width: 400px;
+    max-width: 400px;
+    display: grid;
+    place-content: center;
+    margin: 20px;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.8);
+    transform: translateY(-200px);
+    transition: 0.3s ease;
+}
+
+/* Show the navigation items when active */
+.navigation.active .nav-items {
+    transform: translateY(0);
+}
+
+/* Style navigation links */
+.navigation .nav-items a {
+    color: #222;
+    font-size: 1em;
+    margin: 15px 50px;
+    transition: color 0.3s;
+}
+
+/* Change link color on hover */
+.navigation .nav-items a:hover {
+    color: #210060;
+}
+
+/* Style navigation close button */
+.nav-close-btn {
+    display: block;
+    color: #222;
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 1.3em;
+    margin: 10px;
+    cursor: pointer;
+    transition: color 0.3s, transform 0.3s;
+}
+
+/* Apply rotation to close button on hover */
+.nav-close-btn:hover {
+    transform: rotate(90deg);
+}
+
+/*======= Log in =======*/
+
+/* Style the popup container */
+.popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0);
+    z-index: 1000;
+    transition: background-color 0.3s;
+}
+
+/* Style the popup content container */
+.popup-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    width: 500px; 
+    height: 500px; /* Set a fixed height for the popup */
+    padding: 60px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    text-align: center;
+    transition: transform 0.3s, opacity 0.3s;
+}
+
+/* Style the close button in the popup */
+.popup-close-btn {
+    position: absolute;
+    top: 10px;
+    left: 15px;
+    font-size: 25px;
+    cursor: pointer;
+    transition: color 0.3s, transform 0.3s;
+}
+
+/* Apply rotation to the close button on hover */
+.popup-close-btn:hover {
+    transform: rotate(90deg);
+}
+
+/* Style the login form within the popup */
+#login-form {
+    text-align: left;
+    width: 80%;
+    margin: 0 auto;
+}
+
+/* Style input boxes within the login form */
+#login-form input[type="text"],
+#login-form input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Style the login button within the login form */
+#login-form button {
+    display: block;
+    margin: 40px;
+    width: 100%;
+}
+
+#login-form button {
+    display: block;
+    background: #210060;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: bold;
+    margin-top: 20px;
+    transition: background 0.3s;
+    margin-left: 0; 
+}
+
+/* Style the login button background and text on hover */
+#login-form button:hover {
+    background-color: #996DEE;
+}
+
+/* Style the password toggle button */
+.password-toggle {
+    position: absolute;
+    top: 46%;
+    right: 115px;
+    transform: translateY(65%);
+    cursor: pointer;
+    z-index: 1;
+}
+
+#login-form input[type="text"]:hover{
+    border-color: #996DEE
+}
+
+#login-form input[type="password"]:hover{
+    border-color: #996DEE
+}
+
+/*======= Register =======*/
+
+/* Style the register form */
+#register-form {
+    text-align: left;
+    width: 80%;
+    margin: 0 auto;
+}
+
+/* Style input boxes within the register form */
+#register-form input[type="text"],
+#register-form input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#register-form input[type="text"]:hover{
+    border-color: #996DEE
+}
+
+#register-form input[type="password"]:hover{
+    border-color: #996DEE
+}
+
+/* Style the register button within the register form */
+#register-form button {
+    display: block;
+    margin: 40px;
+    width: 100%;
+}
+
+/* Style the register button background and text on hover */
+#register-form button:hover {
+    background-color: #996DEE;
+}
+
+/* Style the password toggle button within the register form */
+#register-form .password-toggle {
+    position: absolute;
+    top: 46%;
+    right: 115px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    z-index: 1;
+}
+
+/* Style the email and password confirmation input boxes */
+#register-form input[type="email"],
+#register-form input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#register-form input[type="email"]:hover{
+    border-color: #996DEE
+}
+
+
+/* Style the "Don't have an account?" link */
+#register-link {
+    color: #210060;
+    text-decoration: none;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+/* Style the "Don't have an account?" link on hover */
+#register-link:hover {
+    color: #fff;
+}
+
+#register-form select#occupation {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background: #fff; /* Set the background color */
+    color: #000; /* Set the text color */
+    font-size: 16px; /* Set the font size */
+    outline: none; /* Remove the default outline */
+}
+
+#register-form select#occupation:focus {
+    border-color: #996DEE; /* Style the border when the input is focused */
+}
+
+#register-form select#occupation:hover {
+    border-color: #996DEE; /* Style the border when the input is focused */
+}
+
+/* Style the select options */
+#register-form select#occupation option {
+    color: #000; /* Set the text color for options */
+    background: #fff; /* Set the background color for options */
+}
+
+#register-form select#occupation::placeholder {
+    color: #fff; /* Style the placeholder text for the dropdown */
+}
+
+/* Style for the date input within the register form */
+#register-form input[type="date"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#register-form input[type="date"]:hover{
+    border-color: #996DEE
+}
+
+/* Style the file input within the register form */
+#register-form input[type="file"] {
+    width: 200px;
+    height: 200px;
+    margin: 0 auto; /* Center the input field horizontally */
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column; /* Align content vertically */
+    justify-content: flex-end; /* Place content at the bottom */
+    align-items: center; /* Center content horizontally */
+}
+
+/* Style the "Upload Image" text before the file input */
+#register-form input[type="file"]::-webkit-file-upload-button {
+    display: none;
+}
+
+/* Style the "Upload Image" text appearance and hover effect */
+#register-form input[type="file"]:before {
+    content: "Upload Image";
+    display: block;
+    text-align: center;
+    font-size: 14px;
+    color: #210060;
+    margin-bottom: 0px; /* Add space below the text */
+}
+
+/* Apply hover styles to the file input */
+#register-form input[type="file"]:hover {
+    cursor: pointer;
+    background-color: #f5f5f5;
+    border-color: #996DEE;
+}
+
+/* Style the register button within the register form */
+#register-form button {
+    display: block;
+    background: #210060;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: bold;
+    margin-top: 20px;
+    transition: background 0.3s;
+    margin-left: 0;
+}
+
+/* Apply hover effect to the register button */
+#register-form button:hover {
+    background-color: #996DEE;
+}
+
+/* Define a refresh animation for future use */
+@keyframes refreshAnimation {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(0.5);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/*======= Footer =======*/
+
+/* Footer Styles */
+
+.footer {
+    position: relative;
+    width: 100%;
+    background: #7681ff;
+    min-height: 150px;
+    padding: 20px 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 200px;
+}
+  
+.social-icon,
+.menu {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0;
+    flex-wrap: wrap;
+}
+  
+.social-icon__item,
+.menu__item {
+    list-style: none;
+}
+  
+.social-icon__link {
+    font-size: 2rem;
+    color: #fff;
+    margin: 0 10px;
+    display: inline-block;
+    transition: 0.5s;
+}
+
+.social-icon__link:hover {
+    transform: translateY(-10px);
+}
+  
+.menu__link {
+    font-size: 1.2rem;
+    color: #fff;
+    margin: 0 10px;
+    display: inline-block;
+    transition: 0.5s;
+    text-decoration: none;
+    opacity: 0.75;
+    font-weight: 300;
+}
+  
+.menu__link:hover {
+    opacity: 1;
+}
+  
+.footer p {
+    color: #fff;
+    margin: 15px 0 10px 0;
+    font-size: 1rem;
+    font-weight: 300;
+}
+  
+.wave {
+    position: absolute;
+    top: -100px;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background: url("wave.png");
+    background-size: 1100px 100px;
+}
+  
+.wave#wave1 {
+    z-index: 1000;
+    opacity: 1;
+    bottom: 0;
+    animation: animateWaves 8s linear infinite;
+}
+  
+.wave#wave2 {
+    z-index: 999;
+    opacity: 0.5;
+    bottom: 10px;
+    animation: animate 8s linear infinite !important;
+}
+  
+.wave#wave3 {
+    z-index: 1000;
+    opacity: 0.2;
+    bottom: 15px;
+    animation: animateWaves 6s linear infinite;
+}
+  
+.wave#wave4 {
+    z-index: 999;
+    opacity: 0.7;
+    bottom: 20px;
+    animation: animate 40s linear infinite;
+}
+  
+@keyframes animateWaves {
+    0% {
+      background-position-x: 1000px;
+    }
+    100% {
+      background-positon-x: 0px;
+    }
+}
+  
+@keyframes animate {
+    0% {
+      background-position-x: -1000px;
+    }
+    100% {
+      background-positon-x: 0px;
+    }
+}
+  
+  
+  
+
+/*======= Media Queries for Mobile Screen =======*/
+
+/* Media query for screens smaller than 768px (typical mobile screens) */
+@media (max-width: 768px) {
+    /* Modify header styles for smaller screens */
+    header .nav-bar {
+        padding: 0 20px;
+    }
+
+    .nav-menu-btn {
+        display: block;
+    }
+
+    /* Modify home section styles for smaller screens */
+    .home {
+        min-height: auto;
+        text-align: center;
+    }
+
+    .home h1 {
+        font-size: 3em;
+        margin: 50px 0;
+    }
+
+    .home p {
+        font-size: 1.2em;
+        margin: 20px 0;
+    }
+
+    .home .get-started-button {
+        margin-top: 20px;
+    }
+
+    /* Modify content section styles for smaller screens */
+    .content h1 {
+        font-size: 2em;
+    }
+
+    .content p {
+        font-size: 1em;
+        margin: 20px 0;
+    }
+
+}   
+

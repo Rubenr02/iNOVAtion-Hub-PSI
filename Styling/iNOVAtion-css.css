@@ -1,0 +1,587 @@
+/*======= Google fonts =======*/
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+/*======= Main CSS =======*/
+
+/* Apply styles to all elements, set box model to border-box, and use 'Poppins' font-family */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Remove outline on focus for all elements */
+*:focus {
+    outline: none;
+}
+
+/* Set background color for the body */
+body {
+    background: #EFF0F6;
+}
+
+
+
+/*======= Header navigation bar =======*/
+
+/* Style the fixed header bar */
+header {
+    z-index: 999;
+    position: fixed;
+    width: 100%;
+    min-height: 1em;
+    background: #fff;
+}
+
+/* Style the navigation bar inside the header */
+header .nav-bar {
+    position: relative;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    height: 4em;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 100px;
+    transition: 0.5s ease;
+}
+
+/* Style the links and separator inside the header */
+.header-links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Style individual header links */
+.header-link {
+    color: #210060;
+    font-size: 1.2em;
+    text-decoration: none;
+    margin-right: 20px;
+    font-weight: 500;
+    text-transform: uppercase;
+    transition: color 0.3s;
+}
+
+/* Change link color on hover */
+.header-link:hover {
+    color: #fff;
+}
+
+/* Style the separator between links */
+.separator {
+    margin: 0 10px;
+    color: #210060;
+    font-size: 1.2em;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+/* Style the logo inside the navigation bar */
+.nav-bar .logo img {
+    width: 250px;
+    height: auto;
+    float: left;
+    margin-left: -80px;
+}
+
+/* Style navigation items */
+.navigation .nav-items a {
+    color: #fff;
+    font-size: 1em;
+    text-decoration: none;
+}
+
+/* Add margin to navigation items except the last one */
+.navigation .nav-items a:not(:last-child) {
+    margin-right: 10px;
+}
+
+
+/* Style navigation close and menu buttons */
+.nav-close-btn, .nav-menu-btn {
+    display: none;
+}
+
+/* Style the navigation menu button */
+.nav-menu-btn {
+    display: block;
+    color: #210060;
+    font-size: 1.5em;
+    cursor: pointer;
+    transition: color 0.3s, transform 0.3s;
+}
+
+/* Apply rotation on button click */
+.nav-menu-btn:active {
+    transform: rotate(180deg);
+}
+
+/* Change button color on hover */
+.nav-menu-btn:hover {
+    color: #fff;
+}
+
+/* Style the navigation menu */
+.navigation {
+    z-index: 99999;
+    position: fixed;
+    background: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.3s ease;
+}
+
+/* Show the navigation menu when active */
+.navigation.active {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Style the navigation items container */
+.navigation .nav-items {
+    position: relative;
+    background: #fff;
+    width: 400px;
+    max-width: 400px;
+    display: grid;
+    place-content: center;
+    margin: 20px;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.8);
+    transform: translateY(-200px);
+    transition: 0.3s ease;
+}
+
+/* Show the navigation items when active */
+.navigation.active .nav-items {
+    transform: translateY(0);
+}
+
+/* Style navigation links */
+.navigation .nav-items a {
+    color: #222;
+    font-size: 1em;
+    margin: 15px 50px;
+    transition: color 0.3s;
+}
+
+/* Change link color on hover */
+.navigation .nav-items a:hover {
+    color: #210060;
+}
+
+/* Style navigation close button */
+.nav-close-btn {
+    display: block;
+    color: #222;
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 1.3em;
+    margin: 10px;
+    cursor: pointer;
+    transition: color 0.3s, transform 0.3s;
+}
+
+/* Apply rotation to close button on hover */
+.nav-close-btn:hover {
+    transform: rotate(90deg);
+}
+
+/*======= Seacrh bar and Profile =======*/
+
+/* Style the search bar */
+.search-bar {
+    display: inline-block;
+    position: relative;
+    width: 300px;
+  }
+  
+  .search-bar input {
+    width: 100%;
+    padding: 5px 20px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    outline: none;
+    background: #EFF0F6;
+    text-align: left;
+    position: relative;
+    margin-left: 50px;
+  }
+  
+  .search-bar i {
+    position: absolute;
+    top: 50%;
+    right: -40px;
+    transform: translateY(-50%);
+    color: #000;
+    cursor: pointer;
+  }
+  
+  /* Style the profile link */
+  .header-links a:last-child {
+    color: #210060;
+    font-size: 1.3em;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+    margin-right: -200px;
+    margin-left: 400px;
+  }
+  
+  /* Change link color on hover */
+  .header-links a:last-child:hover {
+    color: #fff;
+  }
+
+/*======= Top bar (Create post, Filter) =======*/
+
+
+.top-bar {
+    background: white;
+    border-radius: 20.05px;
+    display: flex;
+    width: 1000px;
+    align-items: center;
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 7em;
+    z-index: 1;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.top-bar .left {
+    flex: 1;
+    text-align: left;
+    padding-left: 20px;
+}
+
+.top-bar .center {
+    flex: 1;
+    text-align: left;
+    margin-left: 20px;
+    background: #EFF0F6;
+    padding: 10px;
+    border-radius: 20px;
+    margin: 10px 0; 
+}
+
+
+.top-bar .center .create-post-button .create-post-link {
+    font-size: 16px; /* Adjust the font size as needed */
+    color: #000; 
+    text-decoration: none; /* Remove underline of the link */
+    margin-right: 10px; 
+}
+
+.top-bar .center .create-post-button .create-post-link:hover {
+    color: grey;
+}
+
+.top-bar .center .create-post-button .plus-icon {
+    background-color: #EFF0F6;
+    color: black;
+    border-radius: 50%;
+    border: solid black;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    line-height: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    margin-left: 170px; 
+}
+
+.top-bar .center .create-post-button .plus-icon:hover {
+    color: gray;
+    border: solid gray;
+}
+
+.top-bar .right {
+    flex: 1;
+    text-align: right;
+    padding-right: 20px;
+}
+
+
+/* Style the filter button */
+.top-bar .right .filter-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s;
+    font-size: 20px; /* Adjust the icon size */
+}
+
+/* Add filter icon color and margin */
+.top-bar .right .filter-button i {
+    color: #000; 
+    margin-left: 5px; /* Add spacing between text and icon */
+}
+
+.top-bar .right .filter-button:hover i {
+    color: gray; 
+}
+
+
+
+/*======= Media Queries for Mobile Screen=======*/
+
+
+/* Media query for screens smaller than 768px*/
+@media (max-width: 768px) {
+    body {
+        padding: 0px; /* Add some spacing to the body content */
+    }
+
+    header .nav-bar {
+        padding: 0 20px; /* Adjust the navigation bar padding for smaller screens */
+        justify-content: space-between; /* Center the logo and menu button */
+        width: 100%; /* Make the header span the full width of the viewport */
+    }
+
+    .nav-menu-btn {
+        display: block; /* Display the navigation menu button on mobile */
+    }
+
+    .nav-bar .logo img {
+        width: 150px; /* Adjust the logo size for smaller screens */
+        margin-left: 0; /* Reset the margin for the logo */
+    }
+
+    .navigation .nav-items {
+        width: 100%; /* Make navigation items full-width on mobile */
+    }
+
+    /* Adjust other styles as needed for mobile screens */
+    .top-bar {
+        width: 100%; /* Make the top bar full-width on mobile */
+        margin: 2px auto;
+    }
+
+    .top-bar .left {
+        flex: 1;
+        text-align: left; /* Align left for the "Create a Post" button */
+    }
+
+    .top-bar .center {
+        flex: 1;
+        text-align: left; /* Align left for the search bar and "Create a Post" button */
+        margin-left: 0; /* Reset margin for the center element */
+    }
+
+    .top-bar .center .create-post-button .plus-icon {
+        margin-left: 80px; /* Reset the margin for the "Create a Post" button */
+    }
+
+    .header-links a:last-child {
+        margin-left: 0; /* Reset the margin for the profile link */
+    }
+
+    .search-bar {
+        display: inline-block;
+        position: relative;
+        width: 200px;
+    }
+    
+    .search-bar input {
+        width: 100%;
+        padding: 5px 20px;
+        border: 1px solid #ccc;
+        border-radius: 20px;
+        outline: none;
+        background: #EFF0F6;
+        text-align: left;
+        position: relative;
+        margin-left: -125px;
+    }
+    
+    .search-bar i {
+        position: absolute;
+        top: 50%;
+        right: 130px;
+        transform: translateY(-50%);
+        color: #000;
+        cursor: pointer;
+    }
+    
+    /* Style the profile link */
+    .header-links a:last-child {
+        color: #210060;
+        font-size: 1.2em;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s;
+        margin-right: -200px;
+        margin-left: 10px;
+    }
+    
+    /* Change link color on hover */
+    .header-links a:last-child:hover {
+        color: #fff;
+    }
+
+    .top-bar .right {
+        flex: 1;
+        text-align: right;
+        padding-right: 20px;
+    }
+
+    .top-bar .right .filter-button {
+        font-size: 24px; /* Increase the font size for the filter button */
+    }
+
+}
+
+/*======= Top Posts Styling =======*/
+
+
+.top-posts {
+    padding-top: 3.5em; /* Adjust the top padding to push down the content below the fixed header */
+}
+
+.top-posts-section {
+    background: white;
+    border-radius: 20px;
+    width: 170px;
+    margin: 10em 15.5% 0; /* Adjusted margin to bring the top-posts closer to the post */
+    padding: 3px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.top-posts-title {
+    color: #000;
+    padding: 2px;
+    border-radius: 10px;
+    text-align: left;
+    margin-left: 10px;
+    margin-bottom: 1px;
+}
+
+.top-posts-title span {
+    font-size: 1em;
+    display: flex;
+    align-items: center; /
+}
+
+.top-posts-title span i {
+    font-size: 1.2em; /* Adjust the icon size as needed */
+    margin-left: 20px; /* Add spacing between text and icon */
+    color: #FF4500; 
+}
+
+
+/*======= Post Template Styling =======*/
+
+/* Style the post container */
+.post {
+    background-color: #fff;
+    margin: 1em 0; /* Adjusted margin to make it closer to the top-posts */
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    width: 1000px;
+    margin-left: 15.5%;
+}
+
+/* Style the user info section */
+.user-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.user-info img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.username {
+    font-size: 1.2em;
+    font-weight: 500;
+    color: #555;
+}
+
+/* Style the post title and tags */
+.post-title {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    color: #333;
+    display: flex;
+    justify-content: space-between; /* Align items to the right */
+}
+
+.post-tag {
+    display: flex;
+    align-items: center; /* Align vertically */
+}
+
+.input-tag,
+.input-type {
+    margin-left: 10px; /* Adjusted margin to separate tags from title */
+    font-size: 1em;
+    color: #888;
+}
+
+/* Style the post content */
+.post-content {
+    font-size: 1.2em;
+    line-height: 1.5;
+    color: #555;
+    margin-bottom: 20px;
+    background-color: #EFF0F6; 
+    padding: 10px;
+    border-radius: 15px;
+}
+
+/* Style the post actions and stats */
+.post-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.post-actions button {
+    background-color: #E9EAF3;
+    color: #555;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    margin-right: 10px;
+    font-size: 1em;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.post-actions button:hover {
+    background-color: #555;
+    color: #fff;
+}
+
+.post-stats {
+    display: flex;
+    align-items: center;
+}
+
+.vote-count,
+.comment-count {
+    font-size: 1em;
+    margin-right: 10px;
+    color: #555;
+}

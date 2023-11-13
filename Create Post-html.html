@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Post</title>
+    <link rel="stylesheet" href="Styling/Create Post-css.css">  
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+
+</head>
+<body>
+    <header>
+        <div class="nav-bar">
+          <div class="logo">
+            <a href="iNOVAtion-html.html">
+              <img src="Images/iNOVAtion Hub.png" alt="Your Logo" id="main-logo">
+            </a>
+          </div>
+          <div class="header-links">
+            <div class="search-bar">
+              <input type="text" placeholder="Search for tags, problems, ideas ...">
+              <i class="uil uil-search"></i>
+            </div>
+            <a href="#"><i class="uil uil-user"></i> Profile</a>
+          </div>
+          <div class="navigation">
+            <div class="nav-items">
+              <i class="uil uil-times nav-close-btn"></i>
+              <a href="#"><i class="uil uil-home"></i> Home</a>
+              <a href="#"><i class="uil uil-compass"></i> Explore</a>
+              <a href="#"><i class="uil uil-info-circle"></i> About</a>
+              <a href="#"><i class="uil uil-envelope"></i> Contact</a>
+            </div>
+          </div>
+          <i class="uil uil-apps nav-menu-btn"></i>
+        </div>
+      </header>
+
+      <div class="post-container">
+        <h1>Share your new Idea</h1>
+
+        <div class="input-title">
+          <input type="text" id="post-title" name="post-title" placeholder="Add a Title" required>
+        </div>
+
+        <div class="input-text">
+          <textarea id="post-text" name="post-text" placeholder="Add a text (up to 200 words)" 
+              rows="4" required></textarea>
+      </div>
+      
+      <script>
+          document.getElementById('post-text').addEventListener('input', function () {
+              var words = this.value.match(/\S+/g);
+              var wordCount = words ? words.length : 0;
+              
+              if (wordCount > 200) {
+                  // Trim the excess words
+                  var trimmedText = this.value.split(/\s+/, 200).join(' ');
+                  this.value = trimmedText;
+                  wordCount = 200;
+              }
+      
+              document.getElementById('word-count').textContent = 'Words remaining: ' + (200 - wordCount);
+          });
+      </script>
+      
+
+      <div class="input-tag">
+        <select id="post-tag" name="post-tag" class="select-tag">
+            <option value="" disabled selected>Add a Tag</option>
+            <option value="option">Tag 1</option>
+            <option value="option">Tag 2</option>
+            <option value="option">Tag 3</option>
+            <option value="option">Tag 4</option>
+            <option value="option">Tag 5</option>
+            <option value="option">Tag 6</option>
+            <option value="option">Tag 7</option>
+            <option value="option">Tag 8</option>
+            <option value="option">Tag 9</option>
+            <option value="option">Tag 10</option>
+        </select>
+        <i class="uil uil-angle-down"></i>
+      </div>
+    
+      <div class="input-type">
+          <select id="post-type" name="post-type" class="select-type">
+              <option value="" disabled selected>Specify Content</option>
+              <option value="idea">Idea</option>
+              <option value="problem">Problem</option>
+          </select>
+          <i class="uil uil-angle-down"></i>
+      </div>
+      
+
+      <div class="input-hide">
+          <label for="hide-real-name">Anonymous</label>
+          <input type="checkbox" id="hide-real-name" name="hide-real-name">
+      </div>
+
+      <button id="post-button" type="submit">
+        Post
+        <i class="uil uil-plus-circle"></i>
+      </button>
+
+    </div>
+
+</body>
+</html>
