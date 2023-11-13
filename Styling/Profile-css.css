@@ -1,0 +1,426 @@
+/*======= Google fonts =======*/
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+/*======= Main CSS =======*/
+
+/* Apply styles to all elements, set box model to border-box, and use 'Poppins' font-family */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Remove outline on focus for all elements */
+*:focus {
+    outline: none;
+}
+
+/* Set background color for the body */
+body {
+    background: #EFF0F6;
+}
+
+
+
+/*======= Header navigation bar =======*/
+
+/* Style the fixed header bar */
+header {
+    z-index: 999;
+    position: fixed;
+    width: 100%;
+    min-height: 1em;
+    background: #fff;
+
+}
+
+/* Style the navigation bar inside the header */
+header .nav-bar {
+    position: relative;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    height: 4em;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 100px;
+    transition: 0.5s ease;
+}
+
+/* Style the links and separator inside the header */
+.header-links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Style individual header links */
+.header-link {
+    color: #210060;
+    font-size: 1.2em;
+    text-decoration: none;
+    margin-right: 20px;
+    font-weight: 500;
+    text-transform: uppercase;
+    transition: color 0.3s;
+}
+
+/* Change link color on hover */
+.header-link:hover {
+    color: #fff;
+}
+
+/* Style the separator between links */
+.separator {
+    margin: 0 10px;
+    color: #210060;
+    font-size: 1.2em;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+/* Style the logo inside the navigation bar */
+.nav-bar .logo img {
+    width: 250px;
+    height: auto;
+    float: left;
+    margin-left: -80px;
+}
+
+/* Style navigation items */
+.navigation .nav-items a {
+    color: #fff;
+    font-size: 1em;
+    text-decoration: none;
+}
+
+/* Add margin to navigation items except the last one */
+.navigation .nav-items a:not(:last-child) {
+    margin-right: 10px;
+}
+
+
+/* Style navigation close and menu buttons */
+.nav-close-btn, .nav-menu-btn {
+    display: none;
+}
+
+/* Style the navigation menu button */
+.nav-menu-btn {
+    display: block;
+    color: #210060;
+    font-size: 1.5em;
+    cursor: pointer;
+    transition: color 0.3s, transform 0.3s;
+}
+
+/* Apply rotation on button click */
+.nav-menu-btn:active {
+    transform: rotate(180deg);
+}
+
+/* Change button color on hover */
+.nav-menu-btn:hover {
+    color: #fff;
+}
+
+/* Style the navigation menu */
+.navigation {
+    z-index: 99999;
+    position: fixed;
+    background: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.3s ease;
+}
+
+/* Show the navigation menu when active */
+.navigation.active {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Style the navigation items container */
+.navigation .nav-items {
+    position: relative;
+    background: #fff;
+    width: 400px;
+    max-width: 400px;
+    display: grid;
+    place-content: center;
+    margin: 20px;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.8);
+    transform: translateY(-200px);
+    transition: 0.3s ease;
+}
+
+/* Show the navigation items when active */
+.navigation.active .nav-items {
+    transform: translateY(0);
+}
+
+/* Style navigation links */
+.navigation .nav-items a {
+    color: #222;
+    font-size: 1em;
+    margin: 15px 50px;
+    transition: color 0.3s;
+}
+
+/* Change link color on hover */
+.navigation .nav-items a:hover {
+    color: #210060;
+}
+
+/* Style navigation close button */
+.nav-close-btn {
+    display: block;
+    color: #222;
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 1.3em;
+    margin: 10px;
+    cursor: pointer;
+    transition: color 0.3s, transform 0.3s;
+}
+
+/* Apply rotation to close button on hover */
+.nav-close-btn:hover {
+    transform: rotate(90deg);
+}
+
+/*======= Profile and Icon =======*/
+  
+/* Style the profile link */
+.header-links a:last-child {
+    color: #210060;
+    font-size: 1.3em;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+    margin-right: -500px;
+    margin-left: 400px;
+}
+  
+/* Change link color on hover */
+.header-links a:last-child:hover {
+    color: #fff;
+}
+
+
+/*======= Profile and Icon =======*/
+
+/* Style the profile container */
+.profile-container {
+    display: flex;
+    align-items: flex-start;
+    max-width: 100%;
+    width: 100%;
+    margin: 0;
+    background: #EFF0F6;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.profile-header {
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.profile-picture {
+    width: 250px; 
+    height: 250px; 
+    border-radius: 50%;
+    margin-right: 20px;
+    margin-top: 4em;
+}
+
+.profile-info {
+    flex-grow: 1;
+}
+
+.username {
+    font-size: 2.5em; 
+    font-weight: 600;
+    color: #210060;
+    margin-top: 2em;
+    text-align: center;
+}
+
+.description {
+    font-size: 1.5em; 
+    color: #555;
+    margin-top: 10px;
+    text-align: center;
+}
+
+/* Style the published posts section */
+.published-posts {
+    width: 100%;
+    margin: 50px; 
+
+}
+
+.published-posts h2 {
+    font-size: 1.5em;
+    font-weight: 600;
+    color: #210060;
+    margin-bottom: 15px;
+}
+
+/* Style the container for posts */
+.posts-container {
+    width: 70%;
+    margin: 50px;
+}
+
+/* Style the individual post using existing post styles */
+.post {
+    position: relative;
+    background-color: #fff;
+    margin: 1em 0;
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    width: 100%;
+}
+
+/* Style the user info section */
+.post .user-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.post .user-info img {
+    width: 50px; 
+    height: 50px; 
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.post .username {
+    font-size: 1.2em;
+    font-weight: 500;
+    color: #555;
+}
+
+/* Style the post title and tags */
+.post .post-title {
+    font-size: 1.5em; 
+    margin-bottom: 8px; 
+    color: #333;
+    display: flex;
+    justify-content: space-between;
+}
+
+.post .post-tag {
+    display: flex;
+    align-items: center;
+}
+
+.post .input-tag,
+.post .input-type {
+    margin-left: 8px; 
+    font-size: 1em; 
+    color: #888;
+}
+
+/* Style the post content */
+.post .post-content {
+    font-size: 1.2em; 
+    line-height: 1.4; 
+    color: #555;
+    margin-bottom: 15px; 
+    background-color: #EFF0F6;
+    padding: 10px;
+    border-radius: 10px; 
+}
+
+/* Style the post actions and stats */
+.post .post-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.post .post-actions button {
+    background-color: #E9EAF3;
+    color: #555;
+    padding: 8px 16px; 
+    border: none;
+    border-radius: 30px; 
+    cursor: pointer;
+    margin-right: 8px;
+    font-size: 1em; 
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.post .post-actions button:hover {
+    background-color: #555;
+    color: #fff;
+}
+
+.post .post-stats {
+    display: flex;
+    align-items: center;
+}
+
+.post .vote-count,
+.post .comment-count {
+    font-size: 1em; 
+    margin-right: 8px; 
+    color: #555;
+}
+
+/* Style the edit and delete buttons with icons */
+.post .edit-delete-buttons {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+}
+
+.post .edit-delete-buttons a,
+.post .edit-delete-buttons button {
+    background-color: #EFF0F6;
+    color: #555;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    margin-right: 8px;
+    font-size: 0.8em;
+    text-decoration: none; 
+}
+
+.post .edit-delete-buttons button.delete-button {
+    background-color: #EFF0F6;
+}
+
+
+.post .edit-delete-buttons button.delete-button:hover {
+    background-color: #555;
+    color: white;
+}
+
+.post .edit-delete-buttons a:hover {
+    background-color: #555;
+    color: white;
+}

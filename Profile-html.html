@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="Styling/Profile-css.css">  
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+</head>
+<body>
+    <header>
+        <div class="nav-bar">
+          <div class="logo">
+            <a href="iNOVAtion-html.html">
+              <img src="Images/iNOVAtion Hub.png" alt="Your Logo" id="main-logo">
+            </a>
+          </div>
+          <div class="header-links">
+            <a href="#"><i class="uil uil-user"></i> Profile</a>
+          </div>
+          <div class="navigation">
+            <div class="nav-items">
+              <i class="uil uil-times nav-close-btn"></i>
+              <a href="#"><i class="uil uil-home"></i> Home</a>
+              <a href="#"><i class="uil uil-compass"></i> Explore</a>
+              <a href="#"><i class="uil uil-info-circle"></i> About</a>
+              <a href="#"><i class="uil uil-envelope"></i> Contact</a>
+            </div>
+          </div>
+          <i class="uil uil-apps nav-menu-btn"></i>
+        </div>
+      </header>
+
+    
+      <body>
+        <div class="profile-container">
+            <div class="profile-header">
+                <div class="edit-profile" id="editProfileBtn">
+                    <i class="uil uil-edit"></i> Edit Profile
+                </div>
+                <img src="Images/persona.avif" alt="User Profile Picture" class="profile-picture" id="profilePicture">
+                <div class="profile-info" id="profileInfo">
+                    <h1 class="username" id="username">Username</h1>
+                    <p class="description" id="description">User description goes here.</p>
+                </div>
+            </div>
+    
+            <div class="published-posts">
+                <h2>Your Published Posts</h2>
+    
+                <!-- Check if the user has published posts -->
+                <div id="posts-container">
+                    <!-- JavaScript will dynamically add posts here -->
+                </div>
+    
+                <!-- Message for users with no published posts -->
+                <p id="no-posts-message" style="display: none;">No Posts Yet to Show.</p>
+            </div>
+        </div>
+        
+    </body>
+
+      <script type="text/javascript" src="Scripts/Profile-js.js"></script>
+
+      
+    
+</body>
+</html>
