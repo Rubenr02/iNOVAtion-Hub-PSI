@@ -125,7 +125,7 @@ section {
 .home::before {
     content: "";
     background: url(1.png.webp);
-    background-size: 1100px;
+    background-size: 77%;
     background-position: right;
     width: 100%;
     height: 100%;
@@ -156,14 +156,14 @@ section {
 /* Style buttons, headings, and text inside the home section */
 .home h1 {
     color: #210060;
-    font-size: 4em;
+    font-size: 5.5vw;
     font-weight: 600;
     margin: 100px 0 0 0;
 }
 
 .home p {
     color: #210060;
-    font-size: 1.5em;
+    font-size: 1.5vw;
     margin: 20px 0;
     margin-right: 100px;
 }
@@ -222,14 +222,14 @@ section {
 /* Style headings and paragraphs inside the content section */
 .content h1 {
     color: #210060;
-    font-size: 3.5em;
+    font-size: 4vw;
     margin: 30px;
     margin-left: 0;
 }
 
 .content p {
     color: #210060;
-    font-size: 1.2em;
+    font-size: 1.5vw;
     margin: 30px 0;
 }
 
@@ -284,7 +284,7 @@ section {
 
 /* Style text inside feature section */
 .feature .text {
-    font-size: 1.4em;
+    font-size: 1.5vw;
     color: #210060;
 }
 
