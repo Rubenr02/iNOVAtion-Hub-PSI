@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['register'])) {
             VALUES ('$email', '$username', '$hashedPassword', '$firstName', '$lastName', '$birthDate', '$occupation', '$image')";
 
     if ($conn->query($sql) === TRUE) {
-        header("Location: /PSI/iNOVAtion-html.html");
+        header("Location: /PSI/Loading-html.html");
         exit();
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;

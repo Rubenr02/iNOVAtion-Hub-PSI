@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])) {
     $result = $conn->query($sql);
 
     if ($result->num_rows == 1) {
-        header("Location: /PSI/iNOVAtion-html.html");
+        header("Location: /PSI/Loading-html.html");
         exit();
     } else {
         echo "Invalid username or password";

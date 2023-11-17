@@ -195,18 +195,20 @@ header .nav-bar {
     transform: rotate(90deg);
 }
 
-/*======= Seacrh bar and Profile =======*/
+/*======= Search bar and Profile =======*/
 
 /* Style the search bar */
 .search-bar {
-    display: inline-block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     position: absolute;
     width: 30%;
-    margin-left: 23%;
-    align-self: center;
-  }
-  
-  .search-bar input {
+    left: 35%;
+    right: 35%;
+}
+
+.search-bar input {
     width: 100%;
     padding: 5px 20px;
     border: 1px solid #ccc;
@@ -214,21 +216,20 @@ header .nav-bar {
     outline: none;
     background: #EFF0F6;
     text-align: left;
-    position: relative;
-    margin-left: 50px;
-  }
-  
-  .search-bar i {
+}
+
+.search-bar i {
     position: absolute;
     top: 50%;
-    right: -40px;
+    right: 10px;
     transform: translateY(-50%);
     color: #000;
     cursor: pointer;
-  }
+}
+
   
-  /* Style the profile link */
-  .header-links a:last-child {
+/* Style the profile link */
+.header-links a:last-child {
     color: #210060;
     font-size: 1.3em;
     text-decoration: none;
@@ -236,7 +237,7 @@ header .nav-bar {
     transition: color 0.3s;
     align-self: center;
     
-  }
+}
   
   /* Change link color on hover */
   .header-links a:last-child:hover {
@@ -250,7 +251,7 @@ header .nav-bar {
 .post-container {
     background-color: white;
     max-width: 1000px;
-    width: 100%;
+    width: 70%;
     margin-top: 9em; /* Push the container down by the height of the header */
     padding: 20px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
@@ -443,7 +444,6 @@ header .nav-bar {
     cursor: pointer;
 }
 
-/*======= Add PDF =======*/
 
 /*======= Post Button =======*/
 
@@ -471,3 +471,85 @@ header .nav-bar {
 }
 
 
+/*======= Media Queries for Mobile Screen=======*/
+
+
+/* Media query for screens smaller than 768px*/
+@media (max-width: 768px) {
+    body {
+        padding: 0px; /* Add some spacing to the body content */
+    }
+
+    header .nav-bar {
+        padding: 0 20px; /* Adjust the navigation bar padding for smaller screens */
+        justify-content: space-between; /* Center the logo and menu button */
+        width: 100%; /* Make the header span the full width of the viewport */
+    }
+
+    .nav-menu-btn {
+        display: block; /* Display the navigation menu button on mobile */
+        margin-right: -2%;
+    }
+
+    .nav-bar .logo img {
+        width: 150px; /* Adjust the logo size for smaller screens */
+        margin-left: -10%; /* Reset the margin for the logo */
+    }
+
+    .navigation .nav-items {
+        width: 100%; /* Make navigation items full-width on mobile */
+    }
+
+    /* Adjust other styles as needed for mobile screens */
+
+    .header-links a:last-child {
+        margin-left: 0; /* Reset the margin for the profile link */
+    }
+
+    .search-bar {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        width: 30%;
+        left: 35%;
+        right: 35%;
+    }
+    
+    .search-bar input {
+        width: 100%;
+        padding: 5px 20px;
+        border: 1px solid #ccc;
+        border-radius: 20px;
+        outline: none;
+        background: #EFF0F6;
+        text-align: left;
+    }
+    
+    .search-bar i {
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        transform: translateY(-50%);
+        color: #000;
+        cursor: pointer;
+    }
+    
+    /* Style the profile link */
+    .header-links a:last-child {
+        color: #210060;
+        font-size: 1.2em;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s;     
+        margin-right: auto;
+        margin-left: auto;
+    }
+    
+    /* Change link color on hover */
+    .header-links a:last-child:hover {
+        color: #fff;
+    }
+    
+
+}

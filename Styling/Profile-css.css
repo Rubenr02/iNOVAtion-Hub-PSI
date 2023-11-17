@@ -195,8 +195,39 @@ header .nav-bar {
     transform: rotate(90deg);
 }
 
-/*======= Seacrh bar and Profile =======*/
- 
+/*======= Search bar and Profile =======*/
+
+/* Style the search bar */
+.search-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    width: 30%;
+    left: 35%;
+    right: 35%;
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 5px 20px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    outline: none;
+    background: #EFF0F6;
+    text-align: left;
+}
+
+.search-bar i {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    color: #000;
+    cursor: pointer;
+}
+
+  
 /* Style the profile link */
 .header-links a:last-child {
     color: #210060;
@@ -208,10 +239,10 @@ header .nav-bar {
     
 }
   
-/* Change link color on hover */
-.header-links a:last-child:hover {
+  /* Change link color on hover */
+  .header-links a:last-child:hover {
     color: #fff;
-}
+  }
 
 
 
@@ -238,11 +269,12 @@ header .nav-bar {
 }
 
 .profile-picture {
-    width: 250px; 
-    height: 250px; 
+    width: 200px; 
+    height: 200px; 
     border-radius: 50%;
     margin-right: 20px;
     margin-top: 4em;
+    margin-left: 20px;
 }
 
 .profile-info {
@@ -250,18 +282,25 @@ header .nav-bar {
 }
 
 .username {
-    font-size: 2.5em; 
+    font-size: 2.3em; 
     font-weight: 600;
     color: #210060;
-    margin-top: 2em;
+    margin-top: 0;
     text-align: center;
 }
 
 .description {
-    font-size: 1.5em; 
+    font-size: 1.3em; 
     color: #555;
     margin-top: 10px;
     text-align: center;
+}
+
+.edit-profile {
+    display: flex;
+    margin-top: 55px;
+    margin-left: -130px;
+    align-self: center;
 }
 
 /* Style the published posts section */
@@ -277,6 +316,7 @@ header .nav-bar {
     color: #210060;
     margin-bottom: 15px;
 }
+
 
 /* Style the container for posts */
 .posts-container {
@@ -417,4 +457,187 @@ header .nav-bar {
 .post .edit-delete-buttons a:hover {
     background-color: #555;
     color: white;
+}
+
+
+
+/* Media query for screens smaller than 768px*/
+@media (max-width: 768px) {
+    body {
+        padding: 0px; /* Add some spacing to the body content */
+    }
+
+    header .nav-bar {
+        padding: 0 20px; /* Adjust the navigation bar padding for smaller screens */
+        justify-content: space-between; /* Center the logo and menu button */
+        width: 100%; /* Make the header span the full width of the viewport */
+    }
+
+    .nav-menu-btn {
+        display: block; /* Display the navigation menu button on mobile */
+        margin-right: -2%;
+    }
+
+    .nav-bar .logo img {
+        width: 150px; /* Adjust the logo size for smaller screens */
+        margin-left: -10%; /* Reset the margin for the logo */
+    }
+
+    .navigation .nav-items {
+        width: 100%; /* Make navigation items full-width on mobile */
+    }
+
+    /* Adjust other styles as needed for mobile screens */
+
+    .header-links a:last-child {
+        margin-left: 0; /* Reset the margin for the profile link */
+    }
+
+    .search-bar {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        width: 30%;
+        left: 35%;
+        right: 35%;
+    }
+    
+    .search-bar input {
+        width: 100%;
+        padding: 5px 20px;
+        border: 1px solid #ccc;
+        border-radius: 20px;
+        outline: none;
+        background: #EFF0F6;
+        text-align: left;
+    }
+    
+    .search-bar i {
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        transform: translateY(-50%);
+        color: #000;
+        cursor: pointer;
+    }
+    
+    /* Style the profile link */
+    .header-links a:last-child {
+        color: #210060;
+        font-size: 1.2em;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s;
+        margin-right: auto;
+        margin-left: auto;
+    }
+    
+    /* Change link color on hover */
+    .header-links a:last-child:hover {
+        color: #fff;
+    }
+
+    .profile-container {
+        display: flex;
+        align-items: flex-start;
+        max-width: 100%;
+        width: 100%;
+        margin: 0;
+        background: #EFF0F6;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    .profile-header {
+        display: flex;
+        flex-direction: column; 
+        align-items: center;
+        margin-bottom: 20px;
+    }
+    
+    .profile-picture {
+        width: 100%; 
+        height: 100%; 
+        border-radius: 50%;
+        margin-right: 0px;
+        margin-top: 2em;
+        margin-left: -10px;
+    }
+    
+    .profile-info {
+        flex-grow: 1;
+    }
+    
+    .username {
+        font-size: 1.2em; 
+        font-weight: 600;
+        color: #210060;
+        margin-top: 0;
+        margin-left: -5px;
+        text-align: center;
+    }
+    
+    .description {
+        font-size: 0.8em; 
+        color: #555;
+        margin-top: 1px;
+        text-align: center;
+        margin-left: -5px;
+    }
+    
+    .edit-profile {
+        display: flex;
+        margin-top: 55px;
+        margin-left: -15px;
+        align-self: center;
+        white-space: nowrap;
+    }
+
+    /* Style the post title and tags */
+    .post .post-title {
+    font-size: 1em; 
+    margin-bottom: 8px; 
+    color: #333;
+    display: flex;
+    justify-content: space-between;
+    }
+
+    .post .input-tag,
+    .post .input-type {
+        margin-left: 8px; 
+        font-size: 0.8em; 
+        color: #888;
+    }
+
+    /* Style the post content */
+    .post .post-content {
+        font-size: 1em; 
+        line-height: 1.4; 
+        color: #555;
+        margin-bottom: 15px; 
+        background-color: #EFF0F6;
+        padding: 10px;
+        border-radius: 10px; 
+    }
+
+    /* Style the individual post using existing post styles */
+    .post {
+        position: relative;
+        background-color: #fff;
+        margin: 0 0;
+        padding: 5px;
+        border-radius: 15px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        margin-right: 50px;
+        margin-top: 10px;
+    }
+
+    .post .username {
+        font-size: 0.8em;
+        font-weight: 500;
+        color: #555;
+    }
 }

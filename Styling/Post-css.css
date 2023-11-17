@@ -527,8 +527,8 @@ header .nav-bar {
     color: inherit; /* Use the default text color */
   }
   
-  .report a:hover {
+.report a:hover {
     text-decoration: none; /* Add underline on hover if needed */
     color: red;
-  }
+}
   
