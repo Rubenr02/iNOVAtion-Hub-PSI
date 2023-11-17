@@ -252,13 +252,13 @@ header .nav-bar {
     background-color: white;
     max-width: 1000px;
     width: 70%;
-    margin-top: 9em; /* Push the container down by the height of the header */
+    margin-top: 7em; /* Push the container down by the height of the header */
     padding: 20px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
     border-radius: 20.05px;
-    position: fixed;
+    position: absolute;
     align-items: center;
-    left: 15%;  
+    left: 16%;  
 }
 
 .post-container h1 {
@@ -444,6 +444,7 @@ header .nav-bar {
     cursor: pointer;
 }
 
+/*======= Add PDF =======*/
 
 /*======= Post Button =======*/
 
@@ -541,7 +542,7 @@ header .nav-bar {
         font-size: 1.2em;
         text-decoration: none;
         font-weight: 500;
-        transition: color 0.3s;     
+        transition: color 0.3s;
         margin-right: auto;
         margin-left: auto;
     }
@@ -550,6 +551,5 @@ header .nav-bar {
     .header-links a:last-child:hover {
         color: #fff;
     }
-    
 
 }
