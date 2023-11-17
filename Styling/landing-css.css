@@ -142,7 +142,7 @@ section {
         transform: translateX(0) rotate(0deg) scale(1);
     }
     100% {
-        transform: translateX(-30%) rotate(30deg) scale(1.4);
+        transform: translateX(-30%) rotate(0deg) scale(1.4);
     }
 }
 

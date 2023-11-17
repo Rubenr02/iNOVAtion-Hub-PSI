@@ -201,24 +201,30 @@ document.getElementById("open-login-popup").addEventListener("click", function(e
 });
 
 
-// Preview Image in register form
-document.getElementById('picture').addEventListener('change', function () {
-    const selectedImage = document.getElementById('selected-image');
-    const imagePreview = document.getElementById('image-preview');
+const imageInput = document.getElementById("imageInput");
+    const imagePreview = document.getElementById("image-preview");
+    const selectedImage = document.getElementById("selected-image");
 
-    const file = this.files[0];
-    if (file) {
+    imageInput.addEventListener("change", () => {
+      const file = imageInput.files[0];
+
+      if (file) {
+        // Use FileReader to read the selected image as a data URL
         const reader = new FileReader();
 
-        reader.onload = function (e) {
-            selectedImage.src = e.target.result;
-            imagePreview.style.display = 'block';
+        reader.onload = (e) => {
+          // Set the source of the preview image to the data URL
+          selectedImage.src = e.target.result;
+          // Show the image preview div
+          imagePreview.style.display = "block";
         };
 
+        // Read the selected image as a data URL
         reader.readAsDataURL(file);
-    }
-});
-
-document.getElementById('finish-button').addEventListener('click', function () {
-
-});
+      } else {
+        // Reset the preview if no file is selected
+        selectedImage.src = "";
+        // Hide the image preview div
+        imagePreview.style.display = "none";
+      }
+    });

@@ -32,7 +32,6 @@ header {
     width: 100%;
     min-height: 1em;
     background: #fff;
-
 }
 
 /* Style the navigation bar inside the header */
@@ -54,15 +53,16 @@ header .nav-bar {
 .header-links {
     display: flex;
     align-items: center;
-    justify-content: center;
+    margin-left: auto;
+    white-space: nowrap;
 }
+
 
 /* Style individual header links */
 .header-link {
     color: #210060;
     font-size: 1.2em;
     text-decoration: none;
-    margin-right: 20px;
     font-weight: 500;
     text-transform: uppercase;
     transition: color 0.3s;
@@ -73,21 +73,12 @@ header .nav-bar {
     color: #fff;
 }
 
-/* Style the separator between links */
-.separator {
-    margin: 0 10px;
-    color: #210060;
-    font-size: 1.2em;
-    font-weight: 500;
-    text-transform: uppercase;
-}
-
 /* Style the logo inside the navigation bar */
 .nav-bar .logo img {
     width: 250px;
     height: auto;
     float: left;
-    margin-left: -80px;
+    margin-left: -40%;
 }
 
 /* Style navigation items */
@@ -99,13 +90,15 @@ header .nav-bar {
 
 /* Add margin to navigation items except the last one */
 .navigation .nav-items a:not(:last-child) {
-    margin-right: 10px;
+    margin-right: 50px;
 }
 
 
 /* Style navigation close and menu buttons */
-.nav-close-btn, .nav-menu-btn {
+.nav-menu-btn {
     display: none;
+    margin-right: -7%;
+    margin-left: 3%;
 }
 
 /* Style the navigation menu button */
@@ -202,8 +195,8 @@ header .nav-bar {
     transform: rotate(90deg);
 }
 
-/*======= Profile and Icon =======*/
-  
+/*======= Seacrh bar and Profile =======*/
+ 
 /* Style the profile link */
 .header-links a:last-child {
     color: #210060;
@@ -211,14 +204,15 @@ header .nav-bar {
     text-decoration: none;
     font-weight: 500;
     transition: color 0.3s;
-    margin-right: -500px;
-    margin-left: 400px;
+    align-self: center;
+    
 }
   
 /* Change link color on hover */
 .header-links a:last-child:hover {
     color: #fff;
 }
+
 
 
 /*======= Profile and Icon =======*/

@@ -19,8 +19,8 @@
 /* Set background color for the body */
 body {
     background: #EFF0F6;
-   
 }
+
 
 
 /*======= Header navigation bar =======*/
@@ -53,15 +53,16 @@ header .nav-bar {
 .header-links {
     display: flex;
     align-items: center;
-    justify-content: center;
+    margin-left: auto;
+    white-space: nowrap;
 }
+
 
 /* Style individual header links */
 .header-link {
     color: #210060;
     font-size: 1.2em;
     text-decoration: none;
-    margin-right: 20px;
     font-weight: 500;
     text-transform: uppercase;
     transition: color 0.3s;
@@ -72,21 +73,12 @@ header .nav-bar {
     color: #fff;
 }
 
-/* Style the separator between links */
-.separator {
-    margin: 0 10px;
-    color: #210060;
-    font-size: 1.2em;
-    font-weight: 500;
-    text-transform: uppercase;
-}
-
 /* Style the logo inside the navigation bar */
 .nav-bar .logo img {
     width: 250px;
     height: auto;
     float: left;
-    margin-left: -80px;
+    margin-left: -40%;
 }
 
 /* Style navigation items */
@@ -98,13 +90,15 @@ header .nav-bar {
 
 /* Add margin to navigation items except the last one */
 .navigation .nav-items a:not(:last-child) {
-    margin-right: 10px;
+    margin-right: 50px;
 }
 
 
 /* Style navigation close and menu buttons */
-.nav-close-btn, .nav-menu-btn {
+.nav-menu-btn {
     display: none;
+    margin-right: -7%;
+    margin-left: 3%;
 }
 
 /* Style the navigation menu button */
@@ -201,17 +195,18 @@ header .nav-bar {
     transform: rotate(90deg);
 }
 
-
 /*======= Seacrh bar and Profile =======*/
 
 /* Style the search bar */
 .search-bar {
     display: inline-block;
-    position: relative;
-    width: 300px;
-}
+    position: absolute;
+    width: 30%;
+    margin-left: 23%;
+    align-self: center;
+  }
   
-.search-bar input {
+  .search-bar input {
     width: 100%;
     padding: 5px 20px;
     border: 1px solid #ccc;
@@ -232,22 +227,21 @@ header .nav-bar {
     cursor: pointer;
   }
   
-  
-/* Style the profile link */
-.header-links a:last-child {
+  /* Style the profile link */
+  .header-links a:last-child {
     color: #210060;
     font-size: 1.3em;
     text-decoration: none;
     font-weight: 500;
     transition: color 0.3s;
-    margin-right: -200px;
-    margin-left: 400px;
-}
+    align-self: center;
+    
+  }
   
-.header-links a:last-child:hover {
+  /* Change link color on hover */
+  .header-links a:last-child:hover {
     color: #fff;
-}
-
+  }
 
 /*======= Create a New Post Styling =======*/
 
@@ -331,6 +325,7 @@ header .nav-bar {
     border-radius: 15px;
     box-sizing: border-box;
     background: #E9EAF3;
+    height: 150px; 
     resize: none; /* Disable textarea resizing(the 3 stripes on the bottom left corner) */
 }
 
@@ -420,6 +415,36 @@ header .nav-bar {
 }
 
 
+/*======= Add Image =======*/
+
+.input-image,
+.input-pdf {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    display: inline-block;
+    width: calc(40% - 20px); /* Set the width and adjust for margin */
+    margin-right: 20px; /* Adjust the margin between image and PDF inputs */
+}
+
+.input-image label,
+.input-pdf label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.input-image input[type="file"],
+.input-pdf input[type="file"] {
+    width: 100%;
+    padding: 8px;
+    border-radius: 10px;
+    box-sizing: border-box;
+    background: #E9EAF3;
+    cursor: pointer;
+}
+
+/*======= Add PDF =======*/
+
 /*======= Post Button =======*/
 
 #post-button {
@@ -429,8 +454,8 @@ header .nav-bar {
     border: none;
     border-radius: 15px;
     cursor: pointer;
-    margin-bottom: 50px;
-    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-top: -35px;
     float: right;
     text-align: left;
     position: relative; /* Position relative for icon placement */

@@ -53,15 +53,16 @@ header .nav-bar {
 .header-links {
     display: flex;
     align-items: center;
-    justify-content: center;
+    margin-left: auto;
+    white-space: nowrap;
 }
+
 
 /* Style individual header links */
 .header-link {
     color: #210060;
     font-size: 1.2em;
     text-decoration: none;
-    margin-right: 20px;
     font-weight: 500;
     text-transform: uppercase;
     transition: color 0.3s;
@@ -72,21 +73,12 @@ header .nav-bar {
     color: #fff;
 }
 
-/* Style the separator between links */
-.separator {
-    margin: 0 10px;
-    color: #210060;
-    font-size: 1.2em;
-    font-weight: 500;
-    text-transform: uppercase;
-}
-
 /* Style the logo inside the navigation bar */
 .nav-bar .logo img {
     width: 250px;
     height: auto;
     float: left;
-    margin-left: -80px;
+    margin-left: -40%;
 }
 
 /* Style navigation items */
@@ -98,13 +90,15 @@ header .nav-bar {
 
 /* Add margin to navigation items except the last one */
 .navigation .nav-items a:not(:last-child) {
-    margin-right: 10px;
+    margin-right: 50px;
 }
 
 
 /* Style navigation close and menu buttons */
-.nav-close-btn, .nav-menu-btn {
+.nav-menu-btn {
     display: none;
+    margin-right: -7%;
+    margin-left: 3%;
 }
 
 /* Style the navigation menu button */
@@ -206,8 +200,10 @@ header .nav-bar {
 /* Style the search bar */
 .search-bar {
     display: inline-block;
-    position: relative;
-    width: 300px;
+    position: absolute;
+    width: 30%;
+    margin-left: 23%;
+    align-self: center;
   }
   
   .search-bar input {
@@ -238,8 +234,8 @@ header .nav-bar {
     text-decoration: none;
     font-weight: 500;
     transition: color 0.3s;
-    margin-right: -200px;
-    margin-left: 400px;
+    align-self: center;
+    
   }
   
   /* Change link color on hover */
@@ -256,7 +252,7 @@ header .nav-bar {
     display: flex;
     width: 1000px;
     align-items: center;
-    position: fixed;
+    position: absolute;
     left: 50%;
     transform: translateX(-50%);
     top: 7em;
@@ -356,11 +352,12 @@ header .nav-bar {
 
     .nav-menu-btn {
         display: block; /* Display the navigation menu button on mobile */
+        margin-right: -2%;
     }
 
     .nav-bar .logo img {
         width: 150px; /* Adjust the logo size for smaller screens */
-        margin-left: 0; /* Reset the margin for the logo */
+        margin-left: -10%; /* Reset the margin for the logo */
     }
 
     .navigation .nav-items {
@@ -396,6 +393,9 @@ header .nav-bar {
         display: inline-block;
         position: relative;
         width: 200px;
+        align-self: center;
+        margin-left: 30%;
+        margin-right: -20%;
     }
     
     .search-bar input {
@@ -426,8 +426,8 @@ header .nav-bar {
         text-decoration: none;
         font-weight: 500;
         transition: color 0.3s;
-        margin-right: -200px;
-        margin-left: 10px;
+        margin-right: auto;
+        margin-left: auto;
     }
     
     /* Change link color on hover */
@@ -458,7 +458,7 @@ header .nav-bar {
     background: white;
     border-radius: 20px;
     width: 170px;
-    margin: 10em 15.5% 0; /* Adjusted margin to bring the top-posts closer to the post */
+    margin: 10em 15% 0; /* Adjusted margin to bring the top-posts closer to the post */
     padding: 3px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
@@ -490,12 +490,12 @@ header .nav-bar {
 /* Style the post container */
 .post {
     background-color: #fff;
-    margin: 1em 0; /* Adjusted margin to make it closer to the top-posts */
+    margin: 1em auto; /* Adjusted margin to make it closer to the top-posts */
     padding: 20px;
     border-radius: 20px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    width: 1000px;
-    margin-left: 15.5%;
+    width: 70%;
+    margin-left: 15%;
 }
 
 /* Style the user info section */
@@ -523,6 +523,7 @@ header .nav-bar {
     font-size: 1.5em;
     margin-bottom: 10px;
     color: #333;
+    margin-left: 0.5%;
     display: flex;
     justify-content: space-between; /* Align items to the right */
 }
@@ -549,6 +550,19 @@ header .nav-bar {
     padding: 10px;
     border-radius: 15px;
 }
+
+/* Style the post image */
+.post-image {
+    width: 100%;   /* Make the image take up 100% of its container's width */
+    height: 500px; /* Set a fixed height for the image */
+    object-fit: cover; /* Maintain the aspect ratio and cover the container */
+    border-radius: 15px; /* Add rounded corners */
+    margin-top: 15px; /* Adjust the margin as needed */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+    margin-bottom: 1em;
+}
+
+
 
 /* Style the post actions and stats */
 .post-footer {
@@ -584,4 +598,13 @@ header .nav-bar {
     font-size: 1em;
     margin-right: 10px;
     color: #555;
+}
+
+.post-link {
+    text-decoration: none; /* Remove underline from the anchor text */
+    color: inherit; /* Use the default text color */
+}
+  
+.post-link:hover {
+    text-decoration: none; /* Add underline on hover if needed */
 }

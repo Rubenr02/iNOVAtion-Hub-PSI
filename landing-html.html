@@ -109,13 +109,13 @@
     <div class="popup-content">
       <span class="popup-close-btn" id="close-login-popup">&times;</span>
       <h2>Login</h2>
-      <form id="login-form">
+      <form id="login-form" action="Php/login.php" method="post">
         <br>
         <p>Join the platform to share your ideas and start making a difference!</p>
         <input type="text" id="username" name="username" placeholder="Email or username" required>
         <input type="password" id="password" name="password" placeholder="Password" required>
         <i class="password-toggle uil uil-eye-slash" id="password-toggle"></i>
-        <button type="submit">Log In</button>
+        <button type="submit" name="login">Log In</button>
     </form>
     <p>Don’t have an account? <a href="#" id="open-register-popup2">Register</a></p>
     </div>
@@ -127,12 +127,12 @@
     <div class="popup-content">
         <span class="popup-close-btn" id="close-register-popup">&times;</span>
         <h2>Register</h2>
-        <form id="register-form">
-            <div class="register-step" id="register-step-1">
+        <form id="register-form" action="Php/register.php" method="post">
+          <div class="register-step" id="register-step-1">
                 <input type="text" id="email" name="email" placeholder="Email" required>
+                <input type="text" id="username" name="username" placeholder="Username" required>
                 <input type="password" id="password" name="password" placeholder="Password" required>
-                <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm Password" required>
-                <button type="button" id="continue-button-1">Continue</button>
+                <button type="submit" id="continue-button-1">Continue</button>
             </div>
 
             <div class="register-step" id="register-step-2" style="display: none;">
@@ -144,16 +144,16 @@
                   <option value="Professor">Professor</option>
                   <option value="Others">Others</option>
                 </select>
-                <button type="button" id="continue-button-2">Continue</button>
+                <button type="submit" id="continue-button-2">Continue</button>
             </div>
 
             <div class="register-step" id="register-step-3" style="display: none;">
               <p>A descriptive profile improves your experience in the platform.</p>
-                <input type="file" id="picture" name="picture" accept="image/*" required>
+                <input type="file" id="image" name="image" accept="image/*" required>
                 <div id="image-preview" style="display: none;">
                   <img id="selected-image" src="" alt="Selected Image">
                 </div>
-                <button type="button" id="finish-button">Finish Registration</button>
+                <button type="submit" id="finish-button" name="register">Finish Registration</button>
             </div>
         </form>
         <p>Already have an account? <a href="#" id="open-login-popup">Log In</a></p>
