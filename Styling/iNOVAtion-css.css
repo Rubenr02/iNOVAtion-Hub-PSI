@@ -250,7 +250,7 @@ header .nav-bar {
     background: white;
     border-radius: 20.05px;
     display: flex;
-    width: 1000px;
+    width: 70%;
     align-items: center;
     position: absolute;
     left: 50%;
@@ -366,7 +366,7 @@ header .nav-bar {
 
     /* Adjust other styles as needed for mobile screens */
     .top-bar {
-        width: 100%; /* Make the top bar full-width on mobile */
+        width: 70%; /* Make the top bar full-width on mobile */
         margin: 2px auto;
     }
 
@@ -382,7 +382,7 @@ header .nav-bar {
     }
 
     .top-bar .center .create-post-button .plus-icon {
-        margin-left: 80px; /* Reset the margin for the "Create a Post" button */
+        margin-left: 0px; /* Reset the margin for the "Create a Post" button */
     }
 
     .header-links a:last-child {
@@ -561,7 +561,6 @@ header .nav-bar {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
     margin-bottom: 1em;
 }
-
 
 
 /* Style the post actions and stats */
