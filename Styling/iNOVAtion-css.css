@@ -199,14 +199,16 @@ header .nav-bar {
 
 /* Style the search bar */
 .search-bar {
-    display: inline-block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     position: absolute;
     width: 30%;
-    margin-left: 23%;
-    align-self: center;
-  }
-  
-  .search-bar input {
+    left: 35%;
+    right: 35%;
+}
+
+.search-bar input {
     width: 100%;
     padding: 5px 20px;
     border: 1px solid #ccc;
@@ -214,21 +216,20 @@ header .nav-bar {
     outline: none;
     background: #EFF0F6;
     text-align: left;
-    position: relative;
-    margin-left: 50px;
-  }
-  
-  .search-bar i {
+}
+
+.search-bar i {
     position: absolute;
     top: 50%;
-    right: -40px;
+    right: 10px;
     transform: translateY(-50%);
     color: #000;
     cursor: pointer;
-  }
+}
+
   
-  /* Style the profile link */
-  .header-links a:last-child {
+/* Style the profile link */
+.header-links a:last-child {
     color: #210060;
     font-size: 1.3em;
     text-decoration: none;
@@ -236,7 +237,7 @@ header .nav-bar {
     transition: color 0.3s;
     align-self: center;
     
-  }
+}
   
   /* Change link color on hover */
   .header-links a:last-child:hover {
@@ -390,12 +391,13 @@ header .nav-bar {
     }
 
     .search-bar {
-        display: inline-block;
-        position: relative;
-        width: 200px;
-        align-self: center;
-        margin-left: 30%;
-        margin-right: -20%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        width: 30%;
+        left: 35%;
+        right: 35%;
     }
     
     .search-bar input {
@@ -406,14 +408,12 @@ header .nav-bar {
         outline: none;
         background: #EFF0F6;
         text-align: left;
-        position: relative;
-        margin-left: -125px;
     }
     
     .search-bar i {
         position: absolute;
         top: 50%;
-        right: 130px;
+        right: 10px;
         transform: translateY(-50%);
         color: #000;
         cursor: pointer;
