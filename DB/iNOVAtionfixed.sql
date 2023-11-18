@@ -167,6 +167,28 @@ create table VOTES
    primary key (VOTEID)
 );
 
+/*==============================================================*/
+/* Table: POSTS                                                 */
+/*==============================================================*/
+create table POSTS
+(
+   POSTID               int not null auto_increment,
+   USERID               int not null,
+   TAGID                int,
+   TITLE                varchar(255) not null,
+   DESCRIPTION          text not null,
+   CONTENT              text not null,
+   IMAGE                longblob,
+   PDF_FILE             longblob,
+   CREATEDON            date,
+   IS_ANONYMOUS         boolean default 0,
+   primary key (POSTID),
+   CONSTRAINT FK_POSTS_USERS FOREIGN KEY (USERID) REFERENCES USERS (USERID),
+   CONSTRAINT FK_POSTS_TAGS FOREIGN KEY (TAGID) REFERENCES TAGS (TAGID)
+);
+
+
+
 alter table COMMENTS add constraint FK_COMMENTS_IDEAS foreign key (IDEAID)
       references IDEAS (IDEAID);
 

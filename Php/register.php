@@ -1,4 +1,6 @@
 <?php
+// Start or resume the session
+session_start();
 
 // Create connection
 $conn = mysqli_connect("localhost", "root", "", "inovation");
@@ -26,13 +28,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['register'])) {
             VALUES ('$email', '$username', '$hashedPassword', '$firstName', '$lastName', '$birthDate', '$occupation', '$image')";
 
     if ($conn->query($sql) === TRUE) {
+        // Set the session variable after successful registration
+        $_SESSION['USERID'] = mysqli_insert_id($conn);
+
         header("Location: /PSI/Loading-html.html");
         exit();
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
     }
 }
-
-// Close the database connection
-$conn->close();
 ?>

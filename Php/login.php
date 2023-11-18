@@ -1,4 +1,6 @@
 <?php
+// Start or resume the session
+session_start();
 
 // Create connection
 $conn = mysqli_connect("localhost", "root", "", "inovation");
@@ -13,9 +15,8 @@ if (mysqli_connect_errno()) {
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
-    echo $username = $_POST['username'];
-    echo $password = $_POST['password'];
-
+    echo "Username: $username<br>";
+    echo "Password: $password<br>";
 
     $hashedPassword = md5($password);
 
@@ -24,16 +25,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])) {
     $result = $conn->query($sql);
 
     if ($result->num_rows == 1) {
+        // Fetch user data
+        $row = $result->fetch_assoc();
+
+        // Store user information in the session
+        $_SESSION['USERID'] = $row['USERID'];
+        $_SESSION['USERNAME'] = $row['USERNAME'];
+
+        // Redirect to the loading page
         header("Location: /PSI/Loading-html.html");
         exit();
     } else {
         echo "Invalid username or password";
-        echo "Number of rows returned: $result->num_rows";
-
     }
 }
 
-
-// Close the database connection
-$conn->close();
 ?>

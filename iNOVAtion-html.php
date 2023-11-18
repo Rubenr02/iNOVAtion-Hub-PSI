@@ -1,3 +1,31 @@
+<?php
+// Create connection
+$conn = mysqli_connect("localhost", "root", "", "inovation");
+
+if (mysqli_connect_errno()) {
+    echo "Failed to connect to MySQL: " . mysqli_connect_errno();
+}
+
+// Start or resume the session
+session_start();
+
+// Check if the user is logged in
+if (isset($_SESSION['USERID'])) {
+    // Retrieve the user ID from the session
+    $userid = $_SESSION['USERID'];
+
+    // Fetch the username from the database based on the USERID
+    $sql = "SELECT USERNAME FROM USERS WHERE USERID = '$userid'";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows == 1) {
+        $row = $result->fetch_assoc();
+        $username = $row['USERNAME'];
+    }
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,7 +40,7 @@
     <header>
         <div class="nav-bar">
           <div class="logo">
-            <a href="iNOVAtion-html.html">
+            <a href="iNOVAtion-html.php">
               <img src="Images/iNOVAtion Hub.png" alt="Your Logo" id="main-logo">
             </a>
           </div>
@@ -38,11 +66,11 @@
 
       <div class="top-bar">
         <div class="left">
-            <span>Username</span>
+          <span><?php echo isset($username) ? $username : ''; ?></span>
         </div>
         <div class="center">
           <div class="create-post-button">
-              <a href="Create Post-html.html" class="create-post-link">
+              <a href="Create Post-html.php" class="create-post-link">
                   Create a Post
                   <button class="plus-icon">+</button>
               </a>

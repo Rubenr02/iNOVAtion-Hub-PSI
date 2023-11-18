@@ -252,13 +252,13 @@ header .nav-bar {
     background-color: white;
     max-width: 1000px;
     width: 70%;
-    margin-top: 9em; /* Push the container down by the height of the header */
+    margin-top: 7em; /* Push the container down by the height of the header */
     padding: 20px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
     border-radius: 20.05px;
-    position: fixed;
+    position: absolute;
     align-items: center;
-    left: 15%;  
+    left: 16%;  
 }
 
 .post-container h1 {
@@ -341,7 +341,7 @@ header .nav-bar {
 .input-type {
     position: relative;
     display: inline-block;
-    width: calc(20% - 20px); /* Set the width to 50% and adjust for margin */
+    width: 200px;
     margin-right: 2px; /* Adjust the margin between the two selects */
     margin-left: 10px;
 }
@@ -381,7 +381,7 @@ header .nav-bar {
 .input-hide {
     display: flex;
     align-items: center;
-    width: 18%;
+    width: 180px;
     padding: 8px;
     background: #E9EAF3;
     border: 0px solid #ccc;
@@ -426,12 +426,15 @@ header .nav-bar {
     display: inline-block;
     width: calc(40% - 20px); /* Set the width and adjust for margin */
     margin-right: 20px; /* Adjust the margin between image and PDF inputs */
+    margin-top: 10px;
 }
+
 
 .input-image label,
 .input-pdf label {
     display: block;
     margin-bottom: 5px;
+    font-size: 0.9em;
 }
 
 .input-image input[type="file"],
@@ -444,6 +447,9 @@ header .nav-bar {
     cursor: pointer;
 }
 
+
+
+/*======= Add PDF =======*/
 
 /*======= Post Button =======*/
 
@@ -541,7 +547,7 @@ header .nav-bar {
         font-size: 1.2em;
         text-decoration: none;
         font-weight: 500;
-        transition: color 0.3s;     
+        transition: color 0.3s;
         margin-right: auto;
         margin-left: auto;
     }
@@ -550,6 +556,238 @@ header .nav-bar {
     .header-links a:last-child:hover {
         color: #fff;
     }
-    
+
+        /* Style the new post container */
+    .post-container {
+        background-color: white;
+        max-width: 1000px;
+        width: 70%;
+        margin-top: 7em; /* Push the container down by the height of the header */
+        padding: 20px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        border-radius: 20.05px;
+        position: absolute;
+        align-items: center;
+        left: 16%;  
+    }
+
+    .post-container h1 {
+        color: #333; /* Set the text color of the heading */
+        text-align: left; 
+        margin-bottom: 20px; 
+        margin-left: 10px;
+        font-size: 24px;
+    }
+
+    .input-field {
+        margin-bottom: 10px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        
+    }
+
+    .input-field label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    /*======= Add Title =======*/
+
+    .input-title {
+        padding: 10px; /* Add some padding for spacing */
+        border-radius: 8px; /* Rounded corners */
+        margin-bottom: 10px; /* Adjust margin as needed */
+    }
+
+    .input-title label {
+        display: none; /* Hide the label by default */
+    }
+
+    .input-title input[type="text"] {
+        width: 100%;
+        padding: 8px; /* Adjust padding as needed */
+        border: 0px solid #ccc; /* Add a border for a clean look */
+        border-radius: 15px; /* Rounded corners for the input */
+        box-sizing: border-box; /* Include padding and border in the input's total width */
+        background: #b9bcd6;
+    }
+
+    /* Show label when the input is focused (clicked) */
+    .input-title input[type="text"]:focus + label {
+        display: block;
+    }
+
+    /*======= Post Content =======*/
+
+    .input-text {
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+
+    .input-text label {
+        display: none;
+    }
+
+
+    .input-text textarea {
+        width: 100%;
+        padding: 10px;
+        border: 0px solid #ccc;
+        border-radius: 15px;
+        box-sizing: border-box;
+        background: #E9EAF3;
+        height: 150px; 
+        resize: none; /* Disable textarea resizing(the 3 stripes on the bottom left corner) */
+    }
+
+    /* Show label when the textarea is focused (clicked) */
+    .input-text textarea:focus + label {
+        display: block;
+    }
+
+    /*======= Tags =======*/
+
+    .input-tag,
+    .input-type {
+        position: relative;
+        display: inline-block;
+        width: 44%;
+        margin-right: 2px; /* Adjust the margin between the two selects */
+        margin-left: 10px;
+    }
+
+    .select-tag,
+    .select-type {
+        position: relative;
+        width: 100%;
+        padding: 8px;
+        background: #E9EAF3;
+        border: 0px solid #ccc;
+        border-radius: 10px;
+        color: #555;
+        box-sizing: border-box;
+        appearance: none;
+        cursor: pointer;
+        overflow-y: auto; /* Allow scrolling if needed */
+    }
+
+    .select-tag option {
+        height: 20px; /* Set the height for each option */
+    }
+
+    .uil-angle-down {
+        position: absolute;
+        top: 50%;
+        right: 10px; /* Adjust the right spacing as needed */
+        transform: translateY(-50%);
+        font-size: 18px; /* Adjust the font size as needed */
+        color: #555; /* Set the color of the arrow */
+    }
+
+
+    /*======= Anonymous Post  =======*/
+
+
+    .input-hide {
+        display: flex;
+        align-items: center;
+        width: 40%;
+        padding: 8px;
+        background: #E9EAF3;
+        border: 0px solid #ccc;
+        border-radius: 10px;
+        box-sizing: border-box;
+        cursor: pointer;
+        margin-left: 10px;
+        margin-top: 20px;
+    }
+
+    .input-hide label {
+        display: block;
+        cursor: pointer;
+        margin-right: 10px;
+        color: #555;
+        font-size: 0.8em;
+    }
+
+    .input-hide input[type="checkbox"] {
+        width: 14px; /* Set the width to make it smaller */
+        height: 14px; /* Set the height to make it smaller */
+        cursor: pointer;
+        appearance: none;
+        border: 2px solid #ccc;
+        border-radius: 3px; /* Smaller border-radius */
+        margin-left: 0px;
+    }
+
+
+    /* Style the checkbox when checked */
+    .input-hide input[type="checkbox"]:checked {
+        background-color: #555;
+    }
+
+
+    /*======= Add Image =======*/
+
+    .input-image,
+    .input-pdf {
+        margin-bottom: 10px;
+        padding: 8px;
+        border-radius: 5px;
+        display: inline-block;
+        width: 300px;
+        margin-right: 20px; /* Adjust the margin between image and PDF inputs */
+        margin-top: 10px;
+    }
+
+
+    .input-image label,
+    .input-pdf label {
+        display: block;
+        margin-bottom: 5px;
+        font-size: 0.9em;
+        white-space: nowrap;
+    }
+
+    .input-image input[type="file"],
+    .input-pdf input[type="file"] {
+        width: 100%;
+        padding: 8px;
+        border-radius: 10px;
+        box-sizing: border-box;
+        background: #E9EAF3;
+        cursor: pointer;
+        font-size: 0.75em;
+    }
+
+
+
+    /*======= Add PDF =======*/
+
+    /*======= Post Button =======*/
+
+    #post-button {
+        background-color: #E9EAF3;
+        color: #555;
+        padding: 8px 30px;
+        border: none;
+        border-radius: 15px;
+        cursor: pointer;
+        margin-bottom: 20px;
+        margin-top: -35px;
+        float: right;
+        text-align: left;
+        position: relative; /* Position relative for icon placement */
+    }
+
+    #post-button:hover {
+        background-color: #555;
+        color: #fff;
+    }
+
+    #post-button i {
+        margin-left: 5px; /* Adjust the margin as needed */
+    }
 
 }

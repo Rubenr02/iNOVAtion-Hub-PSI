@@ -1,3 +1,20 @@
+<?php
+// Create connection
+$conn = mysqli_connect("localhost", "root", "", "inovation");
+
+if (mysqli_connect_errno()) {
+    echo "Failed to connect to MySQL: " . mysqli_connect_errno();
+}
+
+// Start or resume the session
+session_start();
+
+// Fetch tags from the database
+$tagQuery = "SELECT TAGS FROM TAGS";
+$tagResult = $conn->query($tagQuery);
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,7 +29,7 @@
     <header>
         <div class="nav-bar">
           <div class="logo">
-            <a href="iNOVAtion-html.html">
+            <a href="iNOVAtion-html.php">
               <img src="Images/iNOVAtion Hub.png" alt="Your Logo" id="main-logo">
             </a>
           </div>
@@ -36,6 +53,7 @@
         </div>
       </header>
 
+      <form action="Php/createpost.php" method="post" enctype="multipart/form-data">
       <div class="post-container">
         <h1>Share your new Idea</h1>
 
@@ -68,16 +86,18 @@
       <div class="input-tag">
         <select id="post-tag" name="post-tag" class="select-tag">
             <option value="" disabled selected>Add a Tag</option>
-            <option value="option">Tag 1</option>
-            <option value="option">Tag 2</option>
-            <option value="option">Tag 3</option>
-            <option value="option">Tag 4</option>
-            <option value="option">Tag 5</option>
-            <option value="option">Tag 6</option>
-            <option value="option">Tag 7</option>
-            <option value="option">Tag 8</option>
-            <option value="option">Tag 9</option>
-            <option value="option">Tag 10</option>
+            <?php
+            // Fetch tags from the database
+            $tagQuery = "SELECT TAGS FROM TAGS";
+            $tagResult = $conn->query($tagQuery);
+
+            if ($tagResult->num_rows > 0) {
+                while ($tagRow = $tagResult->fetch_assoc()) {
+                    $tagName = $tagRow['TAGS'];
+                    echo "<option value=\"$tagName\">$tagName</option>";
+                }
+            }
+            ?>
         </select>
         <i class="uil uil-angle-down"></i>
       </div>
@@ -90,14 +110,16 @@
           </select>
           <i class="uil uil-angle-down"></i>
       </div>
-      
+      <br>
       <div class="input-image">
-          <input type="file" id="post-image" name="post-image" accept="image/*" required>
+        <label for="post-image"><i class="uil uil-camera-plus"></i> Select Image...</label>
+          <input type="file" id="post-image" name="post-image" accept="image/*">
       </div>
       
       <!-- Add a file input for PDF files -->
       <div class="input-pdf">
-          <input type="file" id="post-pdf" name="post-pdf" accept=".pdf" required>
+          <label for="post-pdf"><i class="uil uil-file-upload"></i> Select PDF File...</label>
+          <input type="file" id="post-pdf" name="post-pdf" accept=".pdf">
       </div>
 
       <div class="input-hide">
@@ -105,12 +127,13 @@
           <input type="checkbox" id="hide-real-name" name="hide-real-name">
       </div>
 
-      <button id="post-button" type="submit">
+      <button id="post-button" type="submit" name="post-button">
         Post
         <i class="uil uil-plus-circle"></i>
       </button>
 
     </div>
+    </form>
 
     
 </body>
