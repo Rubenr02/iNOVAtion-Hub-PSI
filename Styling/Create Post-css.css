@@ -447,6 +447,7 @@ header .nav-bar {
     cursor: pointer;
 }
 
+/*======= Add PDF =======*/
 
 
 /*======= Add PDF =======*/
@@ -556,6 +557,7 @@ header .nav-bar {
     .header-links a:last-child:hover {
         color: #fff;
     }
+<<<<<<< HEAD
 
         /* Style the new post container */
     .post-container {
@@ -789,5 +791,7 @@ header .nav-bar {
     #post-button i {
         margin-left: 5px; /* Adjust the margin as needed */
     }
+=======
+>>>>>>> 7d4bb30af4cf72bd8607d0006f065affe938ab6a
 
 }
