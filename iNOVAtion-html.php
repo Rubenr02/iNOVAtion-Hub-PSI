@@ -79,13 +79,15 @@ if (isset($_SESSION['USERID'])) {
         </div>
 
         <div class="center">
-
+          
           <div class="create-post-button">
               <a href="Create Post-html.php" class="create-post-link">
                   Create a Post
                   <button class="plus-icon">+</button>
               </a>
           </div>
+
+      </div>
       
         <div class="right">
             Filter
@@ -101,8 +103,8 @@ if (isset($_SESSION['USERID'])) {
         <div class="top-posts-title">
             <span>Top Posts <i class="uil uil-fire"></i></span>
         </div>
-
-      </div>
+        <!--  Posts content goes here -->
+    </div>
 
     <!-- Post Template -->
     <div class="post">
@@ -114,7 +116,7 @@ if (isset($_SESSION['USERID'])) {
             <span class="username">User_Persona</span>
           </div>
 
-          <h2 class="post-title">Campus Campolide Gym</h2>~
+          <h2 class="post-title">Campus Campolide Gym</h2>
 
           <div class="post-tag">
             <span class="input-tag">Exercise</span>
@@ -138,24 +140,22 @@ if (isset($_SESSION['USERID'])) {
 
         <img src="Images/gym.png" alt="Campus Gym Image" class="post-image">
 
-        </a>
+      </a>
 
       <div class="post-footer">
 
         <div class="post-actions">
           <button class="upvote-button"><i class="uil uil-arrow-up"></i></button>
           <button class="downvote-button"><i class="uil uil-arrow-down"></i></button>
-
           <a href="ViewPost-html.html" class="post-link">
           <button class="comment-button"><i class="uil uil-comment"></i></button>
           </a>
-
         </div>
 
         <div class="post-stats">
           <span class="vote-count"></span>
           <span class="comment-count"></span>
-        </div>  
+        </div>   
 
       </div>
 
