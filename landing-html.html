@@ -10,13 +10,17 @@
 <body>
 
   <header>
+
     <div class="nav-bar">
+
       <div class="logo">
           <a href="landing-html.html">
               <img src="Images/iNOVAtion Hub.png" alt="Your Logo" id="main-logo"> 
           </a>
       </div>
+
       <div class="navigation">
+
         <div class="nav-items">
           <i class="uil uil-times nav-close-btn"></i>
           <a href="landing-html.html"><i class="uil uil-home"></i> Home</a>
@@ -24,28 +28,41 @@
           <a href="#"><i class="uil uil-users-alt"></i> Team</a>
           <a href="#"><i class="uil uil-question-circle"></i> FAQs</a>
         </div>
+
       </div>
+
       <div class="header-links">
         <a href = "#" class="header-link" id="login-link">Sign In</a>
         <span class="separator">|</span>
       </div>
+
       <i class="uil uil-apps nav-menu-btn"></i>
+
     </div>
+
     <div class="scroll-indicator-container">
       <div class="scroll-indicator-bar"></div>
     </div>
+
   </header>
 
   <section class="home" data-value="0.2">
+
       <h1 id="typing-heading">"Innovate, Collaborate, Impact: Turning <span class="different-color">Ideas</span> into Collective <span class="different-color">Solutions</span>"</h1>
-      <p>Empowering Collective Innovation. Our platform facilitates idea collaboration among users of all backgrounds. <br>With distinct roles and milestones, it ensures transparent idea progression, inviting investors to engage. Together, we tackle major challenges through collective creativity.</p>
+
+      <p>Empowering Collective Innovation. Our platform facilitates idea collaboration among users of all backgrounds. <br>With distinct roles and milestones, 
+        it ensures transparent idea progression, inviting investors to engage. Together, we tackle major challenges through collective creativity.</p>
+
       <div class="button-container">  
           <a href="#" id="open-register-popup" class="get-started-button">START NOW</a>
       </div>
+
   </section>
 
   <section class="content">
+
     <h1>Welcome to the iNOVAtion Community!</h1>
+
     <p>Our platform is a dedicated hub for cultivating innovation, nurturing problem-solving, and promoting collaboration within our vibrant community. 
       Whether you're grappling with a challenge that demands creative solutions or bursting with excitement to share your
       groundbreaking ideas, you've arrived at the ideal destination where your voice has the power to create a lasting impact.
@@ -54,46 +71,63 @@
     </p>
         
     <ul>
+
       <li class="feature">
+
           <div class="text">
               <strong>Share Ideas Anonymously:</strong> Express yourself freely by posting problems or innovative ideas without 
               revealing your identity. Engage in thoughtful discussions while maintaining your privacy, fostering a safe space for
                creativity to flourish.
           </div>
+
           <div class="image">
               <img src="Images/anonymous.jpg" alt="Share Ideas Anonymously Icon">
           </div>
+
       </li>
+
       <li class="feature">
+
           <div class="text">
               <strong>Community Engagement:</strong> Join a vibrant community where members can vote on and discuss your problems and ideas. 
               Collaborate with like-minded individuals, refine your concepts, and receive valuable feedback, making your ideas 
               stronger and more impactful.
           </div>
+
           <div class="image">
               <img src="Images/community.jpg" alt="Community Engagement Icon">
           </div>
+
       </li>
+
       <li class="feature">
+
           <div class="text">
               <strong>Expert Review:</strong> Submit your top-voted ideas and problems for expert evaluation. Our dedicated team, 
               including specialists from NOVA University, will assess the feasibility and potential impact of your concepts, 
               guiding them toward real-world implementation.
           </div>
+
           <div class="image">
               <img src="Images/review.jpg" alt="Expert Review Icon">
           </div>
+
       </li>
+
       <li class="feature">
+
           <div class="text">
               <strong>Funding Opportunities:</strong> Transform your dreams into reality by potentially securing funding for your 
               promising ideas. Ideas that successfully pass our rigorous review process stand a chance to receive financial 
               support from both enthusiastic investors and NOVA University. Together, let's bring your visions to life.
           </div>
+
           <div class="image">
               <img src="Images/funding.jpg" alt="Funding Opportunities Icon">
           </div>
+
       </li>
+
     </ul>
   
     <p><strong>Join us in creating a brighter future through innovation. Start sharing your thoughts, voting on others' ideas,
@@ -106,9 +140,13 @@
   <!-- Login Popup Form -->
 
   <div id="login-popup" class="popup">
+
     <div class="popup-content">
+
       <span class="popup-close-btn" id="close-login-popup">&times;</span>
+
       <h2>Login</h2>
+
       <form id="login-form" action="Php/login.php" method="post">
         <br>
         <p>Join the platform to share your ideas and start making a difference!</p>
@@ -116,89 +154,119 @@
         <input type="password" id="password" name="password" placeholder="Password" required>
         <i class="password-toggle uil uil-eye-slash" id="password-toggle"></i>
         <button type="submit" name="login">Log In</button>
-    </form>
-    <p>Don’t have an account? <a href="#" id="open-register-popup2">Register</a></p>
+      </form>
+
+      <p>Don’t have an account? <a href="#" id="open-register-popup2">Register</a></p>
+
     </div>
+
   </div>
 
   <!-- Register Popup Form -->
 
   <div id="register-popup" class="popup">
+
     <div class="popup-content">
+
         <span class="popup-close-btn" id="close-register-popup">&times;</span>
+
         <h2>Register</h2>
+
         <form id="register-form" action="Php/register.php" method="post">
+
           <div class="register-step" id="register-step-1">
+                
                 <input type="text" id="email" name="email" placeholder="Email" required>
                 <input type="text" id="username" name="username" placeholder="Username" required>
                 <input type="password" id="password" name="password" placeholder="Password" required>
+
                 <button type="submit" id="continue-button-1">Continue</button>
             </div>
 
             <div class="register-step" id="register-step-2" style="display: none;">
+                
                 <input type="text" id="first-name" name="first-name" placeholder="First Name" required>
                 <input type="text" id="last-name" name="last-name" placeholder="Last Name" required>
                 <input type="date" id="birth-date" name="birth-date" required>
+                
                 <select id="occupation" name="occupation" required>
                   <option value="Student">Student</option>
                   <option value="Professor">Professor</option>
                   <option value="Others">Others</option>
                 </select>
+
                 <button type="submit" id="continue-button-2">Continue</button>
             </div>
 
             <div class="register-step" id="register-step-3" style="display: none;">
+
               <p>A descriptive profile improves your experience in the platform.</p>
+
                 <input type="file" id="image" name="image" accept="image/*">
+
                 <div id="image-preview" style="display: none;">
                   <img id="selected-image" src="" alt="Selected Image">
                 </div>
+
                 <button type="submit" id="finish-button" name="register">Finish Registration</button>
             </div>
+
         </form>
+
         <p>Already have an account? <a href="#" id="open-login-popup">Log In</a></p>
+
     </div>
+
 </div>
 
 <footer class="footer">
+
   <div class="waves">
+
     <div class="wave" id="wave1"></div>
     <div class="wave" id="wave2"></div>
     <div class="wave" id="wave3"></div>
     <div class="wave" id="wave4"></div>
+
   </div>
+
   <ul class="social-icon">
+
     <li class="social-icon__item"><a class="social-icon__link" href="#">
         <ion-icon name="logo-facebook"></ion-icon>
       </a></li>
+
     <li class="social-icon__item"><a class="social-icon__link" href="#">
         <ion-icon name="logo-twitter"></ion-icon>
       </a></li>
+
     <li class="social-icon__item"><a class="social-icon__link" href="#">
         <ion-icon name="logo-linkedin"></ion-icon>
       </a></li>
+
     <li class="social-icon__item"><a class="social-icon__link" href="#">
         <ion-icon name="logo-instagram"></ion-icon>
       </a></li>
+
   </ul>
+
   <ul class="menu">
     <li class="menu__item"><a class="menu__link" href="landing-html.html">Home</a></li>
     <li class="menu__item"><a class="menu__link" href="#">About</a></li>
     <li class="menu__item"><a class="menu__link" href="#">Services</a></li>
     <li class="menu__item"><a class="menu__link" href="#">Team</a></li>
     <li class="menu__item"><a class="menu__link" href="#">FAQs</a></li>
-
   </ul>
+
   <p>&copy; 2023 iNOVAtion Hub | All rights reserved.</p>
+
 </footer>
 
 <!-- Scripts for footer -->
 <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-<!-- Scripts for footer -->
 
 <!-- JavaScript for the Landing Page-->
-
 <script type="text/javascript" src="Scripts/landing-js.js"></script>
 
 </body>

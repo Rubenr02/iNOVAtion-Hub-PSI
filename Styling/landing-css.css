@@ -142,7 +142,7 @@ section {
         transform: translateX(0) rotate(0deg) scale(1);
     }
     100% {
-        transform: translateX(-30%) rotate(0deg) scale(1.4);
+        transform: translateX(-30%) rotate(0deg) scale(1.5);
     }
 }
 
@@ -150,7 +150,6 @@ section {
 .your-background-element {
     animation: scrollRotateZoomBackground 10s linear infinite; /* Adjust the animation duration */
 }
-
 
 
 /* Style buttons, headings, and text inside the home section */

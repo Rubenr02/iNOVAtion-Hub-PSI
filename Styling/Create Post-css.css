@@ -22,7 +22,6 @@ body {
 }
 
 
-
 /*======= Header navigation bar =======*/
 
 /* Style the fixed header bar */
@@ -447,7 +446,6 @@ header .nav-bar {
     cursor: pointer;
 }
 
-/*======= Add PDF =======*/
 
 
 /*======= Add PDF =======*/
@@ -557,7 +555,6 @@ header .nav-bar {
     .header-links a:last-child:hover {
         color: #fff;
     }
-<<<<<<< HEAD
 
         /* Style the new post container */
     .post-container {
@@ -685,113 +682,107 @@ header .nav-bar {
         transform: translateY(-50%);
         font-size: 18px; /* Adjust the font size as needed */
         color: #555; /* Set the color of the arrow */
-    }
+}
 
 
-    /*======= Anonymous Post  =======*/
+/*======= Anonymous Post  =======*/
 
 
-    .input-hide {
-        display: flex;
-        align-items: center;
-        width: 40%;
-        padding: 8px;
-        background: #E9EAF3;
-        border: 0px solid #ccc;
-        border-radius: 10px;
-        box-sizing: border-box;
-        cursor: pointer;
-        margin-left: 10px;
-        margin-top: 20px;
-    }
+.input-hide {
+    display: flex;
+    align-items: center;
+    width: 40%;
+    padding: 8px;
+    background: #E9EAF3;
+    border: 0px solid #ccc;
+    border-radius: 10px;
+    box-sizing: border-box;
+    cursor: pointer;
+    margin-left: 10px;
+    margin-top: 20px;
+}
 
-    .input-hide label {
-        display: block;
-        cursor: pointer;
-        margin-right: 10px;
-        color: #555;
-        font-size: 0.8em;
-    }
+.input-hide label {
+    display: block;
+    cursor: pointer;
+    margin-right: 10px;
+    color: #555;
+    font-size: 0.8em;
+}
 
-    .input-hide input[type="checkbox"] {
-        width: 14px; /* Set the width to make it smaller */
-        height: 14px; /* Set the height to make it smaller */
-        cursor: pointer;
-        appearance: none;
-        border: 2px solid #ccc;
-        border-radius: 3px; /* Smaller border-radius */
-        margin-left: 0px;
-    }
-
-
-    /* Style the checkbox when checked */
-    .input-hide input[type="checkbox"]:checked {
-        background-color: #555;
-    }
+.input-hide input[type="checkbox"] {
+    width: 14px; 
+    height: 14px;
+    cursor: pointer;
+    appearance: none;
+    border: 2px solid #ccc;
+    border-radius: 3px; 
+    margin-left: 0px;
+}
 
 
-    /*======= Add Image =======*/
-
-    .input-image,
-    .input-pdf {
-        margin-bottom: 10px;
-        padding: 8px;
-        border-radius: 5px;
-        display: inline-block;
-        width: 300px;
-        margin-right: 20px; /* Adjust the margin between image and PDF inputs */
-        margin-top: 10px;
-    }
+/* Style the checkbox when checked */
+.input-hide input[type="checkbox"]:checked {
+    background-color: #555;
+}
 
 
-    .input-image label,
-    .input-pdf label {
-        display: block;
-        margin-bottom: 5px;
-        font-size: 0.9em;
-        white-space: nowrap;
-    }
+/*======= Add Image =======*/
 
-    .input-image input[type="file"],
-    .input-pdf input[type="file"] {
-        width: 100%;
-        padding: 8px;
-        border-radius: 10px;
-        box-sizing: border-box;
-        background: #E9EAF3;
-        cursor: pointer;
-        font-size: 0.75em;
-    }
+.input-image,
+.input-pdf {
+    margin-bottom: 10px;
+    padding: 8px;
+    border-radius: 5px;
+    display: inline-block;
+    width: 300px;
+    margin-right: 20px;
+    margin-top: 10px;
+}
 
 
+.input-image label,
+.input-pdf label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 0.9em;
+    white-space: nowrap;
+}
 
-    /*======= Add PDF =======*/
+.input-image input[type="file"],
+.input-pdf input[type="file"] {
+    width: 100%;
+    padding: 8px;
+    border-radius: 10px;
+    box-sizing: border-box;
+    background: #E9EAF3;
+    cursor: pointer;
+    font-size: 0.75em;
+}
 
-    /*======= Post Button =======*/
 
-    #post-button {
-        background-color: #E9EAF3;
-        color: #555;
-        padding: 8px 30px;
-        border: none;
-        border-radius: 15px;
-        cursor: pointer;
-        margin-bottom: 20px;
-        margin-top: -35px;
-        float: right;
-        text-align: left;
-        position: relative; /* Position relative for icon placement */
-    }
+/*======= Post Button =======*/
+#post-button {
+    background-color: #E9EAF3;
+    color: #555;
+    padding: 8px 30px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    margin-top: -35px;
+    float: right;
+    text-align: left;
+    position: relative; /* Position relative for icon placement */
+}
 
-    #post-button:hover {
-        background-color: #555;
-        color: #fff;
-    }
+#post-button:hover {
+    background-color: #555;
+    color: #fff;
+}
 
-    #post-button i {
-        margin-left: 5px; /* Adjust the margin as needed */
-    }
-=======
->>>>>>> 7d4bb30af4cf72bd8607d0006f065affe938ab6a
+#post-button i {
+    margin-left: 5px; /* Adjust the margin as needed */
+}
 
 }

@@ -195,6 +195,27 @@ header .nav-bar {
     transform: rotate(90deg);
 }
 
+/*======= Scroll bar =======*/
+
+/* Style the scrollbar and scrollbar thumb */
+::-webkit-scrollbar {
+    background: #fff;
+    width: 11px;
+    border-radius: 2em;
+}
+
+/* Style the scrollbar thumb on hover */
+::-webkit-scrollbar-thumb {
+    background: grey;
+    width: 100%;
+    border-radius: 2em;
+}
+
+/* Style the scrollbar thumb when hovering */
+::-webkit-scrollbar-thumb:hover {
+    background:darkgray;
+}
+
 /*======= Search bar and Profile =======*/
 
 /* Style the search bar */
@@ -290,13 +311,13 @@ header .nav-bar {
 /* Style the post container */
 .post {
     background-color: #fff;
-    margin: 6em 0; /* Adjusted margin to make it closer to the top-posts */
+    margin: 6em 0;
     padding: 20px;
     border-radius: 20px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     max-width: 1200px;
-    width: 85%;
-    margin-left: 8%;
+    width: 80%;
+    margin-left: 10%;
     align-items: center;
     position: absolute;
 }
@@ -327,46 +348,48 @@ header .nav-bar {
     margin-bottom: 10px;
     color: #333;
     display: flex;
-    justify-content: space-between; /* Align items to the right */
+    justify-content: space-between; 
 }
 
 .post-tag {
     display: flex;
-    align-items: center; /* Align vertically */
+    align-items: center; 
     white-space: nowrap;
 }
 
 .input-type {
-    margin-left: 10px; /* Adjusted margin to separate tags from title */
+    margin-left: 10px; 
     font-size: 1.1em;
     font-weight: 600;
-    color: red
+    color: #555;
 }
 
 .input-tag {
-    margin-left: 10px; /* Adjusted margin to separate tags from title */
+    margin-left: 10px; 
     font-size: 1.1em;
     font-weight: 600;
-    color: darkblue;
+    color: #555;
 }
 
 .input-level {
-    margin-left: 10px; /* Adjusted margin to separate tags from title */
+    margin-left: 10px; 
     font-size: 1.1em;
     font-weight: 600;
-    color: darkorange
+    color: #555;
 }
 
 .input-date {
     position: absolute;
-    margin-left: 85%; /* Adjusted margin to separate tags from title */
+    margin-left: 85%; 
     font-size: 1em;
-    color: blue;
+    color: #555;
+    text-decoration: none;
 }
 
 .post-image img {
     width: 100%;
     height: auto;
+    border-radius: 1.5%;
 }
 
 .post-files ul {
@@ -440,15 +463,44 @@ header .nav-bar {
     position: absolute;
     font-size: 1.1em;
     margin-top: 1.5%;
-    margin-left: 74%;
+    margin-left: 75%;
     white-space: nowrap;
+    color: #555;
+    text-decoration: none; /* Remove underline */
+}
+
+.contact a{
+    text-decoration: none;
+    color: #555;
+}
+
+.contact a:hover{
+    color: darkgrey;
 }
 
 .report {
     font-size: 1.1em;
     color: red;
+    text-decoration: none; /* Remove underline */
 }
 
+.report a {
+    text-decoration: none;
+    color: #555;
+}
+
+.report a:hover {
+    color: red;
+}
+
+.post-files a{
+    text-decoration: none;
+    color: #555;
+}
+
+.post-files a:hover{
+    color: darkgrey;
+}
 
 /* Media query for screens smaller than 768px*/
 @media (max-width: 768px) {
@@ -575,28 +627,28 @@ header .nav-bar {
         margin-left: 10px; /* Adjusted margin to separate tags from title */
         font-size: 0.9em;
         font-weight: 600;
-        color: red
+        color: #555;
     }
 
     .input-tag {
         margin-left: 10px; /* Adjusted margin to separate tags from title */
         font-size: 0.9em;
         font-weight: 600;
-        color: darkblue;
+        color: #555;
     }
 
     .input-level {
         margin-left: 10px; /* Adjusted margin to separate tags from title */
         font-size: 0.9em;
         font-weight: 600;
-        color: darkorange
+        color: #555;
     }
 
     .input-date {
         position: absolute;
         margin-left: 73%; /* Adjusted margin to separate tags from title */
         font-size: 0.85em;
-        color: blue;
+        color: #555;
     }
 
     /* Style the post content */
@@ -655,7 +707,7 @@ header .nav-bar {
         position: absolute;
         font-size: 0.85em;
         margin-top: 2.7%;
-        margin-left: 53%;
+        margin-left: 60%;
         white-space: nowrap;
     }
 
@@ -663,4 +715,38 @@ header .nav-bar {
         font-size: 0.9em;
         color: red;
     }
+
+    .contact a{
+        text-decoration: none;
+        color: #555;
+    }
+    
+    .contact a:hover{
+        color: darkgrey;
+    }
+    
+    .report {
+        font-size: 1.1em;
+        color: red;
+        text-decoration: none; /* Remove underline */
+    }
+    
+    .report a {
+        text-decoration: none;
+        color: #555;
+    }
+    
+    .report a:hover {
+        color: red;
+    }
+    
+    .post-files a{
+        text-decoration: none;
+        color: #555;
+    }
+    
+    .post-files a:hover{
+        color: darkgrey;
+    }
+
 }
