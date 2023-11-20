@@ -22,8 +22,35 @@ if (isset($_SESSION['USERID'])) {
         $row = $result->fetch_assoc();
         $username = $row['USERNAME'];
     }
+
+// Fetch posts from the database
+$postQuery = "SELECT * FROM POSTS";
+$postResult = $conn->query($postQuery);
+
+if ($postResult->num_rows > 0) {
+  while ($postRow = $postResult->fetch_assoc()) {
+      $postTitle = $postRow['TITLE'];
+      $tagID = $postRow['TAGID']; // Replace with the actual column name
+      $postContent = $postRow['DESCRIPTION'];
+      $postImage = $postRow['IMAGE'];
+
+      // Fetch tag information from TAGS table
+      $tagQuery = "SELECT TAGS FROM TAGS WHERE TAGID = '$tagID'";
+      $tagResult = $conn->query($tagQuery);
+
+      if ($tagResult->num_rows == 1) {
+          $tagRow = $tagResult->fetch_assoc();
+          $tagName = $tagRow['TAGS'];
+
+      } else {
+          echo "Error fetching tag information.";
+      }
+  }
+} else {
+    echo "No posts found.";
 }
 
+}
 ?>
 
 <!DOCTYPE html>
@@ -108,58 +135,37 @@ if (isset($_SESSION['USERID'])) {
 
     <!-- Post Template -->
     <div class="post">
-
-        <div class="post-header">
-
-          <div class="user-info">
+    <div class="post-header">
+        <div class="user-info">
             <img src="Images/persona.avif" alt="User Profile Picture">
             <span class="username">User_Persona</span>
-          </div>
-
-          <h2 class="post-title">Campus Campolide Gym</h2>
-
-          <div class="post-tag">
-            <span class="input-tag">Exercise</span>
-            <span class="input-type">Problem</span>
-          </div>
-
         </div>
-
-        <a href="ViewPost-html.html" class="post-link">
-
-        <div class="post-content">
-
-          <p>
-            As a student from NOVA IMS proposing the implementation of Campus Campolide Gym on our college campus, 
-            I envision a modern fitness hub that addresses the health and wellness needs of our fellow students. 
-            This initiative involves equipping a dedicated space with the latest exercise equipment, creating a dynamic environment 
-            for physical activity, and hiring experienced trainers to provide guidance.
-          </p>
-
+        <h2 class="post-title"><?php echo $postTitle; ?></h2>
+        <div class="post-tag">
+            <span class="input-tag"><?php echo $tagID; ?></span>
         </div>
-
-        <img src="Images/gym.png" alt="Campus Gym Image" class="post-image">
-
-      </a>
-
-      <div class="post-footer">
-
-        <div class="post-actions">
-          <button class="upvote-button"><i class="uil uil-arrow-up"></i></button>
-          <button class="downvote-button"><i class="uil uil-arrow-down"></i></button>
-          <a href="ViewPost-html.html" class="post-link">
-          <button class="comment-button"><i class="uil uil-comment"></i></button>
-          </a>
-        </div>
-
-        <div class="post-stats">
-          <span class="vote-count"></span>
-          <span class="comment-count"></span>
-        </div>   
-
-      </div>
-
     </div>
+    <a href="ViewPost-html.html" class="post-link">
+        <div class="post-content">
+            <p><?php echo $postContent; ?></p>
+        </div>
+        <img src="<?php echo $postImage; ?>" class="post-image">
+    </a>
+    <div class="post-footer">
+        <div class="post-actions">
+            <button class="upvote-button"><i class="uil uil-arrow-up"></i></button>
+            <button class="downvote-button"><i class="uil uil-arrow-down"></i></button>
+            <a href="ViewPost-html.html" class="post-link">
+                <button class="comment-button"><i class="uil uil-comment"></i></button>
+            </a>
+        </div>
+        <div class="post-stats">
+            <span class="vote-count"></span>
+            <span class="comment-count"></span>
+        </div>
+    </div>
+</div>
+
 
   </section>
 
