@@ -26,20 +26,28 @@ $tagResult = $conn->query($tagQuery);
 
 </head>
 <body>
+
     <header>
+
         <div class="nav-bar">
+
           <div class="logo">
             <a href="iNOVAtion-html.php">
               <img src="Images/iNOVAtion Hub.png" alt="Your Logo" id="main-logo">
             </a>
           </div>
+
           <div class="header-links">
+
             <div class="search-bar">
               <input type="text" placeholder="Search for tags, problems, ideas ...">
               <i class="uil uil-search"></i>
             </div>
+
             <a href="Profile-html.html"><i class="uil uil-user"></i> Profile</a>
+
           </div>
+
           <div class="navigation">
             <div class="nav-items">
               <i class="uil uil-times nav-close-btn"></i>
@@ -51,9 +59,11 @@ $tagResult = $conn->query($tagQuery);
           </div>
           <i class="uil uil-apps nav-menu-btn"></i>
         </div>
+
       </header>
 
       <form action="Php/createpost.php" method="post" enctype="multipart/form-data">
+
       <div class="post-container">
         <h1>Share your new Idea</h1>
 
@@ -64,6 +74,7 @@ $tagResult = $conn->query($tagQuery);
         <div class="input-text">
           <textarea id="post-text" name="post-text" placeholder="Add a text (up to 200 words)" 
               rows="4" required></textarea>
+              
       </div>
       
       <script>
@@ -84,6 +95,7 @@ $tagResult = $conn->query($tagQuery);
       
 
       <div class="input-tag">
+
         <select id="post-tag" name="post-tag" class="select-tag">
             <option value="" disabled selected>Add a Tag</option>
             <?php
@@ -99,7 +111,9 @@ $tagResult = $conn->query($tagQuery);
             }
             ?>
         </select>
+
         <i class="uil uil-angle-down"></i>
+
       </div>
     
       <div class="input-type">
@@ -110,7 +124,9 @@ $tagResult = $conn->query($tagQuery);
           </select>
           <i class="uil uil-angle-down"></i>
       </div>
+
       <br>
+
       <div class="input-image">
         <label for="post-image"><i class="uil uil-camera-plus"></i> Select Image...</label>
           <input type="file" id="post-image" name="post-image" accept="image/*">
@@ -133,8 +149,8 @@ $tagResult = $conn->query($tagQuery);
       </button>
 
     </div>
-    </form>
 
-    
+    </form>
+  
 </body>
 </html>

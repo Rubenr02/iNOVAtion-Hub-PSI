@@ -3,7 +3,7 @@
 session_start();
 
 // Create connection
-$conn = mysqli_connect("localhost", "root", "", "inovation");
+$conn = mysqli_connect("localhost", "root", "", "psi");
 
 if (mysqli_connect_errno()) {
     echo "Failed to connect to MySQL: " . mysqli_connect_errno();
@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])) {
     $hashedPassword = md5($password);
 
     // Perform SQL query
-    $sql = "SELECT * FROM USERS WHERE (USERNAME = '$username' OR EMAIL = '$username') AND PASSWORD = '$hashedPassword'";
+    $sql = "SELECT * FROM USERS WHERE (USERNAME = '$username' OR EMAIL = '$username') AND PASSWORD = 'password'";
     $result = $conn->query($sql);
 
     if ($result->num_rows == 1) {

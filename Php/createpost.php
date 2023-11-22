@@ -3,14 +3,14 @@
 session_start();
 
 // Create connection
-$conn = mysqli_connect("localhost", "root", "", "inovation");
+$conn = mysqli_connect("localhost", "root", "", "psi");
 
 if (mysqli_connect_errno()) {
     echo "Failed to connect to MySQL: " . mysqli_connect_errno();
 }
 
 // Process post form
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['post-button'])) {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['post-button'])) 
     // Retrieve other necessary information here...
 
     $postTitle = $_POST['post-title'];
@@ -21,6 +21,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['post-button'])) {
     $postPDF = $_FILES['post-pdf']['name']; // File name
     $isAnonymous = isset($_POST['hide-real-name']) ? 1 : 0;
 
+  // Process post form
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['post-button'])) {
+    // Retrieve other necessary information here...
+
+    $postTitle = $_POST['post-title'];
+    $postText = $_POST['post-text'];
+    $postTag = $_POST['post-tag'];
+    $postType = $_POST['post-type'];  
+    $postImage = $_FILES['post-image']['name']; 
+    $postPDF = $_FILES['post-pdf']['name']; 
+    $isAnonymous = isset($_POST['hide-real-name']) ? 1 : 0;
+
     // Validate and sanitize user input here...
 
     // Check if the user is logged in and retrieve the user ID
@@ -28,7 +40,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['post-button'])) {
         $userid = $_SESSION['USERID'];
 
         // Handle image upload
-        $targetDirectory = "uploads/";
+        $targetDirectory = "PSI/Images/";
+
         $targetImage = $targetDirectory . basename($postImage);
         move_uploaded_file($_FILES['post-image']['tmp_name'], $targetImage);
 
@@ -44,9 +57,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['post-button'])) {
             $tagRow = $tagResult->fetch_assoc();
             $tagID = $tagRow['TAGID'];
 
+            // Determine the table based on $postType
+            $tableName = ($postType == 'idea') ? 'IDEAS' : 'PROBLEMS';
+
             // Perform SQL query to insert a new post
-            $sql = "INSERT INTO POSTS (USERID, TAGID, TITLE, DESCRIPTION, CONTENT, IMAGE, PDF_FILE, CREATEDON, IS_ANONYMOUS) 
-                    VALUES ('$userid', '$tagID', '$postTitle', '$postText', '$postType', '$targetImage', '$targetPDF', NOW(), '$isAnonymous')";
+            $sql = "INSERT INTO $tableName (USERID, TAGID, TITLE, TEXT, IMAGE, FILE, CREATEDON, ISANONYMOUS) 
+                    VALUES ('$userid', '$tagID', '$postTitle', '$postText', '$targetImage', '$targetPDF', NOW(), '$isAnonymous')";
 
             if ($conn->query($sql) === TRUE) {
                 header("Location: /PSI/Loading-html.html");

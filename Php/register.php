@@ -3,7 +3,7 @@
 session_start();
 
 // Create connection
-$conn = mysqli_connect("localhost", "root", "", "inovation");
+$conn = mysqli_connect("localhost", "root", "", "psi");
 
 if (mysqli_connect_errno()) {
     echo "Failed to connect to MySQL: " . mysqli_connect_errno();
