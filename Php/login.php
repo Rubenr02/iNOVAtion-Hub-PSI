@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])) {
     $hashedPassword = md5($password);
 
     // Perform SQL query
-    $sql = "SELECT * FROM USERS WHERE (USERNAME = '$username' OR EMAIL = '$username') AND PASSWORD = 'password'";
+    $sql = "SELECT * FROM USERS WHERE (USERNAME = '$username' OR EMAIL = '$username') AND PASSWORD = '$hashedPassword'";
     $result = $conn->query($sql);
 
     if ($result->num_rows == 1) {

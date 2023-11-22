@@ -34,18 +34,33 @@ if ($postResult->num_rows > 0) {
       $tagID = $postRow['TAGID']; // Replace with the actual column name
       $postContent = $postRow['TEXT'];
       $postImage = $postRow['IMAGE'];
+      $userID = $postRow['USERID']; // Replace with the actual column name
+
 
       // Fetch tag information from TAGS table
       $tagQuery = "SELECT TAGS FROM tags WHERE TAGID = '$tagID'";
       $tagResult = $conn->query($tagQuery);
 
       if ($tagResult->num_rows == 1) {
-          $tagRow = $tagResult->fetch_assoc();
-          $tagName = $tagRow['TAGS'];
+        $tagRow = $tagResult->fetch_assoc();
+        $tagName = $tagRow['TAGS'];
 
       } else {
           echo "Error fetching tag information.";
       }
+
+      // Fetch Username information from USERS table (for the post)
+      $userQuery = "SELECT USERNAME FROM users WHERE USERID = '$userID'";
+      $userResult = $conn->query($userQuery);
+
+      if ($userResult->num_rows == 1) {
+        $userRow = $userResult->fetch_assoc();
+        $userName = $userRow['USERNAME'];
+
+      } else {
+          echo "Error fetching Name information.";
+      }
+
   }
 } else {
     echo "No posts found.";
@@ -139,7 +154,7 @@ if ($postResult->num_rows > 0) {
     <div class="post-header">
         <div class="user-info">
             <img src="Images/persona.avif" alt="User Profile Picture">
-            <span class="username"><?php echo $username; ?></span>
+            <span class="username"><?php echo $userName; ?></span>
         </div>
         <h2 class="post-title"><?php echo $postTitle; ?></h2>
         <div class="post-tag">
@@ -150,7 +165,7 @@ if ($postResult->num_rows > 0) {
         <div class="post-content">
             <p><?php echo $postContent; ?></p>
         </div>
-        <img src="<?php echo 'PSI/Images/' . $postImage; ?>" class="post-image">
+        <img src="<?php echo $postImage; ?>" class="post-image">
     </a>
     <div class="post-footer">
         <div class="post-actions">

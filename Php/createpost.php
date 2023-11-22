@@ -10,27 +10,13 @@ if (mysqli_connect_errno()) {
 }
 
 // Process post form
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['post-button'])) 
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['post-button'])) {
     // Retrieve other necessary information here...
-
     $postTitle = $_POST['post-title'];
     $postText = $_POST['post-text'];
     $postTag = $_POST['post-tag'];
     $postType = $_POST['post-type'];
-    $postImage = $_FILES['post-image']['name']; // File name
-    $postPDF = $_FILES['post-pdf']['name']; // File name
-    $isAnonymous = isset($_POST['hide-real-name']) ? 1 : 0;
-
-  // Process post form
-    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['post-button'])) {
-    // Retrieve other necessary information here...
-
-    $postTitle = $_POST['post-title'];
-    $postText = $_POST['post-text'];
-    $postTag = $_POST['post-tag'];
-    $postType = $_POST['post-type'];  
-    $postImage = $_FILES['post-image']['name']; 
-    $postPDF = $_FILES['post-pdf']['name']; 
+    $postPDF = $_FILES['post-pdf']['name'];
     $isAnonymous = isset($_POST['hide-real-name']) ? 1 : 0;
 
     // Validate and sanitize user input here...
@@ -40,38 +26,64 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['post-button']))
         $userid = $_SESSION['USERID'];
 
         // Handle image upload
-        $targetDirectory = "PSI/Images/";
+        $targetDirectory = "Images/";
 
-        $targetImage = $targetDirectory . basename($postImage);
-        move_uploaded_file($_FILES['post-image']['tmp_name'], $targetImage);
+        // Create the target directory if it doesn't exist
+        if (!file_exists($targetDirectory)) {
+            mkdir($targetDirectory, 0755, true);
+        }
 
-        // Handle PDF upload
-        $targetPDF = $targetDirectory . basename($postPDF);
-        move_uploaded_file($_FILES['post-pdf']['tmp_name'], $targetPDF);
+        // Check if file was uploaded without errors
+        if (isset($_FILES["post-image"]) && $_FILES["post-image"]["error"] == 0) {
+            $allowed = array("jpg" => "image/jpg", "jpeg" => "image/jpeg", "gif" => "image/gif", "png" => "image/png");
+            $filename = $_FILES["post-image"]["name"];
+            $filetype = $_FILES["post-image"]["type"];
+            $filesize = $_FILES["post-image"]["size"];
 
-        // Get TAGID from TAGS table based on the selected tag
-        $tagQuery = "SELECT TAGID FROM TAGS WHERE TAGS = '$postTag'";
-        $tagResult = $conn->query($tagQuery);
+            // Validate file extension
+            $ext = pathinfo($filename, PATHINFO_EXTENSION);
+            if (!array_key_exists($ext, $allowed)) {
+                die("Error: Please select a valid image file format.");
+            }
 
-        if ($tagResult->num_rows == 1) {
-            $tagRow = $tagResult->fetch_assoc();
-            $tagID = $tagRow['TAGID'];
+            // Validate file size - 10MB maximum
+            $maxsize = 10 * 1024 * 1024;
+            if ($filesize > $maxsize) {
+                die("Error: Image size is larger than the allowed limit.");
+            }
 
-            // Determine the table based on $postType
-            $tableName = ($postType == 'idea') ? 'IDEAS' : 'PROBLEMS';
+            // Move the uploaded image to the target directory
+            $targetImage = $targetDirectory . basename($filename);
+            if (move_uploaded_file($_FILES["post-image"]["tmp_name"], $targetImage)) {
+                // Get TAGID from TAGS table based on the selected tag
+                $tagQuery = "SELECT TAGID FROM TAGS WHERE TAGS = '$postTag'";
+                $tagResult = $conn->query($tagQuery);
 
-            // Perform SQL query to insert a new post
-            $sql = "INSERT INTO $tableName (USERID, TAGID, TITLE, TEXT, IMAGE, FILE, CREATEDON, ISANONYMOUS) 
-                    VALUES ('$userid', '$tagID', '$postTitle', '$postText', '$targetImage', '$targetPDF', NOW(), '$isAnonymous')";
+                if ($tagResult->num_rows == 1) {
+                    $tagRow = $tagResult->fetch_assoc();
+                    $tagID = $tagRow['TAGID'];
 
-            if ($conn->query($sql) === TRUE) {
-                header("Location: /PSI/Loading-html.html");
-                exit();
+                    // Determine the table based on $postType
+                    $tableName = ($postType == 'idea') ? 'IDEAS' : 'PROBLEMS';
+
+                    // Perform SQL query to insert a new post
+                    $sql = "INSERT INTO $tableName (USERID, TAGID, TITLE, TEXT, IMAGE, FILE, CREATEDON, ISANONYMOUS) 
+                            VALUES ('$userid', '$tagID', '$postTitle', '$postText', '$targetImage', '$postPDF', NOW(), '$isAnonymous')";
+
+                    if ($conn->query($sql) === TRUE) {
+                        header("Location: /PSI/Loading-html.html");
+                        exit();
+                    } else {
+                        echo "Error: " . $sql . "<br>" . $conn->error;
+                    }
+                } else {
+                    echo "Error: Tag not found.";
+                }
             } else {
-                echo "Error: " . $sql . "<br>" . $conn->error;
+                echo "Error: There was a problem uploading your image. Please try again.";
             }
         } else {
-            echo "Error: Tag not found.";
+            echo "Error: Please select an image.";
         }
     } else {
         echo "Error: User not logged in.";

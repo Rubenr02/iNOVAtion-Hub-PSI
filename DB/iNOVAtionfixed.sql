@@ -364,8 +364,4 @@ INSERT INTO TAGS (TAGID, TAGS) VALUES
 (97, 'Erasmus'),
 (98, 'Renewable Energy Education'),
 (99, 'Innovative Solutions for Disabilities'),
-<<<<<<< HEAD
 (100, 'Global Connectivity');
-=======
-(100, 'Global Connectivity');
->>>>>>> a5678a89d1bf1250f0e0f19ba29785672be5c392
