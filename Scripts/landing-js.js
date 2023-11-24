@@ -1,4 +1,4 @@
-// Scroll indicator bar
+// Scroll indicator bar operating according to the scroll bar
 window.addEventListener("scroll", () => {
   const indicatorBar = document.querySelector(".scroll-indicator-bar");
   const pageScroll = window.scrollY;
@@ -7,7 +7,7 @@ window.addEventListener("scroll", () => {
   indicatorBar.style.width = scrollValue + "%";
 });
 
-// Dropdown Menu
+// Pop-up Menu with the navigation tools
 const menuBtn = document.querySelector(".nav-menu-btn");
 const closeBtn = document.querySelector(".nav-close-btn");
 const navigation = document.querySelector(".navigation");
@@ -39,7 +39,7 @@ animatedElements.forEach(element => {
 
 // Fade in effect for heading element
 const heading = document.getElementById("typing-heading");
-const logo = document.getElementById("main-logo"); // Add reference to the new logo image
+const logo = document.getElementById("main-logo"); 
 
 function fadeIn() {
   heading.classList.add('active');
@@ -72,7 +72,7 @@ function animateHomeSection() {
 window.addEventListener('load', animateHomeSection);
 window.addEventListener('scroll', animateHomeSection);
 
-// Add a similar function for the new logo
+// Basic animatio for the Logo 
 function animateLogo() {
   const rect = logo.getBoundingClientRect();
   const windowHeight = window.innerHeight;
@@ -86,7 +86,7 @@ window.addEventListener('load', animateLogo);
 window.addEventListener('scroll', animateLogo);
 
 
-// Login and Register Pop-up functions
+// Login and Register Pop-ups functions
 function openPopup(popupId, focusElementId) {
   const popup = document.getElementById(popupId);
   const popupContent = popup.querySelector(".popup-content");
@@ -113,6 +113,7 @@ function closePopup(popupId) {
   }, 300);
 }
 
+// Functions for inter-changing between the register and the login pop-up 
 document.getElementById("login-link").addEventListener("click", function(event) {
   event.preventDefault();
   openPopup("login-popup", "username");
@@ -125,8 +126,8 @@ document.getElementById("close-login-popup").addEventListener("click", function(
 
 document.getElementById("open-login-popup").addEventListener("click", function(event) {
   event.preventDefault();
-  closePopup("register-popup"); // Close the login popup
-  openPopup("login-popup", "email"); // Open the register popup
+  closePopup("register-popup");
+  openPopup("login-popup", "email");
 });
 
 
@@ -147,7 +148,7 @@ document.getElementById("close-register-popup").addEventListener("click", functi
   closePopup("register-popup");
 });
 
-// Toggle password visibility
+// Toggle password visibility with the eye-slash
 function togglePasswordVisibility() {
   const passwordInput = document.getElementById("password");
   const passwordToggle = document.getElementById("password-toggle");
@@ -162,22 +163,7 @@ document.getElementById("password-toggle").addEventListener("click", function(ev
 });
 
 
-
-// Password match validation in registration form
-document.getElementById("register-form").addEventListener("submit", function(event) {
-  const passwordInput = document.getElementById("password");
-  const confirmPasswordInput = document.getElementById("confirm-password");
-  const errorText = document.getElementById("password-error");
-
-  if (passwordInput.value !== confirmPasswordInput.value) {
-    errorText.textContent = "Passwords do not match.";
-    event.preventDefault(); // Prevent form submission
-  } else {
-    errorText.textContent = ""; // Clear the error message if passwords match
-  }
-});
-
-// Registration steps handling
+// Registration steps handling for the 3 steps of the register process 
 const steps = document.querySelectorAll(".register-step");
 for (let i = 1; i <= 3; i++) {
   const continueButton = document.getElementById(`continue-button-${i}`);
@@ -196,11 +182,12 @@ for (let i = 1; i <= 3; i++) {
 }
 
 document.getElementById("open-login-popup").addEventListener("click", function(event) {
-  event.preventDefault(); // Prevent the default link behavior (e.g., navigating to a new page).
+  event.preventDefault(); 
   openPopup("login-popup", "email");
 });
 
 
+// Function to allow previewing the inserted image in the register field
 const imageInput = document.getElementById("imageInput");
     const imagePreview = document.getElementById("image-preview");
     const selectedImage = document.getElementById("selected-image");
@@ -209,22 +196,21 @@ const imageInput = document.getElementById("imageInput");
       const file = imageInput.files[0];
 
       if (file) {
-        // Use FileReader to read the selected image as a data URL
+        
         const reader = new FileReader();
 
         reader.onload = (e) => {
-          // Set the source of the preview image to the data URL
+          
           selectedImage.src = e.target.result;
-          // Show the image preview div
+        
           imagePreview.style.display = "block";
         };
 
-        // Read the selected image as a data URL
         reader.readAsDataURL(file);
       } else {
-        // Reset the preview if no file is selected
+      
         selectedImage.src = "";
-        // Hide the image preview div
+      
         imagePreview.style.display = "none";
       }
     });

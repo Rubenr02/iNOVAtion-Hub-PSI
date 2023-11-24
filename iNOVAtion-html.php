@@ -24,17 +24,20 @@ if (isset($_SESSION['USERID'])) {
     }
 
 // Fetch posts from the database
-$postQuery = "SELECT * FROM IDEAS";
-$postResult = $conn->query($postQuery);
+  $postQuery = "SELECT * FROM IDEAS";
+  $postResult = $conn->query($postQuery);
 
 
 if ($postResult->num_rows > 0) {
   while ($postRow = $postResult->fetch_assoc()) {
+      $post_id  = $postRow["IDEAID"];
       $postTitle = $postRow['TITLE'];
-      $tagID = $postRow['TAGID']; // Replace with the actual column name
+      $tagID = $postRow['TAGID'];
       $postContent = $postRow['TEXT'];
       $postImage = $postRow['IMAGE'];
-      $userID = $postRow['USERID']; // Replace with the actual column name
+      $userID = $postRow['USERID']; 
+      $votescore = $postRow['VOTESCORE'];
+
 
 
       // Fetch tag information from TAGS table
@@ -169,17 +172,20 @@ if ($postResult->num_rows > 0) {
     </a>
     <div class="post-footer">
         <div class="post-actions">
-            <button class="upvote-button"><i class="uil uil-arrow-up"></i></button>
-            <button class="downvote-button"><i class="uil uil-arrow-down"></i></button>
+            <form method="post" action="Php/vote.php">
+                <input type="hidden" name="post_id" value="<?php echo $post_id; ?>">
+                <button name="upvote" type="submit" class="upvote-button">
+                    <i class="uil uil-arrow-up"></i>
+                </button>
+                <span class="post-stats"><?php echo $votescore; ?></span>
+                <button name="downvote" type="submit" class="downvote-button">
+                    <i class="uil uil-arrow-down"></i>
+                </button>
+            </form>
             <a href="ViewPost-html.html" class="post-link">
                 <button class="comment-button"><i class="uil uil-comment"></i></button>
             </a>
         </div>
-        <div class="post-stats">
-            <span class="vote-count"></span>
-            <span class="comment-count"></span>
-        </div>
-    </div>
 </div>
 
 

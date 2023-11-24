@@ -174,7 +174,8 @@ create table VOTES
    IDEAID               int,
    USERID               int not null,
    PROBLEMID            int,
-   LIKE_DISLIKE         smallint,
+   UPVOTE               int,
+   DOWNVOTE             int,
    CREATEDON            date not null,
    primary key (VOTEID)
 );

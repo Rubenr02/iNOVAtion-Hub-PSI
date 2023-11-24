@@ -583,11 +583,15 @@ header .nav-bar {
     margin-bottom: 1em;
 }
 
-
 /* Style the post actions and stats */
 .post-footer {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+}
+
+.post-actions {
+    display: flex;
     align-items: center;
 }
 
@@ -609,12 +613,6 @@ header .nav-bar {
 }
 
 .post-stats {
-    display: flex;
-    align-items: center;
-}
-
-.vote-count,
-.comment-count {
     font-size: 1em;
     margin-right: 10px;
     color: #555;
@@ -624,7 +622,7 @@ header .nav-bar {
     text-decoration: none; /* Remove underline from the anchor text */
     color: inherit; /* Use the default text color */
 }
-  
+
 .post-link:hover {
     text-decoration: none; /* Add underline on hover if needed */
 }

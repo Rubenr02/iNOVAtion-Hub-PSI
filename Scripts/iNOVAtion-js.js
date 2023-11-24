@@ -49,3 +49,6 @@ const prevButton = document.getElementById('prev-button');
 
 nextButton.addEventListener('click', nextSlide);
 prevButton.addEventListener('click', prevSlide);
+
+
+// Voting system function
