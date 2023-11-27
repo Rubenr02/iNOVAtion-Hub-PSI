@@ -8,6 +8,6 @@ if (mysqli_connect_errno()) {
     echo "Connected to MySQL successfully!";
 }
 
-// Close the connection (optional)
+// Close the connection 
 mysqli_close($con);
 ?>
