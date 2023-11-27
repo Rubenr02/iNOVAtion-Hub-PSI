@@ -38,8 +38,6 @@ if ($postResult->num_rows > 0) {
       $userID = $postRow['USERID']; 
       $votescore = $postRow['VOTESCORE'];
 
-
-
       // Fetch tag information from TAGS table
       $tagQuery = "SELECT TAGS FROM tags WHERE TAGID = '$tagID'";
       $tagResult = $conn->query($tagQuery);
@@ -164,7 +162,7 @@ if ($postResult->num_rows > 0) {
             <span class="input-tag"><?php echo $tagName; ?></span>
         </div>
     </div>
-    <a href="ViewPost-html.html" class="post-link">
+    <a href="ViewPost-html.php?post_id=<?php echo $post_id; ?>"class="post-link">
         <div class="post-content">
             <p><?php echo $postContent; ?></p>
         </div>
@@ -182,16 +180,17 @@ if ($postResult->num_rows > 0) {
                     <i class="uil uil-arrow-down"></i>
                 </button>
             </form>
-            <a href="ViewPost-html.html" class="post-link">
-                <button class="comment-button"><i class="uil uil-comment"></i></button>
+            <a href="ViewPost-html.php?post_id=<?php echo $post_id; ?>#comments" class="post-link">
+              <button class="comment-button"><i class="uil uil-comment"></i></button>
             </a>
-        </div>
-</div>
 
+        </div>
+      </div>
 
   </section>
 
   <script type="text/javascript" src="Scripts/iNOVAtion-js.js"></script>
+
 
 </body>
 </html>

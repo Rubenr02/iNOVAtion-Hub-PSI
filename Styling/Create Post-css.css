@@ -680,8 +680,8 @@ header .nav-bar {
         top: 50%;
         right: 10px; /* Adjust the right spacing as needed */
         transform: translateY(-50%);
-        font-size: 18px; /* Adjust the font size as needed */
-        color: #555; /* Set the color of the arrow */
+        font-size: 18px; 
+        color: #555; 
 }
 
 
@@ -720,8 +720,6 @@ header .nav-bar {
     margin-left: 0px;
 }
 
-
-/* Style the checkbox when checked */
 .input-hide input[type="checkbox"]:checked {
     background-color: #555;
 }
@@ -772,7 +770,7 @@ header .nav-bar {
     margin-top: -35px;
     float: right;
     text-align: left;
-    position: relative; /* Position relative for icon placement */
+    position: relative; 
 }
 
 #post-button:hover {
@@ -781,7 +779,7 @@ header .nav-bar {
 }
 
 #post-button i {
-    margin-left: 5px; /* Adjust the margin as needed */
+    margin-left: 5px; 
 }
 
 }

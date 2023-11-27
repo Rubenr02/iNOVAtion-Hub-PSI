@@ -502,6 +502,119 @@ header .nav-bar {
     color: darkgrey;
 }
 
+/* Style the comment container */
+.comment-container {
+    display: flex;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    background-color: #fff;
+}
+
+.comment-image img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-left: 10px;
+}
+
+.comment-input-box {
+    flex-grow: 1;
+    padding: 10px;
+}
+
+.comment-input-box textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-sizing: border-box;
+    background: #EFF0F6;
+    height: 80px;
+    resize: none;
+}
+
+.submit-comment {
+    width: 80px;
+    background-color: #E9EAF3;
+    color: #555;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.submit-comment:hover {
+    background-color: #555;
+    color: #fff;
+}
+
+/* Style the published comment container */
+.comment-section {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    background-color: #fff;
+    padding: 10px;
+    overflow: hidden; 
+}
+
+.user-name {
+    font-size: 1.2em;
+    color: #000;
+    font-weight: 500;
+    margin-top: -5px;
+}
+
+.comment-header img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.comment-date {
+    font-size: 0.85em;
+    color: #555;
+    margin-top: -5px; 
+    margin-left: 2%;
+}
+
+.comment-box {
+    font-size: 1em;
+    line-height: 1.5;
+    color: #555;
+    background-color: white;
+    padding: 10px;
+    border-radius: 15px;
+    max-height: 130px;
+    overflow-y: auto;
+    box-sizing: border-box; 
+    width: calc(100% - 20px); 
+    position: relative; 
+}
+
+.comment-actions {
+    position: absolute; 
+    top: 5px; 
+    right: 5px; 
+}
+
+.comment-actions button {
+    background-color: white;
+    color: black;
+    padding: 3px 5px;
+    border: none;
+    cursor: pointer;
+    margin-right: 10px;
+    font-size: 1em;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.comment-actions button:hover {
+    color: #ff4d4d; 
+}
+
+
 /* Media query for screens smaller than 768px*/
 @media (max-width: 768px) {
     body {
@@ -747,6 +860,21 @@ header .nav-bar {
     
     .post-files a:hover{
         color: darkgrey;
+    }
+
+    .submit-comment {
+        margin-top: 10px;
+        width: 80px;
+        background-color: #E9EAF3;
+        color: #555;
+        margin-left: 0px;
+        padding: 5px 10px;
+        border: none;
+        border-radius: 15px;
+        cursor: pointer;
+        float: right;
+        text-align: left;
+        position: relative; /* Position relative for icon placement */
     }
 
 }

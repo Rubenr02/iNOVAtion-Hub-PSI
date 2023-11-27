@@ -1,128 +1,100 @@
+<?php
+// Create connection
+$conn = mysqli_connect("localhost", "root", "", "psi");
+
+if (mysqli_connect_errno()) {
+    echo "Failed to connect to MySQL: " . mysqli_connect_errno();
+}
+
+// Start or resume the session
+session_start();
+
+// Check if the post ID is set in the URL
+if (isset($_GET['post_id'])) {
+    $post_id = $_GET['post_id'];
+
+    // Fetch post information from the database based on the post ID
+    $postQuery = "SELECT * FROM IDEAS WHERE IDEAID = '$post_id'";
+    $postResult = $conn->query($postQuery);
+
+    if ($postResult->num_rows == 1) {
+        $postRow = $postResult->fetch_assoc();
+
+        $postTitle = $postRow['TITLE'];
+        $tagID = $postRow['TAGID'];
+        $postContent = $postRow['TEXT'];
+        $postImage = $postRow['IMAGE'];
+        $userID = $postRow['USERID'];
+        $votescore = $postRow['VOTESCORE'];
+
+        // Fetch tag information from TAGS table
+        $tagQuery = "SELECT TAGS FROM tags WHERE TAGID = '$tagID'";
+        $tagResult = $conn->query($tagQuery);
+
+        if ($tagResult->num_rows == 1) {
+            $tagRow = $tagResult->fetch_assoc();
+            $tagName = $tagRow['TAGS'];
+        } else {
+            echo "Error fetching tag information.";
+        }
+
+        // Fetch Username information from USERS table (for the post)
+        $userQuery = "SELECT USERNAME FROM users WHERE USERID = '$userID'";
+        $userResult = $conn->query($userQuery);
+
+        if ($userResult->num_rows == 1) {
+            $userRow = $userResult->fetch_assoc();
+            $userName = $userRow['USERNAME'];
+        } else {
+            echo "Error fetching Name information.";
+        }
+    } else {
+        echo "Post not found.";
+    }
+} else {
+    echo "Post ID not provided.";
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>iNOVAtion Hub</title>
-    <link rel="stylesheet" href="Styling/Post-css.css">  
+    <link rel="stylesheet" href="Styling/Post-css.css">
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
 </head>
+
 <body>
 
     <header>
+        <!-- Your header content -->
+    </header>
 
-        <div class="nav-bar">
-          
-          <div class="logo">
-            <a href="iNOVAtion-html.php">
-              <img src="Images/iNOVAtion Hub.png" alt="Your Logo" id="main-logo">
-            </a>
-          </div>
-
-          <div class="header-links">
-
-            <div class="search-bar">
-              <input type="text" placeholder="Search for tags, problems, ideas ...">
-              <i class="uil uil-search"></i>
+    <!-- Post Template -->
+    <div class="post">
+        <!-- Display post information dynamically -->
+        <div class="post-header">
+            <div class="user-info">
+                <img src="Images/persona.avif" alt="User Profile Picture">
+                <span class="username"><?php echo $userName; ?></span>
             </div>
-            <a href="Profile-html.html"><i class="uil uil-user"></i> Profile</a>
-          </div>
-
-          <div class="navigation">
-            <div class="nav-items">
-              <i class="uil uil-times nav-close-btn"></i>
-              <a href="#"><i class="uil uil-home"></i> Home</a>
-              <a href="#"><i class="uil uil-compass"></i> Explore</a>
-              <a href="#"><i class="uil uil-info-circle"></i> About</a>
-              <a href="#"><i class="uil uil-envelope"></i> Contact</a>
+            <br>
+            <h2 class="post-title"><?php echo $postTitle; ?></h2>
+            <div class="post-tag">
+                <span class="input-type">Problem</span>
+                <span class="input-tag"><?php echo $tagName; ?></span>
+                <!-- Add other post information here -->
             </div>
-          </div>
-
-          <i class="uil uil-apps nav-menu-btn"></i>
-
         </div>
-
-      </header>
-
-     <!-- Post Template -->
-     <div class="post">
-
-      <div class="contact">
-        <a href=""><i class="uil uil-phone"></i>Contact Idea Initiator</a>
-      </div>
-
-      <div class="post-header">
-
-        <div class="user-info">
-          <img src="Images/persona.avif" alt="User Profile Picture">
-          <span class="username">User_Persona</span>
-        </div>
-
-        <br>
-
-        <h2 class="post-title">Campus Campolide Gym</h2>
-
-        <div class="post-tag">
-          <span class="input-type">Problem</span>
-          <span class="input-tag">Exercise</span>
-          <span class="input-level">Idea Level 1</span>
-          <span class="input-date">Yesterday</span>
-        </div>
-
-      </div>
-
-      <br>
-
-      <div class="post-content">
-        <p>
-          As a student from NOVA IMS proposing the implementation of Campus Campolide Gym on our college campus, 
-          I envision a modern fitness hub that addresses the health and wellness needs of our fellow students. 
-          This initiative involves equipping a dedicated space with the latest exercise equipment, creating a dynamic environment 
-          for physical activity, and hiring experienced trainers to provide guidance. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Diam maecenas ultricies mi eget. Duis tristique sollicitudin nibh sit. Viverra maecenas accumsan lacus vel facilisis volutpat est velit. Venenatis tellus in metus vulputate eu. Pulvinar neque laoreet suspendisse interdum consectetur libero id faucibus nisl. Cras tincidunt lobortis feugiat vivamus at augue. Massa massa ultricies mi quis hendrerit dolor magna eget. Odio eu feugiat pretium nibh. Turpis egestas sed tempus urna et pharetra pharetra. Sit amet justo donec enim diam vulputate ut pharetra.
-        </p>
-      </div>
-
-      <br>
-
-      <div class="post-image">
-        <img src="Images/gym.png" alt="Gym" id="image">
-      </div>
-
-      <br>
-
-      <div class="post-files">
-        <h3>Files</h3>
-        <ul>
-          <li><a href="Images/community.jpg">PlanPDF</a></li>
-          <li><a href="Images/community.jpg">Document</a></li>
-          <li><a href="Images/community.jpg">Presentation</a></li>
-        </ul>
-      </div>
-
-      <br>
-
-      <div class="post-footer">
-        <div class="post-actions">
-          <button class="upvote-button"><i class="uil uil-arrow-up"></i></button>
-          <button class="downvote-button"><i class="uil uil-arrow-down"></i></button>
-          <button class="comment-button"><i class="uil uil-comment"></i></button>
-        </div>
-
-        <div class="post-stats">
-          <span class="upvote-count">101</span>
-          <span class="downvote-count">80</span>
-          <span class="comment-count">32</span>
-        </div>  
-
-        <div class="report">
-          <a href=""><i class="uil uil-exclamation-circle"></i>Report</a>
-        </div>
-
-      </div>
-
+        <!-- Continue displaying the rest of the post content dynamically -->
     </div>
 
-  <script type="text/javascript" src="Scripts/iNOVAtion-js.js"></script>
+    <script src="Scripts/iNOVAtion-js.js"></script>
+    <script src="Scripts/ViewPost-js.js"></script>
 
 </body>
+
 </html>
