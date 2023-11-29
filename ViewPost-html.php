@@ -41,12 +41,13 @@ if (isset($_GET['post_id'])) {
         }
 
         // Fetch Username information from USERS table (for the post)
-        $userQuery = "SELECT USERNAME FROM users WHERE USERID = '$userID'";
+        $userQuery = "SELECT USERNAME, IMAGE AS USER_IMAGE FROM users WHERE USERID = '$userID'";
         $userResult = $conn->query($userQuery);
 
         if ($userResult->num_rows == 1) {
             $userRow = $userResult->fetch_assoc();
             $userName = $userRow['USERNAME'];
+            $userImage = $userRow['USER_IMAGE'];
         } else {
             echo "Error fetching Name information.";
         }
@@ -60,7 +61,6 @@ if (isset($_GET['post_id'])) {
 // Fetch comments associated with the post
 $fetchCommentsQuery = "SELECT * FROM COMMENTS WHERE IDEAID = '$post_id'";
 $commentsResult = $conn->query($fetchCommentsQuery);
-
 
 ?>
 
@@ -116,7 +116,7 @@ $commentsResult = $conn->query($fetchCommentsQuery);
     <div class="post">
         <div class="post-header">
             <div class="user-info">
-                <img src="Images/persona.avif" alt="User Profile Picture">
+                <img src= <?php echo $userImage; ?> alt='User Profile Picture'>
                 <span class="username"><?php echo $userName; ?></span>
             </div>
             <br>
@@ -198,26 +198,29 @@ $commentsResult = $conn->query($fetchCommentsQuery);
         <br>
 
         <div id="comments" class="comment-section">
+
     <?php
     if ($commentsResult->num_rows > 0) {
         while ($commentRow = $commentsResult->fetch_assoc()) {
             $commentUserID = $commentRow['USERID'];
             $commentText = $commentRow['CHARACTERS'];
             $commentDate = $commentRow['CREATEDON'];
-            $commentID = $commentRow['COMMENTID']; 
+            $commentID = $commentRow['COMMENTID'];
 
-            // Fetch the username of the user who commented
-            $commentUserQuery = "SELECT USERNAME FROM USERS WHERE USERID = '$commentUserID'";
+            // Fetch the username and image of the user who commented
+            $commentUserQuery = "SELECT USERNAME, IMAGE AS USER_IMAGE FROM USERS WHERE USERID = '$commentUserID'";
             $commentUserResult = $conn->query($commentUserQuery);
 
             if ($commentUserResult->num_rows == 1) {
                 $commentUserRow = $commentUserResult->fetch_assoc();
                 $commentUserName = $commentUserRow['USERNAME'];
+                $commentUserImage = $commentUserRow['USER_IMAGE']; 
 
+        
                 // Display comment
                 echo "<div class='comment-section'>";
                 echo "<div class='comment-header'>";
-                echo "<img src='Images/persona.avif' alt='User Profile Picture'>";
+                echo "Comment User Image: " . $commentUserImage . "<br>";
                 echo "<span class='user-name'>$commentUserName</span>";
                 echo "<span class='comment-date'>$commentDate</span>";
                 echo "</div>";
@@ -232,7 +235,7 @@ $commentsResult = $conn->query($fetchCommentsQuery);
                 echo "<i class='uil uil-exclamation-circle'></i> Report";
                 echo "</button>";
                 echo "</form>";
-                echo "</div>";  
+                echo "</div>";
 
                 echo "</div>";
                 echo "</div>";
@@ -242,6 +245,7 @@ $commentsResult = $conn->query($fetchCommentsQuery);
         echo "No comments found.";
     }
     ?>
+
 </div>
 
 

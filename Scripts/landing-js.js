@@ -187,30 +187,3 @@ document.getElementById("open-login-popup").addEventListener("click", function(e
 });
 
 
-// Function to allow previewing the inserted image in the register field
-const imageInput = document.getElementById("imageInput");
-    const imagePreview = document.getElementById("image-preview");
-    const selectedImage = document.getElementById("selected-image");
-
-    imageInput.addEventListener("change", () => {
-      const file = imageInput.files[0];
-
-      if (file) {
-        
-        const reader = new FileReader();
-
-        reader.onload = (e) => {
-          
-          selectedImage.src = e.target.result;
-        
-          imagePreview.style.display = "block";
-        };
-
-        reader.readAsDataURL(file);
-      } else {
-      
-        selectedImage.src = "";
-      
-        imagePreview.style.display = "none";
-      }
-    });

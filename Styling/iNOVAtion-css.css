@@ -626,3 +626,27 @@ header .nav-bar {
 .post-link:hover {
     text-decoration: none; /* Add underline on hover if needed */
 }
+
+/* Style the previous and next buttons */
+.prev, .next {
+    position: absolute;
+    top: 60%;
+    font-size: 20px;
+    cursor: pointer;
+    color: #333;
+    background-color: transparent;
+    border: none;
+    transition: color 0.3s;
+}
+
+.prev:hover, .next:hover {
+    color: #ff4500;
+}
+
+.prev {
+    left: 7%;
+}
+
+.next {
+    right: 7%;
+}

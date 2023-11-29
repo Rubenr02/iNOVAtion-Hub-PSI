@@ -172,7 +172,7 @@
 
         <h2>Register</h2>
 
-        <form id="register-form" action="Php/register.php" method="post">
+        <form id="register-form" action="Php/register.php" method="post" enctype="multipart/form-data">
 
           <div class="register-step" id="register-step-1">
                 
@@ -202,7 +202,7 @@
 
               <p>A descriptive profile improves your experience in the platform.</p>
 
-                <input type="file" id="image" name="image" accept="image/*" required>
+                <input type="file" id="user-image" name="user-image" accept="image/*" required>
 
                 <div id="image-preview" style="display: none;">
                   <img id="selected-image" src="" alt="Selected Image">

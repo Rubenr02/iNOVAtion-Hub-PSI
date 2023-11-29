@@ -11,45 +11,36 @@ closeBtn.addEventListener("click", () => {
   navigation.classList.remove("active");
 });
 
+var slideIndex = 0;
+var posts;
 
-// Select the carousel container and its slides
-const carousel = document.querySelector('.carousel');
-const slides = carousel.querySelectorAll('.slide');
+document.addEventListener("DOMContentLoaded", function() {
+    posts = document.getElementsByClassName("post");
+    showPosts();
+});
 
-// Set the initial slide and current index
-let currentIndex = 0;
-showSlide(currentIndex);
-
-// Function to display the current slide
-function showSlide(index) {
-    slides.forEach((slide, i) => {
-        if (i === index) {
-            slide.style.display = 'block';
-        } else {
-            slide.style.display = 'none';
-        }
-    });
+function showPosts() {
+    var i;
+    for (i = 0; i < posts.length; i++) {
+        posts[i].style.display = "none";
+    }
+    if (slideIndex >= posts.length) {
+        slideIndex = 0;
+    }
+    if (slideIndex < 0) {
+        slideIndex = posts.length - 1;
+    }
+    posts[slideIndex].style.display = "block";
+    
 }
 
-// Function to move to the next slide
-function nextSlide() {
-    currentIndex = (currentIndex + 1) % slides.length;
-    showSlide(currentIndex);
+function plusSlides(n) {
+    slideIndex += n;
+    if (slideIndex >= posts.length) {
+        slideIndex = 0;
+    }
+    if (slideIndex < 0) {
+        slideIndex = posts.length - 1;
+    }
+    showPosts();
 }
-
-// Function to move to the previous slide
-function prevSlide() {
-    currentIndex = (currentIndex - 1 + slides.length) % slides.length;
-    showSlide(currentIndex);
-}
-
-// Set up event listeners for next and previous buttons
-const nextButton = document.getElementById('next-button');
-const prevButton = document.getElementById('prev-button');
-
-nextButton.addEventListener('click', nextSlide);
-prevButton.addEventListener('click', prevSlide);
-
-
-
-// Voting system function

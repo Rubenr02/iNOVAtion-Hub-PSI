@@ -77,6 +77,7 @@ $tagResult = $conn->query($tagQuery);
               
       </div>
       
+      <!-- JavaScript code to prevent exceeding the 200 words maximum -->
       <script>
           document.getElementById('post-text').addEventListener('input', function () {
               var words = this.value.match(/\S+/g);

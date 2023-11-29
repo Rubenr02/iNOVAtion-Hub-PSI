@@ -9,6 +9,8 @@ if (mysqli_connect_errno()) {
     echo "Failed to connect to MySQL: " . mysqli_connect_errno();
 }
 
+// Function to sanitize user input
+
 // Process login form
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])) {
     $username = $_POST['username'];
