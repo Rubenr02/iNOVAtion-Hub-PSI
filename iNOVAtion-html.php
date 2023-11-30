@@ -73,6 +73,7 @@ if ($postResult->num_rows > 0) {
 } else {
     echo "No posts found.";
 }
+
 }
 
 ?>
@@ -86,30 +87,7 @@ if ($postResult->num_rows > 0) {
     <link rel="stylesheet" href="Styling/iNOVAtion-css.css">  
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
 </head>
-<style>
-        .prev, .next {
-            position: absolute;
-            top: 60%;
-            font-size: 20px;
-            cursor: pointer;
-            color: #333;
-            background-color: transparent;
-            border: none;
-            transition: color 0.3s;
-        }
 
-        .prev:hover, .next:hover {
-            color: #ff4500;
-        }
-
-        .prev {
-            left: 7%;
-        }
-
-        .next {
-            right: 7%;
-        }
-</style>
 <body>
 
     <header>
@@ -188,7 +166,6 @@ if ($postResult->num_rows > 0) {
     <?php
 
     // Create connection
-    $conn = mysqli_connect("localhost", "root", "", "psi");
     if ($conn) {
         if (mysqli_connect_errno()) {
             echo "Failed to connect to MySQL: " . mysqli_connect_errno();

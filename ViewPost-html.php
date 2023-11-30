@@ -176,19 +176,37 @@ $commentsResult = $conn->query($fetchCommentsQuery);
 
         <br><br>
 
-        <h3>Comments</h3>
-        <br>
+        <?php
+        // Check if the user is logged in and 'user_id' is set in the $_SESSION array
+        if (isset($_SESSION['USERID'])) {
+            $loggedUserID = $_SESSION['USERID'];
+
+            // Fetch the username and image of the logged-in user
+            $loggedUserQuery = "SELECT USERNAME, IMAGE AS USER_IMAGE FROM USERS WHERE USERID = '$loggedUserID'";
+            $loggedUserResult = $conn->query($loggedUserQuery);
+
+            if ($loggedUserResult->num_rows == 1) {
+                $loggedUserRow = $loggedUserResult->fetch_assoc();
+                $loggedUserName = $loggedUserRow['USERNAME'];
+                $loggedUserImage = $loggedUserRow['USER_IMAGE'];
+            } else {
+                echo "Error fetching user information.";
+            }
+        } else {
+            echo "User not logged in or 'user_id' not set in the session.";
+        }
+        ?>
+
+        <!-- Comment Input Box -->
         <div class="comment-container">
             <div class="comment-image">
-                <img src="Images/persona.avif" alt="User Profile Picture">
+                <img src="<?php echo isset($loggedUserImage) ? $loggedUserImage : 'path/to/default/image.jpg'; ?>" alt='User Profile Picture'>
             </div>
             <div class="comment-input-box">
                 <form method="post" action="Php/comment.php">
                     <input type="hidden" name="post_id" value="<?php echo $post_id; ?>">
-                    <textarea id="input-comment" name="input-comment" placeholder="Add a comment"
-                        rows="4" required></textarea>
-                    <button class="submit-comment" id="post-button" type="submit" name="submit-comment">
-                        Post
+                    <textarea id="input-comment" name="input-comment" placeholder="Add a comment" rows="4" required></textarea>
+                    <button class="submit-comment" id="post-button" type="submit" name="submit-comment"> Post
                         <i class="uil uil-plus-circle"></i>
                     </button>
                 </form>
@@ -220,7 +238,7 @@ $commentsResult = $conn->query($fetchCommentsQuery);
                 // Display comment
                 echo "<div class='comment-section'>";
                 echo "<div class='comment-header'>";
-                echo "Comment User Image: " . $commentUserImage . "<br>";
+                echo '<img src="' . $commentUserImage . '" alt="User Profile Picture">';
                 echo "<span class='user-name'>$commentUserName</span>";
                 echo "<span class='comment-date'>$commentDate</span>";
                 echo "</div>";
