@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function () {
     postElement.classList.add("post");
   
     // Create the HTML structure for a post
-    postElement.innerPHP = `
+    postElement.innerHTML = `
     <div class="post">
     <div class="post-header">
         <div class="user-info">

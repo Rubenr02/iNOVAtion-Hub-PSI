@@ -1,4 +1,4 @@
-// Dropdown Menu
+// Dropdown Menu Function
 const menuBtn = document.querySelector(".nav-menu-btn");
 const closeBtn = document.querySelector(".nav-close-btn");
 const navigation = document.querySelector(".navigation");
@@ -11,6 +11,8 @@ closeBtn.addEventListener("click", () => {
   navigation.classList.remove("active");
 });
 
+
+// Function to allow the sliding carousel
 var slideIndex = 0;
 var posts;
 
@@ -34,6 +36,8 @@ function showPosts() {
     
 }
 
+
+// Function for the pop-up filter and search bar for the tags
 function plusSlides(n) {
     slideIndex += n;
     if (slideIndex >= posts.length) {
@@ -43,4 +47,34 @@ function plusSlides(n) {
         slideIndex = posts.length - 1;
     }
     showPosts();
+}
+
+function toggleFilterSection() {
+    var customDropdown = document.querySelector(".custom-dropdown");
+    customDropdown.classList.toggle("active");
+    if (customDropdown.classList.contains("active")) {
+        document.getElementById("tagSearch").focus();
+    }
+}
+
+function selectTag(tagName) {
+    // Add your logic to handle the selected tag
+    console.log("Selected Tag: " + tagName);
+    toggleFilterSection(); // Close the dropdown after selection (optional)
+}
+
+function filterTags() {
+    var input, filter, options, i, tag;
+    input = document.getElementById("tagSearch");
+    filter = input.value.toUpperCase();
+    options = document.getElementById("dropdownContent").getElementsByClassName("tag-option");
+
+    for (i = 0; i < options.length; i++) {
+        tag = options[i].innerText || options[i].textContent;
+        if (tag.toUpperCase().indexOf(filter) > -1) {
+            options[i].style.display = "";
+        } else {
+            options[i].style.display = "none";
+        }
+    }
 }

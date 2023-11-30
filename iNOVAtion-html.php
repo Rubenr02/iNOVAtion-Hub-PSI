@@ -23,13 +23,23 @@ if (isset($_SESSION['USERID'])) {
         $username = $row['USERNAME'];
     }
  
+// Fetch tags from the database
+$tagQuery = "SELECT TAGS FROM TAGS";
+$tagResult = $conn->query($tagQuery);
 
-// Fetch posts from both IDEAS and PROBLEMS tables
-$postQuery = "(SELECT 'idea' as post_type, IDEAID, TITLE, TAGID, TEXT, IMAGE, USERID, VOTESCORE
-              FROM IDEAS)
+// Fetch the filtered tag (if any)
+$filteredTag = isset($_GET['tag']) ? $_GET['tag'] : null;
+
+// Fetch posts with or without the filtered tag from both IDEAS and PROBLEMS tables
+$postQuery = "(SELECT 'idea' as post_type, IDEAID, IDEAS.TITLE, IDEAS.TAGID, TEXT, IMAGE, IDEAS.USERID, VOTESCORE
+              FROM IDEAS
+              INNER JOIN TAGS ON IDEAS.TAGID = TAGS.TAGID
+              " . ($filteredTag ? "WHERE TAGS.TAGS = '$filteredTag'" : "") . ")
               UNION
-              (SELECT 'problem' as post_type, PROBLEMID, TITLE, TAGID, TEXT, IMAGE, USERID, VOTESCORE
-              FROM PROBLEMS)
+              (SELECT 'problem' as post_type, PROBLEMID, PROBLEMS.TITLE, PROBLEMS.TAGID, TEXT, IMAGE, PROBLEMS.USERID, VOTESCORE
+              FROM PROBLEMS
+              INNER JOIN TAGS ON PROBLEMS.TAGID = TAGS.TAGID
+              " . ($filteredTag ? "WHERE TAGS.TAGS = '$filteredTag'" : "") . ")
               ORDER BY VOTESCORE DESC";
 
 $postResult = $conn->query($postQuery);
@@ -142,10 +152,26 @@ if ($postResult->num_rows > 0) {
 
       </div>
       
-        <div class="right">
-            Filter
-            <button class="filter-button"><i class="uil uil-filter"></i></button>
+      <div class="custom-dropdown" id="customDropdown">
+        <button class="filter-button" onclick="toggleFilterSection()">
+            <i class="uil uil-filter"></i> Filter
+        </button>
+        <div class="dropdown-content" id="dropdownContent">
+            <input type="text" id="tagSearch" placeholder="Search tags" oninput="filterTags()">
+            <?php
+            // Fetch tags from the database
+            $tagQuery = "SELECT TAGS FROM TAGS";
+            $tagResult = $conn->query($tagQuery);
+
+            if ($tagResult->num_rows > 0) {
+                while ($tagRow = $tagResult->fetch_assoc()) {
+                    $tagName = $tagRow['TAGS'];
+                    echo "<div class='tag-option' onclick='selectTag(\"$tagName\")'>$tagName</div>";
+                }
+            }
+            ?>
         </div>
+    </div>
 
     </div>
 
@@ -243,6 +269,7 @@ if ($postResult->num_rows > 0) {
                 echo '<h2 class="post-title">' . $postTitle . '</h2>';
                 echo '<div class="post-tag">';
                 echo '<span class="input-tag">' . $tagName . '</span>';
+                echo '<br><br>';
                 echo '</div>';
                 echo '</div>';
                 echo '<a href="ViewPost-html.php?post_id=' . $post_id . '" class="post-link">';
@@ -282,12 +309,59 @@ if ($postResult->num_rows > 0) {
 
 </div>
 
-
-
 <!-- JavaScript for the Landing Page-->
 <script type="text/javascript" src="Scripts/iNOVAtion-js.js"></script>
 
 
+<script>
+function toggleFilterSection() {
+    var customDropdown = document.querySelector(".custom-dropdown");
+    customDropdown.classList.toggle("active");
+    if (customDropdown.classList.contains("active")) {
+        document.getElementById("tagSearch").focus();
+    }
+}
+
+function selectTag(tagName) {
+    // Add your logic to handle the selected tag
+    console.log("Selected Tag: " + tagName);
+    toggleFilterSection(); // Close the dropdown after selection (optional)
+}
+
+function filterTags() {
+    var input, filter, options, i, tag;
+    input = document.getElementById("tagSearch");
+    filter = input.value.toUpperCase();
+    options = document.getElementById("dropdownContent").getElementsByClassName("tag-option");
+
+    for (i = 0; i < options.length; i++) {
+        tag = options[i].innerText || options[i].textContent;
+        if (tag.toUpperCase().indexOf(filter) > -1) {
+            options[i].style.display = "";
+        } else {
+            options[i].style.display = "none";
+        }
+    }
+}
+
+// Event listener to close the popup if you press on the screen
+document.addEventListener('click', function (event) {
+        var customDropdown = document.querySelector(".custom-dropdown");
+        var filterButton = document.querySelector(".filter-button");
+        
+        // Check if the clicked element is outside the filter pop-up and the filter button
+        if (!customDropdown.contains(event.target) && !filterButton.contains(event.target)) {
+            // If so, close the filter pop-up
+            customDropdown.classList.remove("active");
+        }
+    });
+
+// Function to reload the page without refreshing
+function selectTag(tagName) {
+       // Reload the page with the selected tag as a query parameter
+       window.location.href = 'iNOVAtion-html.php?tag=' + encodeURIComponent(tagName);
+}  
+</script>
 
 </body>
 </html>

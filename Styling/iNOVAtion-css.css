@@ -206,15 +206,16 @@ header .nav-bar {
 
 /* Style the scrollbar thumb on hover */
 ::-webkit-scrollbar-thumb {
-    background: #282f4e;
+    background: grey;
     width: 100%;
     border-radius: 2em;
 }
 
 /* Style the scrollbar thumb when hovering */
 ::-webkit-scrollbar-thumb:hover {
-    background: #454f6d;
+    background:darkgray;
 }
+
 
 /*======= Seacrh bar and Profile =======*/
 
@@ -329,32 +330,68 @@ header .nav-bar {
     border: solid gray;
 }
 
-.top-bar .right {
+.top-bar .custom-dropdown {
     flex: 1;
     text-align: right;
     padding-right: 20px;
 }
 
-
-/* Style the filter button */
-.top-bar .right .filter-button {
+.top-bar .filter-button {
     background: none;
     border: none;
+    font-size: 20px;
     cursor: pointer;
-    transition: background 0.3s;
-    font-size: 20px; /* Adjust the icon size */
 }
 
-/* Add filter icon color and margin */
-.top-bar .right .filter-button i {
-    color: #000; 
-    margin-left: 5px; /* Add spacing between text and icon */
+.top-bar .filter-button:hover {
+    color: #555;
 }
 
-.top-bar .right .filter-button:hover i {
-    color: gray; 
+.top-bar .dropdown-content {
+    display: none;
+    position: absolute;
+    text-align: left;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    max-height: 200px; /* Adjust the max height as needed */
+    overflow-y: auto;
 }
 
+.top-bar .tag-option {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.top-bar .tag-option:hover {
+    background-color: #ddd;
+}
+
+.top-bar .custom-dropdown.active .dropdown-content {
+    display: block;
+}
+
+/* Style the search bar */
+#tagSearch {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 8px;
+    outline: none; /* Remove outline on focus */
+}
+
+/* Style the tag options in the dropdown */
+.tag-option {
+    padding: 8px;
+    cursor: pointer;
+}
+
+.tag-option:hover {
+    background-color: #f1f1f1;
+}
 
 
 /*======= Media Queries for Mobile Screen=======*/
@@ -398,13 +435,31 @@ header .nav-bar {
     }
 
     .top-bar .center {
-        flex: 1;
-        text-align: left; /* Align left for the search bar and "Create a Post" button */
-        margin-left: 0; /* Reset margin for the center element */
+        margin-left: -40px;
+        background: #EFF0F6;
+        padding: 10px;
+        border-radius: 20px;
     }
 
     .top-bar .center .create-post-button .plus-icon {
         margin-left: 0px; /* Reset the margin for the "Create a Post" button */
+        font-size: 14px;
+    }
+
+    .top-bar .center .create-post-button .create-post-link{
+        font-size: 14px;
+    }
+
+    .top-bar .right {
+        margin-right: -10px;
+    }
+
+    .top-bar .right .filter-button {
+        font-size: 20px; /* Decrease the font size for the filter button */
+    }
+
+    .top-bar .right .select-tag {
+        font-size: 12px;
     }
 
     .header-links a:last-child {
@@ -454,16 +509,6 @@ header .nav-bar {
     /* Change link color on hover */
     .header-links a:last-child:hover {
         color: #fff;
-    }
-
-    .top-bar .right {
-        flex: 1;
-        text-align: right;
-        padding-right: 20px;
-    }
-
-    .top-bar .right .filter-button {
-        font-size: 24px; /* Increase the font size for the filter button */
     }
 
 }

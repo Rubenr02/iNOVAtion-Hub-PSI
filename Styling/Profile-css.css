@@ -195,6 +195,28 @@ header .nav-bar {
     transform: rotate(90deg);
 }
 
+/*======= Scroll bar =======*/
+
+/* Style the scrollbar and scrollbar thumb */
+::-webkit-scrollbar {
+    background: #fff;
+    width: 11px;
+    border-radius: 2em;
+}
+
+/* Style the scrollbar thumb on hover */
+::-webkit-scrollbar-thumb {
+    background: grey;
+    width: 100%;
+    border-radius: 2em;
+}
+
+/* Style the scrollbar thumb when hovering */
+::-webkit-scrollbar-thumb:hover {
+    background:darkgray;
+}
+
+
 /*======= Search bar and Profile =======*/
 
 /* Style the search bar */
