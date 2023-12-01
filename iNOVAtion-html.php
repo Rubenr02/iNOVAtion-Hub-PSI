@@ -78,7 +78,7 @@ if ($postResult->num_rows > 0) {
     } else {
         echo "Error fetching User information.";
     }
-
+    
   }
 } else {
     echo "No posts found.";
@@ -116,7 +116,7 @@ if ($postResult->num_rows > 0) {
               <i class="uil uil-search"></i>
             </div>
 
-            <a href="Profile-html.html"><i class="uil uil-user"></i> Profile</a>
+            <a href="Profile-html.php"><i class="uil uil-user"></i> Profile</a>
           </div>
 
           <div class="navigation">

@@ -357,6 +357,10 @@ header .nav-bar {
     width: 100%;
 }
 
+.published-posts a{
+    text-decoration: none;
+}
+
 /* Style the user info section */
 .post .user-info {
     display: flex;

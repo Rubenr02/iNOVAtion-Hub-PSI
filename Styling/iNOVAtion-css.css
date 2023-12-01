@@ -442,7 +442,7 @@ header .nav-bar {
     }
 
     .top-bar .center .create-post-button .plus-icon {
-        margin-left: 0px; /* Reset the margin for the "Create a Post" button */
+        margin-left: 15%; /* Reset the margin for the "Create a Post" button */
         font-size: 14px;
     }
 
