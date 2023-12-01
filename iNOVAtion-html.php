@@ -116,16 +116,19 @@ if ($postResult->num_rows > 0) {
               <i class="uil uil-search"></i>
             </div>
 
-            <a href="Profile-html.php"><i class="uil uil-user"></i> Profile</a>
+            <?php if (isset($userid)) : ?>
+                <a href="Profile-html.php?user_id=<?php echo $userid; ?>"><i class="uil uil-user"></i> Profile</a>
+            <?php endif; ?>
+
           </div>
 
           <div class="navigation">
             <div class="nav-items">
-              <i class="uil uil-times nav-close-btn"></i>
-              <a href="#"><i class="uil uil-home"></i> Home</a>
-              <a href="#"><i class="uil uil-compass"></i> Explore</a>
-              <a href="#"><i class="uil uil-info-circle"></i> About</a>
-              <a href="#"><i class="uil uil-envelope"></i> Contact</a>
+                <i class="uil uil-times nav-close-btn"></i>
+                <a href="iNOVAtion-html.php"><i class="uil uil-home"></i> Home</a>
+                <a href="About.html"><i class="uil uil-info-circle"></i> About</a>
+                <a href="Contact.html"><i class="uil uil-envelope"></i> Contact</a>
+                <a href="landing-html.html"><i class="uil uil-signout"></i> Sign Out</a>
             </div>
           </div>
 
@@ -263,8 +266,10 @@ if ($postResult->num_rows > 0) {
                 echo '<section class="post">';
                 echo '<div class="post-header">';
                 echo '<div class="user-info">';
-                echo '<img src="' . $userImage . ' " alt="User Profile Picture">';
+                echo '<a href="Profile-html.php?user_id=' . $userID . '">';
+                echo '<img src="' . $userImage . '" alt="User Profile Picture">';
                 echo '<span class="username">' . $userName . '</span>';
+                echo '</a>';
                 echo '</div>';
                 echo '<h2 class="post-title">' . $postTitle . '</h2>';
                 echo '<div class="post-tag">';

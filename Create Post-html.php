@@ -44,17 +44,17 @@ $tagResult = $conn->query($tagQuery);
               <i class="uil uil-search"></i>
             </div>
 
-            <a href="Profile-html.html"><i class="uil uil-user"></i> Profile</a>
+            <a href="Profile-html.php"><i class="uil uil-user"></i> Profile</a>
 
           </div>
 
           <div class="navigation">
             <div class="nav-items">
               <i class="uil uil-times nav-close-btn"></i>
-              <a href="#"><i class="uil uil-home"></i> Home</a>
-              <a href="#"><i class="uil uil-compass"></i> Explore</a>
-              <a href="#"><i class="uil uil-info-circle"></i> About</a>
-              <a href="#"><i class="uil uil-envelope"></i> Contact</a>
+              <a href="iNOVAtion-html.php"><i class="uil uil-home"></i> Home</a>
+              <a href="About.html"><i class="uil uil-info-circle"></i> About</a>
+              <a href="Contact.html"><i class="uil uil-envelope"></i> Contact</a>
+              <a href="landing-html.html"><i class="uil uil-signout"></i> Sign Out</a>
             </div>
           </div>
           <i class="uil uil-apps nav-menu-btn"></i>
@@ -153,5 +153,7 @@ $tagResult = $conn->query($tagQuery);
 
     </form>
   
+    <script type="text/javascript" src="Scripts/iNOVAtion-js.js"></script>
+
 </body>
 </html>

@@ -9,31 +9,40 @@ if (mysqli_connect_errno()) {
 // Start or resume the session
 session_start();
 
-// Check if the user is logged in
-if (isset($_SESSION['USERID'])) {
-    // Retrieve the user ID from the session
-    $userid = $_SESSION['USERID'];
 
-    // Fetch the username and profile image from the database based on the USERID
-    $userQuery = "SELECT USERNAME, IMAGE AS USER_IMAGE FROM USERS WHERE USERID = '$userid'";
+// Check if a specific user ID is provided in the URL
+$profileUserId = isset($_GET['user_id']) ? $_GET['user_id'] : null;
+
+// If no specific user ID is provided, check if the current user is logged in
+if (!$profileUserId && isset($_SESSION['USERID'])) {
+    $profileUserId = $_SESSION['USERID'];
+}
+
+if ($profileUserId) {
+    // Fetch the username and profile image from the database based on the provided or logged-in USERID
+    $userQuery = "SELECT USERNAME, IMAGE AS USER_IMAGE FROM USERS WHERE USERID = '$profileUserId'";
     $userResult = $conn->query($userQuery);
 
     if ($userResult->num_rows == 1) {
         $userRow = $userResult->fetch_assoc();
         $username = $userRow['USERNAME'];
         $userImage = $userRow['USER_IMAGE'];
+        
+    } else {
+        echo "Error fetching user information.";
+        // Handle the case where no user is found with the provided ID
     }
 
     // Fetch posts with or without the filtered tag from both IDEAS and PROBLEMS tables
     $postQuery = "(SELECT 'idea' as post_type, IDEAID, IDEAS.TITLE, IDEAS.TAGID, TEXT, IMAGE, IDEAS.USERID, VOTESCORE
                     FROM IDEAS
                     INNER JOIN TAGS ON IDEAS.TAGID = TAGS.TAGID
-                    WHERE IDEAS.USERID = '$userid')
+                    WHERE IDEAS.USERID = '$profileUserId')
                     UNION
                     (SELECT 'problem' as post_type, PROBLEMID, PROBLEMS.TITLE, PROBLEMS.TAGID, TEXT, IMAGE, PROBLEMS.USERID, VOTESCORE
                     FROM PROBLEMS
                     INNER JOIN TAGS ON PROBLEMS.TAGID = TAGS.TAGID
-                    WHERE PROBLEMS.USERID = '$userid')
+                    WHERE PROBLEMS.USERID = '$profileUserId')
                     ORDER BY VOTESCORE DESC";
 
     $postResult = $conn->query($postQuery);
@@ -48,7 +57,7 @@ if (isset($_SESSION['USERID'])) {
             $tagID = $postRow['TAGID'];
             $postContent = $postRow['TEXT'];
             $postImage = $postRow['IMAGE'];
-            $userID = $postRow['USERID']; 
+            $postUserID = $postRow['USERID'];  // Change variable name to avoid conflict
             $votescore = $postRow['VOTESCORE'];
 
             // Fetch tag information from TAGS table
@@ -58,13 +67,12 @@ if (isset($_SESSION['USERID'])) {
             if ($tagResult->num_rows == 1) {
                 $tagRow = $tagResult->fetch_assoc();
                 $tagName = $tagRow['TAGS'];
-
             } else {
                 echo "Error fetching tag information.";
             }
 
             // Fetch Username information from USERS table (for the post)
-            $userQuery = "SELECT USERNAME, IMAGE AS USER_IMAGE FROM users WHERE USERID = '$userID'";
+            $userQuery = "SELECT USERNAME, IMAGE AS USER_IMAGE FROM users WHERE USERID = '$postUserID'";
             $userResult = $conn->query($userQuery);
 
             if ($userResult->num_rows == 1) {
@@ -83,12 +91,12 @@ if (isset($_SESSION['USERID'])) {
                 'tagName' => $tagName,
                 'votescore' => $votescore,
                 'userName' => $userName,
-                'userId'=> $userid,
+                'userId' => $postUserID,  // Use the new variable name
                 'userImage' => $userImage
             ];
         }
     } else {
-        echo "No posts found.";
+        echo "";
     }
 }
 ?>
@@ -144,56 +152,63 @@ if (isset($_SESSION['USERID'])) {
             <!-- Check if the user has published posts -->
             <?php if (!empty($posts)) : ?>
                 <?php foreach ($posts as $post) : ?>
-    <div class="post">
-        <div class="post-header">
-            <div class="user-info">
-                <img src="Images/persona.avif" alt="User Profile Picture">
-                <span class="username"><?php echo $post['userName']; ?></span>
-            </div>
-            <a href="ViewPost-html.php?post_id=<?php echo $post['postId']; ?>">
-                <h2 class="post-title"><?php echo $post['postTitle']; ?></h2>
-                <p class="post-tag"><?php echo $post['tagName']; ?></p>
-                <br>
-                <p class="post-content"><?php echo $post['postContent']; ?></p>
-            </a>
-        </div>
-        <div class="post-footer">
-            <div class="post-actions">
-                <form method="post" action="Php/vote.php">
-                    <input type="hidden" name="post_id" value="<?php echo $post['postId']; ?>">
-                    <button name="upvote" type="submit" class="upvote-button">
-                        <i class="uil uil-arrow-up"></i>
-                    </button>
-                    <span class="post-stats"><?php echo $post['votescore']; ?></span>
-                    <button name="downvote" type="submit" class="downvote-button">
-                        <i class="uil uil-arrow-down"></i>
-                    </button>
-                </form>
-                <a href="ViewPost-html.html#comments" class="post-link">
-                    <button class="comment-button"><i class="uil uil-comment"></i></button>
-                </a>
-            </div>
-            <?php if ($post['userId'] == $userid) : ?>
-                <div class="edit-delete-buttons">
-                    <!-- Edit button with icon -->
-                    <a href="Create Post-html.php?edit_post_id=<?php echo $post['postId']; ?>">
-                        <i class="uil uil-pen"></i> Edit
-                    </a>
-                    <!-- Delete button with icon -->
-                    <button class="delete-button" onclick="confirmDelete(<?php echo $post['postId']; ?>)">
-                        <i class="uil uil-trash-alt"></i> Delete
-                    </button>
-                </div>
+                    <div class="post">
+                        <div class="post-header">
+                            <div class="user-info">
+                                <img src="<?php echo $post['userImage']; ?>" alt="User Profile Picture">
+                                <span class="username"><?php echo $post['userName']; ?></span>
+                            </div>
+                            <a href="ViewPost-html.php?post_id=<?php echo $post['postId']; ?>">
+                                <h2 class="post-title"><?php echo $post['postTitle']; ?></h2>
+                                <p class="post-tag"><?php echo $post['tagName']; ?></p>
+                                <br>
+                                <p class="post-content"><?php echo $post['postContent']; ?></p>
+                            </a>
+                        </div>
+                        <div class="post-footer">
+                            <div class="post-actions">
+                                <form method="post" action="Php/vote.php">
+                                    <input type="hidden" name="post_id" value="<?php echo $post['postId']; ?>">
+                                    <button name="upvote" type="submit" class="upvote-button">
+                                        <i class="uil uil-arrow-up"></i>
+                                    </button>
+                                    <span class="post-stats"><?php echo $post['votescore']; ?></span>
+                                    <button name="downvote" type="submit" class="downvote-button">
+                                        <i class="uil uil-arrow-down"></i>
+                                    </button>
+                                </form>
+                                <a href="ViewPost-html.html#comments" class="post-link">
+                                    <button class="comment-button"><i class="uil uil-comment"></i></button>
+                                </a>
+                            </div>
+                            <?php if ($post['userId'] == $profileUserId) : ?>
+                                <div class="edit-delete-buttons">
+                                    <!-- Edit button with icon -->
+                                    <a href="Create Post-html.php?edit_post_id=<?php echo $post['postId']; ?>">
+                                        <i class="uil uil-pen"></i> Edit
+                                    </a>
+                                    <!-- Delete button with icon -->
+                                    <form method="post" action="Php/deletepost.php">
+                                        <input type="hidden" name="post_id" value="<?php echo $post['postId']; ?>">
+                                        <button name="delete-button" type="submit" class="delete-button">
+                                            <i class="uil uil-trash-alt"></i> Delete
+                                        </button>
+                                    </form>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            <?php else : ?>
+                <p>No Posts Yet to Show!</p>
             <?php endif; ?>
         </div>
     </div>
-    <?php endforeach; ?>
-    <?php else : ?>
-        <p>No Posts Yet to Show!</p>
-    <?php endif; ?>
-        </div>
-    </div>
 </body>
+<?php
+echo "Profile User ID: $profileUserId, Post User ID: {$post['userId']}";
+?>
+
 
 <script type="text/javascript" src="Scripts/iNOVAtion-js.js"></script>
 
