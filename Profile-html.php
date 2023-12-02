@@ -9,13 +9,16 @@ if (mysqli_connect_errno()) {
 // Start or resume the session
 session_start();
 
-
 // Check if a specific user ID is provided in the URL
 $profileUserId = isset($_GET['user_id']) ? $_GET['user_id'] : null;
 
 // If no specific user ID is provided, check if the current user is logged in
 if (!$profileUserId && isset($_SESSION['USERID'])) {
     $profileUserId = $_SESSION['USERID'];
+}
+
+if (isset($_SESSION['USERID'])) {
+    $visitorid = $_SESSION['USERID'];
 }
 
 if ($profileUserId) {
@@ -144,7 +147,7 @@ if ($profileUserId) {
             <img src="<?php echo $userImage; ?>" alt="User Profile Picture" class="profile-picture" id="profilePicture">
             <div class="profile-info" id="profileInfo">
                 <h1 class="username" id="username"><?php echo $username; ?></h1>
-                <p class="description" id="description">User description goes here.</p>
+                <p class="description" id="description">Add your description here!</p>
             </div>
         </div>
         <div class="published-posts">
@@ -181,7 +184,7 @@ if ($profileUserId) {
                                     <button class="comment-button"><i class="uil uil-comment"></i></button>
                                 </a>
                             </div>
-                            <?php if ($post['userId'] == $profileUserId) : ?>
+                            <?php if ($visitorid == $profileUserId) : ?>
                                 <div class="edit-delete-buttons">
                                     <!-- Edit button with icon -->
                                     <a href="Create Post-html.php?edit_post_id=<?php echo $post['postId']; ?>">
@@ -206,9 +209,7 @@ if ($profileUserId) {
     </div>
 </body>
 <?php
-echo "Profile User ID: $profileUserId, Post User ID: {$post['userId']}";
 ?>
-
 
 <script type="text/javascript" src="Scripts/iNOVAtion-js.js"></script>
 
