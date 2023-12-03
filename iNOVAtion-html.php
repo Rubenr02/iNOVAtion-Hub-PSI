@@ -36,18 +36,27 @@ $postQuery = "(SELECT 'idea' as post_type, IDEAID, IDEAS.TITLE, IDEAS.TAGID, TEX
               INNER JOIN TAGS ON IDEAS.TAGID = TAGS.TAGID
               " . ($filteredTag ? "WHERE TAGS.TAGS = '$filteredTag'" : "") . ")
               UNION
-              (SELECT 'problem' as post_type, PROBLEMID, PROBLEMS.TITLE, PROBLEMS.TAGID, TEXT, IMAGE, PROBLEMS.USERID, VOTESCORE
+              (SELECT 'problem' as post_type, PROBLEMS.PROBLEMID, PROBLEMS.TITLE, PROBLEMS.TAGID, PROBLEMS.TEXT, PROBLEMS.IMAGE, PROBLEMS.USERID, PROBLEMS.VOTESCORE
               FROM PROBLEMS
               INNER JOIN TAGS ON PROBLEMS.TAGID = TAGS.TAGID
+              INNER JOIN USERS ON PROBLEMS.USERID = USERS.USERID
               " . ($filteredTag ? "WHERE TAGS.TAGS = '$filteredTag'" : "") . ")
               ORDER BY VOTESCORE DESC";
+
 
 $postResult = $conn->query($postQuery);
 
 if ($postResult->num_rows > 0) {
     while ($postRow = $postResult->fetch_assoc()) {
         $postType = $postRow["post_type"];
-        $post_id  = ($postType == 'idea') ? $postRow["IDEAID"] : $postRow["PROBLEMID"];
+        if ($postType == 'idea') {
+            $post_id = $postRow["IDEAID"];
+        } elseif ($postType == 'problem' && isset($postRow["PROBLEMID"])) {
+            $post_id = $postRow["PROBLEMID"];
+        } else {
+            // Handle the case where the post type is unknown or PROBLEMID is not set
+            $post_id = null;
+        }
         $postTitle = $postRow['TITLE'];
         $tagID = $postRow['TAGID'];
         $postContent = $postRow['TEXT'];
@@ -111,10 +120,11 @@ if ($postResult->num_rows > 0) {
           </div>
 
           <div class="header-links">
-            <div class="search-bar">
-              <input type="text" placeholder="Search for tags, problems, ideas ...">
+          <div class="search-bar">
+              <input type="text" id="postSearch" placeholder="Search for problems, ideas ..." oninput="searchPosts()">
               <i class="uil uil-search"></i>
-            </div>
+          </div>
+
 
             <?php if (isset($userid)) : ?>
                 <a href="Profile-html.php?user_id=<?php echo $userid; ?>"><i class="uil uil-user"></i> Profile</a>
@@ -194,7 +204,7 @@ if ($postResult->num_rows > 0) {
   
     <?php
 
-    // Create connection
+    // Verify if the connection is ON if so proceed with the following events 
     if ($conn) {
         if (mysqli_connect_errno()) {
             echo "Failed to connect to MySQL: " . mysqli_connect_errno();
@@ -218,25 +228,36 @@ if ($postResult->num_rows > 0) {
     }
 
         // Fetch posts from both IDEAS and PROBLEMS tables
-        $postQuery = "(SELECT 'idea' as post_type, IDEAID, TITLE, TAGID, TEXT, IMAGE, USERID, VOTESCORE
-                    FROM IDEAS)
-                    UNION
-                    (SELECT 'problem' as post_type, PROBLEMID, TITLE, TAGID, TEXT, IMAGE, USERID, VOTESCORE
-                    FROM PROBLEMS)
-                    ORDER BY VOTESCORE DESC";
+        $postQuery = "(SELECT 'idea' as post_type, IDEAID as POSTID, TITLE, TAGID, TEXT, IMAGE, USERID, VOTESCORE, ISANONYMOUS
+            FROM IDEAS)
+            UNION
+            (SELECT 'problem' as post_type, PROBLEMID as POSTID, TITLE, TAGID, TEXT, IMAGE, USERID, VOTESCORE, ISANONYMOUS
+            FROM PROBLEMS)
+            ORDER BY VOTESCORE DESC";
+
 
         $postResult = $conn->query($postQuery);
 
+        $foundPosts = false; // This variable helps tracking if any posts are found
+
         if ($postResult->num_rows > 0) {
             while ($postRow = $postResult->fetch_assoc()) {
-                $postType = $postRow["post_type"];
-                $post_id  = ($postType == 'idea') ? $postRow["IDEAID"] : $postRow["PROBLEMID"];
+                $postType = $postRow['post_type'];
+                if ($postType == 'idea') {
+                    $post_id = $postRow["POSTID"];
+                } elseif ($postType == 'problem' && isset($postRow["POSTID"])) {
+                    $post_id = $postRow["POSTID"];
+                } else {
+                    // Handle the case where the post type is unknown or POSTID is not set
+                    $post_id = null;
+                }
                 $postTitle = $postRow['TITLE'];
                 $tagID = $postRow['TAGID'];
                 $postContent = $postRow['TEXT'];
                 $postImage = $postRow['IMAGE'];
                 $userID = $postRow['USERID']; 
                 $votescore = $postRow['VOTESCORE'];
+                $isAnonymous = $postRow['ISANONYMOUS'];
 
                 // Fetch tag information from TAGS table
                 $tagQuery = "SELECT TAGS FROM tags WHERE TAGID = '$tagID'";
@@ -245,31 +266,42 @@ if ($postResult->num_rows > 0) {
                 if ($tagResult->num_rows == 1) {
                     $tagRow = $tagResult->fetch_assoc();
                     $tagName = $tagRow['TAGS'];
-
                 } else {
                     echo "Error fetching tag information.";
                 }
 
-                // Fetch Username information from USERS table (for the post)
-                $userQuery = "SELECT USERNAME, IMAGE AS USER_IMAGE FROM users WHERE USERID = '$userID'";
-                $userResult = $conn->query($userQuery);
-
-                if ($userResult->num_rows == 1) {
-                    $userRow = $userResult->fetch_assoc();
-                    $userName = $userRow['USERNAME'];
-                    $userImage = $userRow['USER_IMAGE'];
-                } else {
-                    echo "Error fetching User information.";
-                }
-
-                // Display the post
+                // Display the post for when the user selects to post as nonymous. 
+                // This will display a predefined image and username = Anonymous
+                // You also cannot check the user profile as it should be for extra security
                 echo '<section class="post">';
                 echo '<div class="post-header">';
                 echo '<div class="user-info">';
-                echo '<a href="Profile-html.php?user_id=' . $userID . '">';
-                echo '<img src="' . $userImage . '" alt="User Profile Picture">';
-                echo '<span class="username">' . $userName . '</span>';
-                echo '</a>';
+                if ($isAnonymous) {
+                    echo '<img src="Images/picture.jpg" alt="Anonymous User" class="user-image">';
+                    echo '<span class="username">Anonymous</span>';
+                } else {
+
+                    // Fetch Username information from USERS table (for the post)
+                    $userQuery = "SELECT USERNAME, IMAGE AS USER_IMAGE FROM users WHERE USERID = '$userID'";
+                    $userResult = $conn->query($userQuery);
+
+                    if ($userResult->num_rows == 1) {
+                        $userRow = $userResult->fetch_assoc();
+                        $userName = $userRow['USERNAME'];
+                        $userImage = $userRow['USER_IMAGE'];
+                        // Display username and image for non-anonymous posts
+                        // In this case you can visit the user´s profile wich id corresponds to the post
+                        // You can visit its profile and see its posts but not edit or delet them(ofc)
+                        echo '<a href="Profile-html.php?user_id=' . $userID . '" class="user-link">';
+                        echo '<img src="' . $userImage . '" alt="User Profile Picture" class="user-image">';
+                        echo '</a>';
+                        echo '<a href="Profile-html.php?user_id=' . $userID . '" class="user-link">';
+                        echo '<span class="username">' . $userName . '</span>';
+                        echo '</a>';
+                    } else {
+                        echo "Error fetching User information.";
+                    }
+                }
                 echo '</div>';
                 echo '<h2 class="post-title">' . $postTitle . '</h2>';
                 echo '<div class="post-tag">';
@@ -277,7 +309,7 @@ if ($postResult->num_rows > 0) {
                 echo '<br><br>';
                 echo '</div>';
                 echo '</div>';
-                echo '<a href="ViewPost-html.php?post_id=' . $post_id . '" class="post-link">';
+                echo '<a href="ViewPost-html.php?post_id=' . $post_id . '&post_type=' . $postType . '" class="post-link">';
                 echo '<div class="post-content">';
                 echo '<p>' . $postContent . '</p>';
                 echo '</div>';
@@ -295,12 +327,17 @@ if ($postResult->num_rows > 0) {
                 echo '<i class="uil uil-arrow-down"></i>';
                 echo '</button>';
                 echo '</form>';
-                echo '<a href="ViewPost-html.php?post_id=' . $post_id . '#comments" class="post-link">';
+                echo '<a href="ViewPost-html.php?post_id=' . $post_id . '&post_type=' . $postType . '#comments" class="post-link">';
                 echo '<button class="comment-button"><i class="uil uil-comment"></i></button>';
                 echo '</a>';
                 echo '</div>';
                 echo '</div>';
                 echo '</section>';
+                $foundPosts = true;
+            }
+
+            if (!$foundPosts) {
+                echo "No posts found.";
             }
         } else {
             echo "No posts found.";
@@ -310,9 +347,7 @@ if ($postResult->num_rows > 0) {
 
     
     </div>
-    </div>
-
-</div>
+    
 
 <!-- JavaScript for the Landing Page-->
 <script type="text/javascript" src="Scripts/iNOVAtion-js.js"></script>
@@ -327,12 +362,29 @@ function toggleFilterSection() {
     }
 }
 
+// Basic function that allows you to see the tags and preview the tags name(selected)
 function selectTag(tagName) {
-    // Add your logic to handle the selected tag
     console.log("Selected Tag: " + tagName);
-    toggleFilterSection(); // Close the dropdown after selection (optional)
+    filterPostsByTag(tagName); 
+    toggleFilterSection(); 
 }
 
+// Need to comment
+function filterPostsByTag(selectedTag) {
+    var posts = document.querySelectorAll('.post');
+    
+    for (var i = 0; i < posts.length; i++) {
+        var postTag = posts[i].getElementsByClassName("input-tag")[0];
+
+        if (!selectedTag || postTag.innerText.toUpperCase() === selectedTag.toUpperCase()) {
+            posts[i].style.display = "";
+        } else {
+            posts[i].style.display = "none";
+        }
+    }
+}
+
+// Need to comment
 function filterTags() {
     var input, filter, options, i, tag;
     input = document.getElementById("tagSearch");
@@ -347,25 +399,50 @@ function filterTags() {
             options[i].style.display = "none";
         }
     }
+
+    filterPostsByTag(filter);
 }
 
-// Event listener to close the popup if you press on the screen
+
+// Event listener to close the popup if you press on the screen(so its less anoying)
 document.addEventListener('click', function (event) {
         var customDropdown = document.querySelector(".custom-dropdown");
         var filterButton = document.querySelector(".filter-button");
         
-        // Check if the clicked element is outside the filter pop-up and the filter button
+        // This checks if the event pressed is outside the poopup and if so closes it
         if (!customDropdown.contains(event.target) && !filterButton.contains(event.target)) {
-            // If so, close the filter pop-up
             customDropdown.classList.remove("active");
         }
     });
 
 // Function to reload the page without refreshing
 function selectTag(tagName) {
-       // Reload the page with the selected tag as a query parameter
        window.location.href = 'iNOVAtion-html.php?tag=' + encodeURIComponent(tagName);
 }  
+
+// Function to search for the title of the posts in the page as well as the usernames (without refreshing)
+function searchPosts() {
+    var input, filter, posts, i, postTitle, username, postContent;
+    input = document.getElementById("postSearch");
+    filter = input.value.toUpperCase();
+    posts = document.querySelectorAll('.post');
+
+    for (i = 0; i < posts.length; i++) {
+        postTitle = posts[i].getElementsByClassName("post-title")[0];
+        postContent = posts[i].getElementsByClassName("post-content")[0];
+        username = posts[i].getElementsByClassName("username")[0];
+
+        // This helps on the search making all the irregular text readable in case is either in upper or lower text
+        if (postTitle.innerText.toUpperCase().indexOf(filter) > -1 ||
+            postContent.innerText.toUpperCase().indexOf(filter) > -1 ||
+            username.innerText.toUpperCase().indexOf(filter) > -1) {
+            posts[i].style.display = "";
+        } else {
+            posts[i].style.display = "none";
+        }
+    }
+}
+
 </script>
 
 </body>
