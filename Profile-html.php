@@ -9,13 +9,16 @@ if (mysqli_connect_errno()) {
 // Start or resume the session
 session_start();
 
-
 // Check if a specific user ID is provided in the URL
 $profileUserId = isset($_GET['user_id']) ? $_GET['user_id'] : null;
 
 // If no specific user ID is provided, check if the current user is logged in
 if (!$profileUserId && isset($_SESSION['USERID'])) {
     $profileUserId = $_SESSION['USERID'];
+}
+
+if (isset($_SESSION['USERID'])) {
+    $visitorid = $_SESSION['USERID'];
 }
 
 if ($profileUserId) {
@@ -52,7 +55,7 @@ if ($profileUserId) {
     if ($postResult->num_rows > 0) {
         while ($postRow = $postResult->fetch_assoc()) {
             $postType = $postRow["post_type"];
-            $post_id  = ($postType == 'idea') ? $postRow["IDEAID"] : $postRow["PROBLEMID"];
+            $post_id = ($postType == 'idea') ? $postRow["IDEAID"] : (isset($postRow["PROBLEMID"]) ? $postRow["PROBLEMID"] : null);
             $postTitle = $postRow['TITLE'];
             $tagID = $postRow['TAGID'];
             $postContent = $postRow['TEXT'];
@@ -112,103 +115,106 @@ if ($profileUserId) {
 </head>
 <body>
 
-<header>
-    <div class="nav-bar">
-        <div class="logo">
-            <a href="iNOVAtion-html.php">
-                <img src="Images/iNOVAtion Hub.png" alt="Logo" id="main-logo">
-            </a>
-        </div>
-        <div class="header-links">
-            <a href="#"><i class="uil uil-user"></i> Profile</a>
-        </div>
-        <div class="navigation">
-            <div class="nav-items">
-                <i class="uil uil-times nav-close-btn"></i>
-                <a href="#"><i class="uil uil-home"></i> Home</a>
-                <a href="#"><i class="uil uil-compass"></i> Explore</a>
-                <a href="#"><i class="uil uil-info-circle"></i> About</a>
-                <a href="#"><i class="uil uil-envelope"></i> Contact</a>
+    <header>
+        <div class="nav-bar">
+            <div class="logo">
+                <a href="iNOVAtion-html.php">
+                    <img src="Images/iNOVAtion Hub.png" alt="Logo" id="main-logo">
+                </a>
             </div>
+            <div class="header-links">
+                <a href="#"><i class="uil uil-user"></i> Profile</a>
+            </div>
+            <div class="navigation">
+                <div class="nav-items">
+                    <i class="uil uil-times nav-close-btn"></i>
+                    <a href="#"><i class="uil uil-home"></i> Home</a>
+                    <a href="#"><i class="uil uil-compass"></i> Explore</a>
+                    <a href="#"><i class="uil uil-info-circle"></i> About</a>
+                    <a href="#"><i class="uil uil-envelope"></i> Contact</a>
+                </div>
+            </div>
+            <i class="uil uil-apps nav-menu-btn"></i>
         </div>
-        <i class="uil uil-apps nav-menu-btn"></i>
-    </div>
-</header>
+    </header>
 
-<body>
-    <div class="profile-container">
-        <div class="profile-header">
-            <div class="edit-profile" id="editProfileBtn">
-                <i class="uil uil-edit"></i> Edit Profile
+    <body>
+        <div class="profile-container">
+            <div class="profile-header">
+                <div class="edit-profile" id="editProfileBtn">
+                    <i class="uil uil-edit"></i> Edit Profile
+                </div>
+                <img src="<?php echo $userImage; ?>" alt="User Profile Picture" class="profile-picture" id="profilePicture">
+                <div class="profile-info" id="profileInfo">
+                    <h1 class="username" id="username"><?php echo $username; ?></h1>
+                    <p class="description" id="description">Add your description here!</p>
+                </div>
             </div>
-            <img src="<?php echo $userImage; ?>" alt="User Profile Picture" class="profile-picture" id="profilePicture">
-            <div class="profile-info" id="profileInfo">
-                <h1 class="username" id="username"><?php echo $username; ?></h1>
-                <p class="description" id="description">User description goes here.</p>
-            </div>
-        </div>
-        <div class="published-posts">
-            <h2>Your Published Posts</h2>
-            <!-- Check if the user has published posts -->
-            <?php if (!empty($posts)) : ?>
-                <?php foreach ($posts as $post) : ?>
-                    <div class="post">
-                        <div class="post-header">
-                            <div class="user-info">
-                                <img src="<?php echo $post['userImage']; ?>" alt="User Profile Picture">
-                                <span class="username"><?php echo $post['userName']; ?></span>
-                            </div>
-                            <a href="ViewPost-html.php?post_id=<?php echo $post['postId']; ?>">
-                                <h2 class="post-title"><?php echo $post['postTitle']; ?></h2>
-                                <p class="post-tag"><?php echo $post['tagName']; ?></p>
-                                <br>
-                                <p class="post-content"><?php echo $post['postContent']; ?></p>
-                            </a>
-                        </div>
-                        <div class="post-footer">
-                            <div class="post-actions">
-                                <form method="post" action="Php/vote.php">
-                                    <input type="hidden" name="post_id" value="<?php echo $post['postId']; ?>">
-                                    <button name="upvote" type="submit" class="upvote-button">
-                                        <i class="uil uil-arrow-up"></i>
-                                    </button>
-                                    <span class="post-stats"><?php echo $post['votescore']; ?></span>
-                                    <button name="downvote" type="submit" class="downvote-button">
-                                        <i class="uil uil-arrow-down"></i>
-                                    </button>
-                                </form>
-                                <a href="ViewPost-html.html#comments" class="post-link">
-                                    <button class="comment-button"><i class="uil uil-comment"></i></button>
+
+            <div class="published-posts">
+                <h2>Your Published Posts</h2>
+                <!-- Check if the user has published posts -->
+                <?php if (!empty($posts)) : ?>
+                    <?php $postIndex = 0; ?>
+                    <?php while ($postIndex < count($posts)) : ?>
+                        <?php $post = $posts[$postIndex]; ?>
+                        <div class="post">
+                            <div class="post-header">
+                                <div class="user-info">
+                                    <img src="<?php echo $post['userImage']; ?>" alt="User Profile Picture">
+                                    <span class="username"><?php echo $post['userName']; ?></span>
+                                </div>
+                                <a href="ViewPost-html.php?post_id=<?php echo $post['postId']; ?>">
+                                    <h2 class="post-title"><?php echo $post['postTitle']; ?></h2>
+                                    <p class="post-tag"><?php echo $post['tagName']; ?></p>
+                                    <br>
+                                    <p class="post-content"><?php echo $post['postContent']; ?></p>
                                 </a>
                             </div>
-                            <?php if ($post['userId'] == $profileUserId) : ?>
-                                <div class="edit-delete-buttons">
-                                    <!-- Edit button with icon -->
-                                    <a href="Create Post-html.php?edit_post_id=<?php echo $post['postId']; ?>">
-                                        <i class="uil uil-pen"></i> Edit
-                                    </a>
-                                    <!-- Delete button with icon -->
-                                    <form method="post" action="Php/deletepost.php">
+                            <div class="post-footer">
+                                <div class="post-actions">
+                                    <form method="post" action="Php/vote.php">
                                         <input type="hidden" name="post_id" value="<?php echo $post['postId']; ?>">
-                                        <button name="delete-button" type="submit" class="delete-button">
-                                            <i class="uil uil-trash-alt"></i> Delete
+                                        <button name="upvote" type="submit" class="upvote-button">
+                                            <i class="uil uil-arrow-up"></i>
+                                        </button>
+                                        <span class="post-stats"><?php echo $post['votescore']; ?></span>
+                                        <button name="downvote" type="submit" class="downvote-button">
+                                            <i class="uil uil-arrow-down"></i>
                                         </button>
                                     </form>
+                                    <a href="ViewPost-html.html#comments" class="post-link">
+                                        <button class="comment-button"><i class="uil uil-comment"></i></button>
+                                    </a>
                                 </div>
-                            <?php endif; ?>
-                        </div>
-                    </div>
-                <?php endforeach; ?>
-            <?php else : ?>
-                <p>No Posts Yet to Show!</p>
-            <?php endif; ?>
-        </div>
-    </div>
-</body>
-<?php
-echo "Profile User ID: $profileUserId, Post User ID: {$post['userId']}";
-?>
+                                <?php if ($visitorid == $profileUserId) : ?>
+                                    <div class="edit-delete-buttons">
 
+                                        <!-- Edit button with icon -->
+                                        <a href="Create Post-html.php?edit_post_id=<?php echo $post['postId']; ?>">
+                                            <i class="uil uil-pen"></i> Edit
+                                        </a>
+                            
+                                        <!-- Delete button with icon -->
+                                        <form method="post" action="Php/deletepost.php">
+                                            <input type="hidden" name="post_id" value="<?php echo $post['postId']; ?>">
+                                            <button name="delete-button" type="submit" class="delete-button">
+                                                <i class="uil uil-trash-alt"></i> Delete
+                                            </button>
+                                        </form>
+
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                        <?php $postIndex++; ?>
+                    <?php endwhile; ?>
+                <?php else : ?>
+                    <p>No Posts Yet to Show!</p>
+                <?php endif; ?>
+            </div>
+        </div>
+    </body>
 
 <script type="text/javascript" src="Scripts/iNOVAtion-js.js"></script>
 
