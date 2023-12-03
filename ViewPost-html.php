@@ -13,8 +13,22 @@ session_start();
 if (isset($_GET['post_id'])) {
     $post_id = $_GET['post_id'];
 
+    // Check if its either a Idea or a Problem
+    $postType = isset($_GET['post_type']) ? $_GET['post_type'] : ''; // Add post_type to your URL
+
+    if ($postType === 'idea') {
+        $postTable = 'IDEAS';
+        $postid = 'IDEAID';
+    } elseif ($postType === 'problem') {
+        $postTable = 'PROBLEMS';
+        $postid = 'PROBLEMID';
+    } else {
+        echo "Invalid post type.";
+        exit; 
+    }
+
     // Fetch post information from the database based on the post ID
-    $postQuery = "SELECT * FROM IDEAS WHERE IDEAID = '$post_id'";
+    $postQuery = "SELECT * FROM $postTable WHERE $postid = '$post_id'";
     $postResult = $conn->query($postQuery);
 
     if ($postResult->num_rows == 1) {
@@ -41,15 +55,29 @@ if (isset($_GET['post_id'])) {
         }
 
         // Fetch Username information from USERS table (for the post)
-        $userQuery = "SELECT USERNAME, IMAGE AS USER_IMAGE FROM users WHERE USERID = '$userID'";
+        //
+        $userQuery = "SELECT 
+        IF(ISANONYMOUS = 1, 'Anonymous', USERS.USERNAME) AS USERNAME,
+        IF(ISANONYMOUS = 1, 'Images/picture.jpg', USERS.IMAGE) AS USER_IMAGE
+        FROM $postTable
+        LEFT JOIN USERS ON $postTable.USERID = USERS.USERID
+        WHERE $postTable.$postid = '$post_id'";
+
         $userResult = $conn->query($userQuery);
 
         if ($userResult->num_rows == 1) {
-            $userRow = $userResult->fetch_assoc();
+        $userRow = $userResult->fetch_assoc();
+
+        // Check if the user is anonymous
+        if ($userRow['USERNAME'] === 'Anonymous') {
+            $userName = 'Anonymous';
+            $userImage = 'Images/picture.jpg';
+        } else {
             $userName = $userRow['USERNAME'];
             $userImage = $userRow['USER_IMAGE'];
+        }
         } else {
-            echo "Error fetching Name information.";
+        echo "Error fetching Name information.";
         }
     } else {
         echo "Post not found.";
@@ -59,8 +87,18 @@ if (isset($_GET['post_id'])) {
 }
 
 // Fetch comments associated with the post
-$fetchCommentsQuery = "SELECT * FROM COMMENTS WHERE IDEAID = '$post_id'";
-$commentsResult = $conn->query($fetchCommentsQuery);
+$fetchCommentsQuery = "SELECT * FROM COMMENTS 
+                      WHERE IDEAID = CASE 
+                      WHEN '$postType' = 'idea' THEN '$post_id'
+                      WHEN '$postType' = 'problem' THEN NULL
+                      END
+
+                      OR PROBLEMID = CASE
+                      WHEN '$postType' = 'problem' THEN '$post_id'
+                      WHEN '$postType' = 'idea' THEN NULL
+                      END";
+
+$commentsResult = $conn->query($fetchCommentsQuery);$commentsResult = $conn->query($fetchCommentsQuery);
 
 ?>
 
@@ -116,8 +154,25 @@ $commentsResult = $conn->query($fetchCommentsQuery);
     <div class="post">
         <div class="post-header">
             <div class="user-info">
+                
+            <?php
+            if ($userRow['USERNAME'] != 'Anonymous') {
+            echo '<a href="Profile-html.php?user_id=' . $userID . '" class="user-link">';
+            }
+            ?>
                 <img src= <?php echo $userImage; ?> alt='User Profile Picture'>
+            <?php
+            echo '</a>';
+            ?>
+            <?php
+            if ($userRow['USERNAME'] != 'Anonymous') {
+            echo '<a href="Profile-html.php?user_id=' . $userID . '" class="user-link">';
+            }   
+            ?>
                 <span class="username"><?php echo $userName; ?></span>
+            <?php
+            echo '</a>';
+            ?>
             </div>
             <br>
             <h2 class="post-title"><?php echo $postTitle; ?></h2>
@@ -125,9 +180,9 @@ $commentsResult = $conn->query($fetchCommentsQuery);
                 <span class="input-type">
                     <?php
                     // Check the table from which the post ID is fetched so that i can display if its either a Idea or a Problem
-                    if ($postRow['IDEAID']) {
+                    if (isset($postRow['IDEAID']) && $postRow['IDEAID']) {
                         echo "Idea";
-                    } elseif ($postRow['PROBLEMID']) {
+                    } elseif (isset($postRow['PROBLEMID']) && $postRow['PROBLEMID']) {
                         echo "Problem";
                     }
                     ?>
