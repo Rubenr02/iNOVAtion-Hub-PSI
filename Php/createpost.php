@@ -62,18 +62,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['post-button'])) {
                     $tagRow = $tagResult->fetch_assoc();
                     $tagID = $tagRow['TAGID'];
 
-                        // Determine the table(IDEAS or PROBLEMS) based on $postType inputed
-                        $tableName = ($postType == 'idea') ? 'IDEAS' : 'PROBLEMS';
+                    // Determine the table (IDEAS or PROBLEMS) based on $postType input
+                    $tableName = ($postType == 'idea') ? 'IDEAS' : 'PROBLEMS';
 
-                        // Perform SQL query to insert a new post in the table selected
-                        $sql = "INSERT INTO $tableName (USERID, TAGID, TITLE, TEXT, IMAGE, FILE, CREATEDON, ISANONYMOUS) 
-                                VALUES ('$userid', '$tagID', '$postTitle', '$postText', '$targetImage', '$postPDF', NOW(), '$isAnonymous')";
+                    // Perform SQL query to insert a new post in the selected table
+                    $sql = "INSERT INTO $tableName (USERID, TAGID, TITLE, TEXT, IMAGE, FILE, CREATEDON, ISANONYMOUS) 
+                            VALUES ('$userid', '$tagID', '$postTitle', '$postText', '$targetImage', '$postPDF', NOW(), '$isAnonymous')";
 
                     if ($conn->query($sql) === TRUE) {
                         header("Location: /PSI/Loading-html.html");
                         exit();
-                     
-                    // Error handling responses    
                     } else {
                         echo "Error: " . $sql . "<br>" . $conn->error;
                     }

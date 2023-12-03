@@ -329,6 +329,10 @@ header .nav-bar {
     margin-bottom: 10px;
 }
 
+.user-info a {
+    text-decoration: none;
+}
+
 .user-info img {
     width: 60px;
     height: 60px;
@@ -342,10 +346,12 @@ header .nav-bar {
     color: #555;
 }
 
+
 /* Style the post title and tags */
 .post-title {
     font-size: 1.7em;
     margin-bottom: 10px;
+    margin-left: 6px;
     color: #333;
     display: flex;
     justify-content: space-between; 
