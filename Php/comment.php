@@ -13,14 +13,30 @@ session_start();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $userid = $_SESSION['USERID'];
     $post_id = trim($_POST['post_id']);
+    
     // Check if the comment form is submitted
     if (isset($_POST['submit-comment'])) {
-        // Validate and sanitize the comment input
         $commentText = mysqli_real_escape_string($conn, $_POST['input-comment']);
+        
         // Check if the comment text is not empty
         if (!empty($commentText)) {
+            // Determine the post type (idea or problem)
+            $postType = isset($_POST['post_type']) ? $_POST['post_type'] : '';
+            
+            // Identifying the tables as IDEAS or PROBLEMS
+            if ($postType === 'idea') {
+                $postTable = 'IDEAS';
+                $postIdColumn = 'IDEAID';
+            } elseif ($postType === 'problem') {
+                $postTable = 'PROBLEMS';
+                $postIdColumn = 'PROBLEMID';
+            } else {
+                echo "Invalid post type.";
+                exit; 
+            }
+
             // Insert the comment into the COMMENTS table
-            $insertCommentQuery = "INSERT INTO COMMENTS (IDEAID, USERID, CHARACTERS, CREATEDON, VOTESCORE, COMMENT_TYPE)
+            $insertCommentQuery = "INSERT INTO COMMENTS ($postIdColumn, USERID, CHARACTERS, CREATEDON, VOTESCORE, COMMENT_TYPE)
                                    VALUES ('$post_id', '$userid', '$commentText', NOW(), 0, 1)";
 
             if ($conn->query($insertCommentQuery) === TRUE) {
@@ -34,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// Redirect back to the previous page or wherever you want
+// Redirect back to the previous page 
 header("Location: " . $_SERVER["HTTP_REFERER"]);
 exit();
 ?>
