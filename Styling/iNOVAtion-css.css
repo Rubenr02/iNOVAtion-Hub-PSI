@@ -564,11 +564,22 @@ header .nav-bar {
     margin-left: 15%;
 }
 
+.no-posts-message {
+    text-align: center;
+    margin-top: 20px; /* Adjust the margin as needed */
+    font-size: 18px;
+    color: #555; /* Adjust the color as needed */
+}
+
 /* Style the user info section */
 .user-info {
     display: flex;
     align-items: center;
     margin-bottom: 10px;
+}
+
+.user-info a {
+    text-decoration: none ;
 }
 
 .user-info img {
@@ -583,6 +594,7 @@ header .nav-bar {
     font-weight: 500;
     color: #555;
 }
+
 
 /* Style the post title and tags */
 .post-title {
