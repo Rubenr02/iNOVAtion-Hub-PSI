@@ -1,5 +1,5 @@
 <?php
-$con = mysqli_connect("localhost", "root", "", "psi");
+$con = mysqli_connect("localhost", "root", "", "inovationhub");
 
 // Check connection
 if (mysqli_connect_errno()) {

@@ -3,7 +3,7 @@
 session_start();
 
 // Create connection
-$conn = mysqli_connect("localhost", "root", "", "psi");
+$conn = mysqli_connect("localhost", "root", "", "inovationhub");
 
 if (mysqli_connect_errno()) {
     echo "Failed to connect to MySQL: " . mysqli_connect_errno();
@@ -65,7 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['post-button'])) {
                     // Determine the table (IDEAS or PROBLEMS) based on $postType input
                     $tableName = ($postType == 'idea') ? 'IDEAS' : 'PROBLEMS';
 
-                    // Perform SQL query to insert a new post in the selected table
+                    // Do a SQL query to insert a new post in the corresponding desired table
                     $sql = "INSERT INTO $tableName (USERID, TAGID, TITLE, TEXT, IMAGE, FILE, CREATEDON, ISANONYMOUS) 
                             VALUES ('$userid', '$tagID', '$postTitle', '$postText', '$targetImage', '$postPDF', NOW(), '$isAnonymous')";
 

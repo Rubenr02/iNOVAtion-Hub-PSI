@@ -1,6 +1,6 @@
 <?php
 // Create connection
-$conn = mysqli_connect("localhost", "root", "", "inovation");
+$conn = mysqli_connect("localhost", "root", "", "inovationhub");
 
 if (mysqli_connect_errno()) {
     echo "Failed to connect to MySQL: " . mysqli_connect_errno();

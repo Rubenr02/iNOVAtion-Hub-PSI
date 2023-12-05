@@ -1,6 +1,6 @@
 <?php
 // Create connection
-$conn = mysqli_connect("localhost", "root", "", "psi");
+$conn = mysqli_connect("localhost", "root", "", "inovationhub");
 
 if (mysqli_connect_errno()) {
     echo "Failed to connect to MySQL: " . mysqli_connect_errno();
@@ -164,7 +164,9 @@ if ($profileUserId) {
                                     <img src="<?php echo $post['userImage']; ?>" alt="User Profile Picture">
                                     <span class="username"><?php echo $post['userName']; ?></span>
                                 </div>
-                                <a href="ViewPost-html.php?post_id=<?php echo $post['postId']; ?>">
+                                    <?php
+                                    echo '<a href="ViewPost-html.php?post_id=' . $post_id . '&post_type=' . $postType . '" class="post-link">';
+                                    ?>
                                     <h2 class="post-title"><?php echo $post['postTitle']; ?></h2>
                                     <p class="post-tag"><?php echo $post['tagName']; ?></p>
                                     <br>
@@ -189,6 +191,11 @@ if ($profileUserId) {
                                 </div>
                                 <?php if ($visitorid == $profileUserId) : ?>
                                     <div class="edit-delete-buttons">
+
+                                        <!-- Submit Form button with icon -->
+                                        <a href="Submit_Form-html.php?post_id=<?php echo $post['postId']; ?>">
+                                            <i class="uil uil-file-edit-alt"></i> Submit Form
+                                        </a>
 
                                         <!-- Edit button with icon -->
                                         <a href="Create Post-html.php?edit_post_id=<?php echo $post['postId']; ?>">

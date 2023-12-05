@@ -22,7 +22,6 @@ body {
 }
 
 
-
 /*======= Header navigation bar =======*/
 
 /* Style the fixed header bar */
@@ -195,28 +194,6 @@ header .nav-bar {
     transform: rotate(90deg);
 }
 
-/*======= Scroll bar =======*/
-
-/* Style the scrollbar and scrollbar thumb */
-::-webkit-scrollbar {
-    background: #fff;
-    width: 11px;
-    border-radius: 2em;
-}
-
-/* Style the scrollbar thumb on hover */
-::-webkit-scrollbar-thumb {
-    background: grey;
-    width: 100%;
-    border-radius: 2em;
-}
-
-/* Style the scrollbar thumb when hovering */
-::-webkit-scrollbar-thumb:hover {
-    background:darkgray;
-}
-
-
 /*======= Search bar and Profile =======*/
 
 /* Style the search bar */
@@ -266,230 +243,131 @@ header .nav-bar {
     color: #fff;
   }
 
+/*======= Create a New Post Styling =======*/
 
 
-/*======= Profile and Icon =======*/
-
-/* Style the profile container */
-.profile-container {
-    display: flex;
-    align-items: flex-start;
-    max-width: 100%;
-    width: 100%;
-    margin: 0;
-    background: #EFF0F6;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-}
-
-.profile-header {
-    display: flex;
-    flex-direction: column; 
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.profile-picture {
-    width: 200px; 
-    height: 200px; 
-    border-radius: 50%;
-    margin-right: 20px;
-    margin-top: 4em;
-    margin-left: 20px;
-}
-
-.profile-info {
-    flex-grow: 1;
-}
-
-.username {
-    font-size: 2.3em; 
-    font-weight: 600;
-    color: #210060;
-    margin-top: 0;
-    text-align: center;
-}
-
-.description {
-    font-size: 1.3em; 
-    color: #555;
-    margin-top: 10px;
-    text-align: center;
-}
-
-.edit-profile {
-    display: flex;
-    margin-top: 55px;
-    margin-left: -130px;
-    align-self: center;
-}
-
-/* Style the published posts section */
-.published-posts {
-    width: 100%;
-    margin: 50px; 
-
-}
-
-.published-posts h2 {
-    font-size: 1.5em;
-    font-weight: 600;
-    color: #210060;
-    margin-bottom: 15px;
-}
-
-
-/* Style the container for posts */
-.posts-container {
+/* Style the new post container */
+.post-container {
+    background-color: white;
+    max-width: 1000px;
     width: 70%;
-    margin: 50px;
-}
-
-/* Style the individual post using existing post styles */
-.post {
-    position: relative;
-    background-color: #fff;
-    margin: 1em 0;
-    padding: 15px;
-    border-radius: 15px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    width: 100%;
-}
-
-.published-posts a{
-    text-decoration: none;
-    color: #555;
-}
-
-/* Style the user info section */
-.post .user-info {
-    display: flex;
+    margin-top: 7em; /* Push the container down by the height of the header */
+    padding: 20px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    border-radius: 20.05px;
+    position: absolute;
     align-items: center;
+    left: 16%;  
+}
+
+.post-container h1 {
+    color: #210060;
+    text-align: left; 
+    margin-bottom: 20px; 
+    margin-left: 10px;
+}
+
+.input-field {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    
+}
+
+.input-field label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+/*======= Post Content =======*/
+
+.question {
+    padding: 14px;
+}
+
+.input-text {
+    padding: 10px;
     margin-bottom: 10px;
 }
 
-.post .user-info img {
-    width: 50px; 
-    height: 50px; 
-    border-radius: 50%;
-    margin-right: 10px;
+.input-text label {
+    display: none;
 }
 
-.post .username {
-    font-size: 1.2em;
-    font-weight: 500;
-    color: #555;
-}
 
-/* Style the post title and tags */
-.post .post-title {
-    font-size: 1.5em; 
-    margin-bottom: 8px; 
-    color: #333;
-    display: flex;
-    justify-content: space-between;
-}
-
-.post .post-tag {
-    display: flex;
-    align-items: center;
-}
-
-.post .input-tag,
-.post .input-type {
-    margin-left: 8px; 
-    font-size: 1em; 
-    color: #888;
-}
-
-/* Style the post content */
-.post .post-content {
-    font-size: 1.2em; 
-    line-height: 1.4; 
-    color: #555;
-    margin-bottom: 15px; 
-    background-color: #EFF0F6;
+.input-text textarea {
+    width: 100%;
     padding: 10px;
-    border-radius: 10px; 
+    border: 0px solid #ccc;
+    border-radius: 15px;
+    box-sizing: border-box;
+    background: #E9EAF3;
+    height: 150px; 
+    resize: none; /* Disable textarea resizing(the 3 stripes on the bottom left corner) */
 }
 
-.post .post-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+/* Show label when the textarea is focused (clicked) */
+.input-text textarea:focus + label {
+    display: block;
 }
 
-.post-actions {
-    display: flex;
-    align-items: center;
+
+/*======= Add Image =======*/
+
+.input-image,
+.input-pdf {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    display: inline-block;
+    width: calc(40% - 20px); /* Set the width and adjust for margin */
+    margin-top: 10px;
 }
 
-.post .post-actions button {
+
+.input-image label,
+.input-pdf label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 0.9em;
+}
+
+.input-image input[type="file"],
+.input-pdf input[type="file"] {
+    width: 100%;
+    padding: 8px;
+    border-radius: 10px;
+    box-sizing: border-box;
+    background: #E9EAF3;
+    cursor: pointer;
+}
+
+
+/*======= Post Button =======*/
+
+#post-button {
     background-color: #E9EAF3;
     color: #555;
-    padding: 8px 16px; 
-    border: none;
-    border-radius: 30px; 
+    padding: 8px 20px;
+    border-radius: 15px;
     cursor: pointer;
-    margin-right: 8px;
-    font-size: 1em; 
-    transition: background-color 0.3s, color 0.3s;
+    margin-left: 15px;
+    border: none;
+    margin-left: 10%    ;
 }
 
-.post .post-actions button:hover {
+#post-button:hover {
     background-color: #555;
     color: #fff;
 }
 
-.post .post-stats {
-    display: flex;
-    align-items: center;
-}
-
-.post .vote-count,
-.post .comment-count {
-    font-size: 1em; 
-    margin-right: 8px; 
-    color: #555;
-}
-
-/* Style the edit and delete buttons with icons */
-.post .edit-delete-buttons {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    display: flex;
-}
-
-.post .edit-delete-buttons a,
-.post .edit-delete-buttons button {
-    background-color: #EFF0F6;
-    color: #555;
-    padding: 8px 12px;
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-    margin-right: 8px;
-    font-size: 0.8em;
-    text-decoration: none; 
-}
-
-.post .edit-delete-buttons button.delete-button {
-    background-color: #EFF0F6;
+#post-button i {
+    margin-left: 5px; /* Adjust the margin as needed */
 }
 
 
-.post .edit-delete-buttons button.delete-button:hover {
-    background-color: #555;
-    color: white;
-}
-
-.post .edit-delete-buttons a:hover {
-    background-color: #555;
-    color: white;
-}
-
+/*======= Media Queries for Mobile Screen=======*/
 
 
 /* Media query for screens smaller than 768px*/
@@ -569,106 +447,208 @@ header .nav-bar {
         color: #fff;
     }
 
-    .profile-container {
-        display: flex;
-        align-items: flex-start;
-        max-width: 100%;
-        width: 100%;
-        margin: 0;
-        background: #EFF0F6;
-        padding: 30px;
-        border-radius: 10px;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    }
-    
-    .profile-header {
-        display: flex;
-        flex-direction: column; 
+        /* Style the new post container */
+    .post-container {
+        background-color: white;
+        max-width: 1000px;
+        width: 70%;
+        margin-top: 7em; /* Push the container down by the height of the header */
+        padding: 20px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        border-radius: 20.05px;
+        position: absolute;
         align-items: center;
-        margin-bottom: 20px;
-    }
-    
-    .profile-picture {
-        width: 100%; 
-        height: 100%; 
-        border-radius: 50%;
-        margin-right: 0px;
-        margin-top: 2em;
-        margin-left: -10px;
-    }
-    
-    .profile-info {
-        flex-grow: 1;
-    }
-    
-    .username {
-        font-size: 1.2em; 
-        font-weight: 600;
-        color: #210060;
-        margin-top: 0;
-        margin-left: -5px;
-        text-align: center;
-    }
-    
-    .description {
-        font-size: 0.8em; 
-        color: #555;
-        margin-top: 1px;
-        text-align: center;
-        margin-left: -5px;
-    }
-    
-    .edit-profile {
-        display: flex;
-        margin-top: 55px;
-        margin-left: -15px;
-        align-self: center;
-        white-space: nowrap;
+        left: 16%;  
     }
 
-    /* Style the post title and tags */
-    .post .post-title {
-    font-size: 1em; 
-    margin-bottom: 8px; 
-    color: #333;
-    display: flex;
-    justify-content: space-between;
+    .post-container h1 {
+        font-size: 24px;
     }
 
-    .post .input-tag,
-    .post .input-type {
-        margin-left: 8px; 
-        font-size: 0.8em; 
-        color: #888;
-    }
-
-    /* Style the post content */
-    .post .post-content {
-        font-size: 1em; 
-        line-height: 1.4; 
-        color: #555;
-        margin-bottom: 15px; 
-        background-color: #EFF0F6;
+    .input-field {
+        margin-bottom: 10px;
         padding: 10px;
-        border-radius: 10px; 
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        
     }
 
-    /* Style the individual post using existing post styles */
-    .post {
-        position: relative;
-        background-color: #fff;
-        margin: 0 0;
-        padding: 5px;
-        border-radius: 15px;
-        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    .input-field label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    /*======= Add Title =======*/
+
+    .input-title {
+        padding: 10px; /* Add some padding for spacing */
+        border-radius: 8px; /* Rounded corners */
+        margin-bottom: 10px; /* Adjust margin as needed */
+    }
+
+    .input-title label {
+        display: none; /* Hide the label by default */
+    }
+
+    .input-title input[type="text"] {
         width: 100%;
-        margin-right: 50px;
+        padding: 8px; /* Adjust padding as needed */
+        border: 0px solid #ccc; /* Add a border for a clean look */
+        border-radius: 15px; /* Rounded corners for the input */
+        box-sizing: border-box; /* Include padding and border in the input's total width */
+        background: #b9bcd6;
+    }
+
+    /* Show label when the input is focused (clicked) */
+    .input-title input[type="text"]:focus + label {
+        display: block;
+    }
+
+    /*======= Post Content =======*/
+
+    .input-text {
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+
+    .input-text label {
+        display: none;
+    }
+
+
+    .input-text textarea {
+        width: 100%;
+        padding: 10px;
+        border: 0px solid #ccc;
+        border-radius: 15px;
+        box-sizing: border-box;
+        background: #E9EAF3;
+        height: 150px; 
+        resize: none; /* Disable textarea resizing(the 3 stripes on the bottom left corner) */
+    }
+
+    /* Show label when the textarea is focused (clicked) */
+    .input-text textarea:focus + label {
+        display: block;
+    }
+
+    /*======= Tags =======*/
+
+    .input-tag,
+    .input-type {
+        position: relative;
+        display: inline-block;
+        width: 44%;
+        margin-right: 2px; /* Adjust the margin between the two selects */
+        margin-left: 10px;
+    }
+
+    .select-tag,
+    .select-type {
+        position: relative;
+        width: 100%;
+        padding: 8px;
+        background: #E9EAF3;
+        border: 0px solid #ccc;
+        border-radius: 10px;
+        color: #555;
+        box-sizing: border-box;
+        appearance: none;
+        cursor: pointer;
+        overflow-y: auto; /* Allow scrolling if needed */
+    }
+
+    .select-tag option {
+        height: 20px; /* Set the height for each option */
+    }
+
+    .uil-angle-down {
+        position: absolute;
+        top: 50%;
+        right: 10px; /* Adjust the right spacing as needed */
+        transform: translateY(-50%);
+        font-size: 18px; 
+        color: #555; 
+}
+
+
+    /*======= Anonymous Post  =======*/
+
+
+    .input-hide {
+        display: flex;
+        align-items: center;
+        width: 40%;
+        padding: 8px;
+        background: #E9EAF3;
+        border: 0px solid #ccc;
+        border-radius: 10px;
+        box-sizing: border-box;
+        cursor: pointer;
+        margin-left: 10px;
+        margin-top: 20px;
+    }
+
+    .input-hide label {
+        display: block;
+        cursor: pointer;
+        margin-right: 10px;
+        color: #555;
+        font-size: 0.8em;
+    }
+
+    .input-hide input[type="checkbox"] {
+        width: 14px; 
+        height: 14px;
+        cursor: pointer;
+        appearance: none;
+        border: 2px solid #ccc;
+        border-radius: 3px; 
+        margin-left: 0px;
+    }
+
+    .input-hide input[type="checkbox"]:checked {
+        background-color: #555;
+    }
+
+
+    /*======= Add Image =======*/
+
+    .input-image,
+    .input-pdf {
+        margin-bottom: 10px;
+        padding: 8px;
+        border-radius: 5px;
+        display: inline-block;
+        width: 300px;
+        margin-right: 20px;
         margin-top: 10px;
     }
 
-    .post .username {
-        font-size: 0.8em;
-        font-weight: 500;
-        color: #555;
+
+    .input-image label,
+    .input-pdf label {
+        display: block;
+        margin-bottom: 5px;
+        font-size: 0.9em;
+        white-space: nowrap;
     }
+
+    .input-image input[type="file"],
+    .input-pdf input[type="file"] {
+        width: 100%;
+        padding: 8px;
+        border-radius: 10px;
+        box-sizing: border-box;
+        background: #E9EAF3;
+        cursor: pointer;
+        font-size: 0.75em;
+    }
+
+    /*======= Post Button =======*/
+    #post-button {
+        margin-top: 25px;
+        margin-left: 17dvw;
+    }
+
 }

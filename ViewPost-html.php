@@ -1,6 +1,6 @@
 <?php
 // Create connection
-$conn = mysqli_connect("localhost", "root", "", "psi");
+$conn = mysqli_connect("localhost", "root", "", "inovationhub");
 
 if (mysqli_connect_errno()) {
     echo "Failed to connect to MySQL: " . mysqli_connect_errno();
@@ -217,16 +217,19 @@ $commentsResult = $conn->query($fetchCommentsQuery);$commentsResult = $conn->que
 
         <div class="post-footer">
             <div class="post-actions">
-                <button class="upvote-button"><i class="uil uil-arrow-up"></i></button>
-                <button class="downvote-button"><i class="uil uil-arrow-down"></i></button>
-                <button class="comment-button"><i class="uil uil-comment"></i></button>
-            </div>
-            <div class="post-stats">
-                <span class="upvote-count"><?php echo $votescore; ?></span>
-            </div>
-            <div class="report">
-                <a href=""><i class="uil uil-exclamation-circle"></i>Report</a>
-            </div>
+                <form method="post" action="Php/vote.php">
+                    <button class="upvote-button"><i class="uil uil-arrow-up"></i></button>
+                    <button class="downvote-button"><i class="uil uil-arrow-down"></i></button>
+                    <button class="comment-button"><i class="uil uil-comment"></i></button>
+                </div>
+                <div class="post-stats">
+                    <span class="upvote-count"><?php echo $votescore; ?></span>
+                </div>
+                <div class="report">
+                    <a href=""><i class="uil uil-exclamation-circle"></i>Report</a>
+                </div>
+                </form>
+
         </div>
 
         <br><br>
@@ -255,10 +258,10 @@ $commentsResult = $conn->query($fetchCommentsQuery);$commentsResult = $conn->que
         <!-- Comment Input Box -->
         <div class="comment-container">
             <div class="comment-image">
-                <img src="<?php echo isset($loggedUserImage) ? $loggedUserImage : 'path/to/default/image.jpg'; ?>" alt='User Profile Picture'>
+                <img src="<?php echo isset($loggedUserImage) ? $loggedUserImage : ''; ?>" alt='User Profile Picture'>
             </div>
             <div class="comment-input-box">
-                <form method="post" action="Php/comment.php">
+                <form method="post" action="Php/comment.php?post_id=<?php echo $post_id; ?>&post_type=<?php echo $postType; ?>">
                     <input type="hidden" name="post_id" value="<?php echo $post_id; ?>">
                     <textarea id="input-comment" name="input-comment" placeholder="Add a comment" rows="4" required></textarea>
                     <button class="submit-comment" id="post-button" type="submit" name="submit-comment"> Post
@@ -320,8 +323,6 @@ $commentsResult = $conn->query($fetchCommentsQuery);$commentsResult = $conn->que
     ?>
 
 </div>
-
-
 
 <script src="Scripts/iNOVAtion-js.js"></script>
 <script src="Scripts/ViewPost-js.js"></script>

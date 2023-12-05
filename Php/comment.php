@@ -1,6 +1,6 @@
 <?php
 // Create connection
-$conn = mysqli_connect("localhost", "root", "", "psi");
+$conn = mysqli_connect("localhost", "root", "", "inovationhub");
 
 if (mysqli_connect_errno()) {
     echo "Failed to connect to MySQL: " . mysqli_connect_errno();
@@ -16,15 +16,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     // Check if the comment form is submitted
     if (isset($_POST['submit-comment'])) {
-        // Validate and sanitize the comment input
         $commentText = mysqli_real_escape_string($conn, $_POST['input-comment']);
         
         // Check if the comment text is not empty
         if (!empty($commentText)) {
             // Determine the post type (idea or problem)
-            $postType = isset($_POST['post_type']) ? $_POST['post_type'] : '';
-            
-            // Set the appropriate table and column names based on post type
+            $postType = isset($_POST['post_type']) ? $_POST['post_type'] : (isset($_GET['post_type']) ? $_GET['post_type'] : '');
+
+            // Identifying the tables as IDEAS or PROBLEMS
             if ($postType === 'idea') {
                 $postTable = 'IDEAS';
                 $postIdColumn = 'IDEAID';
@@ -32,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $postTable = 'PROBLEMS';
                 $postIdColumn = 'PROBLEMID';
             } else {
-                echo "Invalid post type.";
+                echo "Invalid post type: " . htmlspecialchars($postType);
                 exit; 
             }
 
@@ -51,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// Redirect back to the previous page or wherever you want
+// Redirect back to the previous page 
 header("Location: " . $_SERVER["HTTP_REFERER"]);
 exit();
 ?>
