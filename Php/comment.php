@@ -21,8 +21,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Check if the comment text is not empty
         if (!empty($commentText)) {
             // Determine the post type (idea or problem)
+<<<<<<< HEAD
             $postType = isset($_POST['post_type']) ? $_POST['post_type'] : (isset($_GET['post_type']) ? $_GET['post_type'] : '');
 
+=======
+            $postType = isset($_POST['post_type']) ? $_POST['post_type'] : '';
+            
+>>>>>>> 1d0528f4e4cbd8d65937d13347466f23d2508efa
             // Identifying the tables as IDEAS or PROBLEMS
             if ($postType === 'idea') {
                 $postTable = 'IDEAS';
@@ -31,7 +36,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $postTable = 'PROBLEMS';
                 $postIdColumn = 'PROBLEMID';
             } else {
+<<<<<<< HEAD
                 echo "Invalid post type: " . htmlspecialchars($postType);
+=======
+                echo "Invalid post type.";
+>>>>>>> 1d0528f4e4cbd8d65937d13347466f23d2508efa
                 exit; 
             }
 

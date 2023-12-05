@@ -164,9 +164,13 @@ if ($profileUserId) {
                                     <img src="<?php echo $post['userImage']; ?>" alt="User Profile Picture">
                                     <span class="username"><?php echo $post['userName']; ?></span>
                                 </div>
+<<<<<<< HEAD
                                     <?php
                                     echo '<a href="ViewPost-html.php?post_id=' . $post_id . '&post_type=' . $postType . '" class="post-link">';
                                     ?>
+=======
+                                <a href="ViewPost-html.php?post_id=<?php echo $post['postId']; ?>">
+>>>>>>> 1d0528f4e4cbd8d65937d13347466f23d2508efa
                                     <h2 class="post-title"><?php echo $post['postTitle']; ?></h2>
                                     <p class="post-tag"><?php echo $post['tagName']; ?></p>
                                     <br>
@@ -192,11 +196,14 @@ if ($profileUserId) {
                                 <?php if ($visitorid == $profileUserId) : ?>
                                     <div class="edit-delete-buttons">
 
+<<<<<<< HEAD
                                         <!-- Submit Form button with icon -->
                                         <a href="Submit_Form-html.php?post_id=<?php echo $post['postId']; ?>">
                                             <i class="uil uil-file-edit-alt"></i> Submit Form
                                         </a>
 
+=======
+>>>>>>> 1d0528f4e4cbd8d65937d13347466f23d2508efa
                                         <!-- Edit button with icon -->
                                         <a href="Create Post-html.php?edit_post_id=<?php echo $post['postId']; ?>">
                                             <i class="uil uil-pen"></i> Edit
