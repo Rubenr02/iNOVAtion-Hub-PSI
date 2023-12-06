@@ -140,7 +140,7 @@ $commentsResult = $conn->query($fetchCommentsQuery);$commentsResult = $conn->que
         <a href="#"><i class="uil uil-home"></i> Home</a>
         <a href="#"><i class="uil uil-compass"></i> Explore</a>
         <a href="#"><i class="uil uil-info-circle"></i> About</a>
-        <a href="#"><i class="uil uil-envelope"></i> Contact</a>
+        <a href="landing-html.html"><i class="uil uil-signout"></i> Sign Out</a>
         </div>
     </div>
 

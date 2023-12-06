@@ -325,175 +325,204 @@ header .nav-bar {
     align-self: center;
 }
 
-/* Style the published posts section */
-.published-posts {
-    width: 100%;
-    margin: 50px; 
+/* Style the info container */
 
-}
-
-.published-posts h2 {
-    font-size: 1.5em;
-    font-weight: 600;
+.info-container {
     color: #210060;
-    margin-bottom: 15px;
-}
-
-
-/* Style the container for posts */
-.posts-container {
-    width: 70%;
-    margin: 50px;
-}
-
-/* Style the individual post using existing post styles */
-.post {
     position: relative;
     background-color: #fff;
-    margin: 1em 0;
+    margin: 4em 0;
     padding: 15px;
     border-radius: 15px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    margin-left: 3%;
+}
+
+
+/*======= Edit =======*/
+
+.profile-container-description{
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Style the register form */
+#register-form {
+    text-align: left;
+    width: 80%;
+    margin: 0 auto;
+}
+
+/* Style input boxes within the register form */
+#register-form input[type="text"],
+#register-form input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#register-form input[type="text"]:hover{
+    border-color: #996DEE
+}
+
+#register-form input[type="password"]:hover{
+    border-color: #996DEE
+}
+
+/* Style the register button within the register form */
+#register-form button {
+    display: block;
+    margin: 40px;
     width: 100%;
 }
 
-.published-posts a{
-    text-decoration: none;
-    color: #555;
+/* Style the register button background and text on hover */
+#register-form button:hover {
+    background-color: #996DEE;
 }
 
-/* Style the user info section */
-.post .user-info {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-}
-
-.post .user-info img {
-    width: 50px; 
-    height: 50px; 
-    border-radius: 50%;
-    margin-right: 10px;
-}
-
-.post .username {
-    font-size: 1.2em;
-    font-weight: 500;
-    color: #555;
-}
-
-/* Style the post title and tags */
-.post .post-title {
-    font-size: 1.5em; 
-    margin-bottom: 8px; 
-    color: #333;
-    display: flex;
-    justify-content: space-between;
-}
-
-.post .post-tag {
-    display: flex;
-    align-items: center;
-}
-
-.post .input-tag,
-.post .input-type {
-    margin-left: 8px; 
-    font-size: 1em; 
-    color: #888;
-}
-
-/* Style the post content */
-.post .post-content {
-    font-size: 1.2em; 
-    line-height: 1.4; 
-    color: #555;
-    margin-bottom: 15px; 
-    background-color: #EFF0F6;
-    padding: 10px;
-    border-radius: 10px; 
-}
-
-.post .post-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.post-actions {
-    display: flex;
-    align-items: center;
-}
-
-.post .post-actions button {
-    background-color: #E9EAF3;
-    color: #555;
-    padding: 8px 16px; 
-    border: none;
-    border-radius: 30px; 
+/* Style the password toggle button within the register form */
+#register-form .password-toggle {
+    position: absolute;
+    top: 46%;
+    right: 115px;
+    transform: translateY(-50%);
     cursor: pointer;
-    margin-right: 8px;
-    font-size: 1em; 
-    transition: background-color 0.3s, color 0.3s;
+    z-index: 1;
 }
 
-.edit-profile a{
+/* Style the email and password confirmation input boxes */
+#register-form input[type="email"],
+#register-form input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#register-form input[type="email"]:hover{
+    border-color: #996DEE
+}
+
+
+/* Style the "Don't have an account?" link */
+#register-link {
+    color: #210060;
     text-decoration: none;
-    color: #555;
+    font-weight: 500;
+    text-transform: uppercase;
 }
 
-.post .post-actions button:hover {
-    background-color: #555;
+/* Style the "Don't have an account?" link on hover */
+#register-link:hover {
     color: #fff;
 }
 
-.post .post-stats {
+#register-form select#occupation {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background: #fff; /* Set the background color */
+    color: #000; /* Set the text color */
+    font-size: 16px; /* Set the font size */
+    outline: none; /* Remove the default outline */
+}
+
+#register-form select#occupation:focus {
+    border-color: #996DEE; /* Style the border when the input is focused */
+}
+
+#register-form select#occupation:hover {
+    border-color: #996DEE; /* Style the border when the input is focused */
+}
+
+/* Style the select options */
+#register-form select#occupation option {
+    color: #000; /* Set the text color for options */
+    background: #fff; /* Set the background color for options */
+}
+
+#register-form select#occupation::placeholder {
+    color: #fff; /* Style the placeholder text for the dropdown */
+}
+
+/* Style for the date input within the register form */
+#register-form input[type="date"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#register-form input[type="date"]:hover{
+    border-color: #996DEE
+}
+
+/* Style the file input within the register form */
+#register-form input[type="file"] {
+    width: 200px;
+    height: 200px;
+    margin: 0 auto; /* Center the input field horizontally */
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    overflow: hidden;
     display: flex;
-    align-items: center;
+    flex-direction: column; /* Align content vertically */
+    justify-content: flex-end; /* Place content at the bottom */
+    align-items: center; /* Center content horizontally */
 }
 
-.post .vote-count,
-.post .comment-count {
-    font-size: 1em; 
-    margin-right: 8px; 
-    color: #555;
+/* Style the "Upload Image" text before the file input */
+#register-form input[type="file"]::-webkit-file-upload-button {
+    display: none;
 }
 
-/* Style the edit and delete buttons with icons */
-.post .edit-delete-buttons {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    display: flex;
+/* Style the "Upload Image" text appearance and hover effect */
+#register-form input[type="file"]:before {
+    content: "Upload Image";
+    display: block;
+    text-align: center;
+    font-size: 14px;
+    color: #210060;
+    margin-bottom: 0px; /* Add space below the text */
 }
 
-.post .edit-delete-buttons a,
-.post .edit-delete-buttons button {
-    background-color: #EFF0F6;
-    color: #555;
-    padding: 8px 12px;
-    border: none;
-    border-radius: 50px;
+/* Apply hover styles to the file input */
+#register-form input[type="file"]:hover {
     cursor: pointer;
-    margin-right: 8px;
-    font-size: 0.8em;
-    text-decoration: none; 
+    background-color: #f5f5f5;
+    border-color: #996DEE;
 }
 
-.post .edit-delete-buttons button.delete-button {
-    background-color: #EFF0F6;
+/* Style the register button within the register form */
+#register-form button {
+    display: block;
+    background: #210060;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: bold;
+    margin-top: 20px;
+    transition: background 0.3s;
+    margin-left: 0;
 }
 
-
-.post .edit-delete-buttons button.delete-button:hover {
-    background-color: #555;
-    color: white;
+/* Apply hover effect to the register button */
+#register-form button:hover {
+    background-color: #996DEE;
 }
 
-.post .edit-delete-buttons a:hover {
-    background-color: #555;
-    color: white;
-}
 
 
 
@@ -587,10 +616,14 @@ header .nav-bar {
     }
     
     .profile-header {
+        margin: 2em 0;
         display: flex;
         flex-direction: column; 
         align-items: center;
         margin-bottom: 20px;
+        width: 20%;
+        margin-left: -15px;
+        margin-right: 10px;
     }
     
     .profile-picture {
@@ -623,62 +656,4 @@ header .nav-bar {
         margin-left: -5px;
     }
     
-    .edit-profile {
-        display: flex;
-        margin-top: 55px;
-        margin-left: -15px;
-        align-self: center;
-        white-space: nowrap;
-    }
-
-    .edit-profile a{
-        text-decoration: none;
-        color: #555;
-    }
-
-    /* Style the post title and tags */
-    .post .post-title {
-    font-size: 1em; 
-    margin-bottom: 8px; 
-    color: #333;
-    display: flex;
-    justify-content: space-between;
-    }
-
-    .post .input-tag,
-    .post .input-type {
-        margin-left: 8px; 
-        font-size: 0.8em; 
-        color: #888;
-    }
-
-    /* Style the post content */
-    .post .post-content {
-        font-size: 1em; 
-        line-height: 1.4; 
-        color: #555;
-        margin-bottom: 15px; 
-        background-color: #EFF0F6;
-        padding: 10px;
-        border-radius: 10px; 
-    }
-
-    /* Style the individual post using existing post styles */
-    .post {
-        position: relative;
-        background-color: #fff;
-        margin: 0 0;
-        padding: 5px;
-        border-radius: 15px;
-        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-        width: 100%;
-        margin-right: 50px;
-        margin-top: 10px;
-    }
-
-    .post .username {
-        font-size: 0.8em;
-        font-weight: 500;
-        color: #555;
-    }
 }
