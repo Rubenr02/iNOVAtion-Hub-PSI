@@ -96,13 +96,13 @@ if ($profileUserId) {
                 <input type="text" id="first-name" name="first-name" placeholder="First Name">
                 <input type="text" id="last-name" name="last-name" placeholder="Last Name">
                 <input type="date" id="birth-date" name="birth-date">
-                
                 <select id="occupation" name="occupation">
                     <option value="Student">Student</option>
                     <option value="Professor">Professor</option>
                     <option value="Others">Others</option>
                 </select>
 
+                
                 <input type="file" id="user-image" name="user-image" accept="image/*">
 
             <div id="image-preview" style="display: none;">

@@ -109,6 +109,31 @@ function filterTags() {
     }
 }
 
+
+// Modify the existing form submission logic to use AJAX
+document.querySelectorAll('.upvote-button, .downvote-button').forEach(function(button) {
+    button.addEventListener('click', function(event) {
+        event.preventDefault();
+        var form = event.target.closest('form');
+        if (form) {
+            var formData = new FormData(form);
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'update_vote.php', true);
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    // Update the UI with the new votescore
+                    updateVotescore(formData.get('post_id'), xhr.responseText);
+                } else {
+                    console.error('Error updating votescore: ' + xhr.statusText);
+                }
+            };
+            xhr.send(formData);
+        }
+    });
+});
+
+
+
 // Event listener to close the popup if you press on the screen
 document.addEventListener('click', function (event) {
         var customDropdown = document.querySelector(".custom-dropdown");

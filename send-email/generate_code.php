@@ -72,11 +72,12 @@ if (isset($_SESSION['USERID'])) {
             // Send an email with the code
             $subject = "Reviewer Code";
             $message = "Here is your reviewer's code: $randomCode. 
-                        Insert it in your profile to become a reviewer";
+                        Insert it in your profile to become a reviewer.";
             $emailResult = sendEmail($userEmail, $subject, $message);
 
             if ($emailResult === true) {
-                echo "Code generated successfully and sent to the user via email.";
+                header("Location: /PSI/Loading-html.html");
+                exit();
             } else {
                 echo "Error sending email: $emailResult";
             }

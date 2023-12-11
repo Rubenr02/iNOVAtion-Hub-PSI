@@ -105,22 +105,6 @@ if ($profileUserId) {
     } 
 }
 
-// Check if the user is of usertype 2
-$usertypeQuery = "SELECT USERTYPE FROM USERS WHERE USERID = '$visitorid'";
-$usertypeResult = $conn->query($usertypeQuery);
-
-if ($usertypeResult->num_rows == 1) {
-    $usertypeRow = $usertypeResult->fetch_assoc();
-    $usertype = $usertypeRow['USERTYPE'];
-
-    // Display the "Generate Code" button for usertype 2
-    if ($usertype == 2) {
-        echo '<form class="generate-code" action = "send-email/generate_code.php" method = "post">
-                <button type ="submit" name ="generate">Generate Code</button>
-              </div>';
-    }
-}
-
 ?>
 
 <!DOCTYPE html>
@@ -161,22 +145,22 @@ if ($usertypeResult->num_rows == 1) {
         <div class="profile-container">
             <div class="profile-header">
                 <div class="edit-profile" id="editProfileBtn">
-                    <a href="Edit Profile-html.php">
-                        <i class="uil uil-edit"></i> Edit Profile
-                    </a>
+                    <?php if ($visitorid == $profileUserId) : ?>
+                        <a href="Edit Profile-html.php" class="edit-profile-button">
+                            <i class="uil uil-edit"></i> Edit Profile
+                        </a>
+                    <?php endif; ?>
                 </div>
-                <div class="random" id="open-code-page">
-                    <a href="Insert Code-html.php">Have a reviewer code?</a>
-                </div>
+                
                 <img src="<?php echo $userImage; ?>" alt="User Profile Picture" class="profile-picture" id="profilePicture">
                 <div class="profile-info" id="profileInfo">
                     <h1 class="username" id="username"><?php echo $username; ?></h1>
-                    <p class="description" id="description">Add your description here!</p>
+                    <p class="description" id="description">Add your description here!</p>  
                 </div>
             </div>
 
             <?php if (!empty($posts)) : ?>
-    <div class="published-posts">
+        <div class="published-posts">
         <h2>Your Published Posts</h2>
 
         <?php foreach($posts as $post) : ?>

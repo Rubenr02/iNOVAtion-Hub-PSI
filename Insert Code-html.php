@@ -54,7 +54,7 @@ if (isset($_SESSION['USERID'])) {
                     <i class="uil uil-search"></i>
                 </div>
 
-                <a href="Profile-html.html"><i class="uil uil-user"></i> Profile</a>
+                <a href="Profile-html.php"><i class="uil uil-user"></i> Profile</a>
 
             </div>
 

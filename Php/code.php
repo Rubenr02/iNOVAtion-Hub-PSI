@@ -46,8 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['validate'])) {
         }
     } else {
             echo "Error: Code not valid.<br>" . $conn->error;
-        }
-        
+        }     
 }
 
 // Close the database connection

@@ -41,9 +41,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION['USERID'])) {
 
     if ($checkVoteResultIdeas->num_rows == 0 && $checkVoteResultProblems->num_rows == 0) {
         if (isset($_POST['upvote']) || isset($_POST['downvote'])) {
-            $votescore = isset($_POST['upvote']) ? 1 : -1;
-            $upvote = isset($_POST['upvote']) ? 1 : 0;
-            $downvote = isset($_POST['downvote']) ? 1 : 0;
+            $upvote = isset($_POST['upvote']) ? $_POST['upvote'] : 0;
+            $downvote = isset($_POST['downvote']) ? $_POST['downvote'] : 0;
+            $votescore = $upvote - $downvote;
         } else {
             // Handle the case where neither upvote nor downvote is set
             echo "Invalid request: Missing upvote or downvote";
@@ -86,6 +86,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION['USERID'])) {
 
             // Execute the insert query
             $insertVoteStmt->execute();
+
+            // Fetch the updated votescore
+            $getVotescoreQuery = "SELECT VOTESCORE FROM " . ($postType == 'idea' ? 'IDEAS' : 'PROBLEMS') . " WHERE " . ($postType == 'idea' ? 'IDEAID' : 'PROBLEMID') . " = ?";
+            $getVotescoreStmt = $conn->prepare($getVotescoreQuery);
+            $getVotescoreStmt->bind_param("i", $post_id);
+            $getVotescoreStmt->execute();
+            $getVotescoreResult = $getVotescoreStmt->get_result();
+
+            if ($getVotescoreResult->num_rows == 1) {
+                $getVotescoreRow = $getVotescoreResult->fetch_assoc();
+                $votescore = $getVotescoreRow['VOTESCORE'];
+
+                // Send the updated votescore as part of the JSON response
+                header('Content-Type: application/json');
+                echo json_encode(['voteCount' => $votescore]);
+                exit;
+            } else {
+                echo "Error fetching updated votescore.";
+            }
+
+            // Close the prepared statement
+            $getVotescoreStmt->close();
         } else {
             // Handle the case where the post type is not found
             echo "Invalid request: Post type not found";
@@ -103,12 +125,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION['USERID'])) {
     if ($insertVoteStmt != null) {
         $insertVoteStmt->close();
     }
+} else {
+    // Handle other cases (e.g., user not logged in, invalid request)
+    echo "Invalid request or user not logged in.";
 }
 
 // Close the database connection
 $conn->close();
-
-// Redirect back to the previous page or wherever you want
-header("Location: " . $_SERVER["HTTP_REFERER"]);
-exit();
 ?>

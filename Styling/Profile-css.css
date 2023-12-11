@@ -22,7 +22,6 @@ body {
 }
 
 
-
 /*======= Header navigation bar =======*/
 
 /* Style the fixed header bar */
@@ -295,7 +294,7 @@ header .nav-bar {
     height: 200px; 
     border-radius: 50%;
     margin-right: 20px;
-    margin-top: 4em;
+    margin-top: 1em;
     margin-left: 20px;
 }
 
@@ -316,6 +315,23 @@ header .nav-bar {
     color: #555;
     margin-top: 10px;
     text-align: center;
+}
+
+
+.edit-profile-button {
+    display: block;
+    margin-top: 10px; 
+    margin-left: 100px;
+    padding: 8px 16px; 
+    color: gray; 
+    text-decoration: none;
+    border-radius: 25px;
+    transition: background-color 0.3s ease;
+}
+
+.edit-profile-button:hover {
+    background-color: #555; 
+    color: #fff;
 }
 
 .edit-profile {
@@ -507,6 +523,22 @@ header .nav-bar {
     color: white;
 }
 
+.generate-code-button {
+    background-color: #EFF0F6; 
+    color: #555; 
+    padding: 10px 8px; 
+    margin-top: 10px;
+    border: none; 
+    border-radius: 25px; 
+    cursor: pointer; 
+    margin-left: 10px; 
+    transition: background-color 0.3s ease;
+}
+
+.generate-code-button:hover {
+    background-color: #555; 
+    color: #fff;
+}
 
 
 /* Media query for screens smaller than 768px*/

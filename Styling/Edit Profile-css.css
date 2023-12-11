@@ -21,8 +21,6 @@ body {
     background: #EFF0F6;
 }
 
-
-
 /*======= Header navigation bar =======*/
 
 /* Style the fixed header bar */
@@ -523,7 +521,10 @@ header .nav-bar {
     background-color: #996DEE;
 }
 
-
+.random a {
+    text-decoration: none;
+    color: #210060;
+}
 
 
 /* Media query for screens smaller than 768px*/
