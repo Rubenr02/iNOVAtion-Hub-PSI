@@ -105,6 +105,7 @@ if ($postResult->num_rows > 0) {
     <title>iNOVAtion Hub</title>
     <link rel="stylesheet" href="Styling/iNOVAtion-css.css">  
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 
 <body>
@@ -317,16 +318,20 @@ if ($postResult->num_rows > 0) {
                 echo '</a>';
                 echo '<div class="post-footer">';
                 echo '<div class="post-actions">';
-                echo '<form method="post" action="Php/vote.php">';
+                echo '<div class="vote-container" data-post-id="' . $post_id . '">';
+                echo '<form class="vote-form" method="post" action="Php/vote.php">';
                 echo '<input type="hidden" name="post_id" value="' . $post_id . '">';
-                echo '<button name="upvote" type="submit" class="upvote-button">';
+                echo '<input type="hidden" name="upvote" value="0">';
+                echo '<input type="hidden" name="downvote" value="0">';
+                echo '<button name="upvote" type="button" class="upvote-button">';
                 echo '<i class="uil uil-arrow-up"></i>';
                 echo '</button>';
                 echo '<span class="post-stats">' . $votescore . '</span>';
-                echo '<button name="downvote" type="submit" class="downvote-button">';
+                echo '<button name="downvote" type="button" class="downvote-button">';
                 echo '<i class="uil uil-arrow-down"></i>';
                 echo '</button>';
                 echo '</form>';
+                echo '</div>';
                 echo '<a href="ViewPost-html.php?post_id=' . $post_id . '&post_type=' . $postType . '#comments" class="post-link">';
                 echo '<button class="comment-button"><i class="uil uil-comment"></i></button>';
                 echo '</a>';
@@ -443,6 +448,43 @@ function searchPosts() {
     }
 }
 
+// Function to update the votescore in real time using ajax     
+$(document).ready(function() {
+  $(".vote-form button").on("click", function(e) {
+    e.preventDefault();
+
+    var container = $(this).closest(".vote-container");
+    var form = container.find(".vote-form");
+
+    // Determine whether it's an upvote or downvote button
+    var isUpvote = $(this).hasClass("upvote-button");
+
+    // Set the values accordingly
+    form.find('input[name="upvote"]').val(isUpvote ? 1 : 0);
+    form.find('input[name="downvote"]').val(isUpvote ? 0 : 1); 
+
+
+    $.ajax({
+      type: form.attr("method"),
+      url: form.attr("action"),
+      data: form.serialize(), // Use form.serialize() to send the form data
+      dataType: "json",
+      success: function(response) {
+        if (response.hasOwnProperty('voteCount')) {
+          // Update the vote count on success
+          container.find(".post-stats").text(response.voteCount);
+        } else {
+          console.error('Invalid response format:', response);
+        }
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        console.error("You have already voted for this post. Thank you for your collaboration!", textStatus, errorThrown);
+        alert("You have already voted for this post. Thank you for your collaboration!");
+      }
+    });
+  });
+});
+ 
 </script>
 
 </body>
