@@ -283,229 +283,79 @@ header .nav-bar {
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
 
-.profile-header {
-    display: flex;
-    flex-direction: column; 
-    align-items: center;
-    margin-bottom: 20px;
-}
 
-.profile-picture {
-    width: 200px; 
-    height: 200px; 
-    border-radius: 50%;
-    margin-right: 20px;
-    margin-top: 4em;
-    margin-left: 20px;
-}
+/* Style the info container */
 
-.profile-info {
-    flex-grow: 1;
-}
-
-.username {
-    font-size: 2.3em; 
-    font-weight: 600;
+.info-container {
     color: #210060;
-    margin-top: 0;
-    text-align: center;
-}
-
-.description {
-    font-size: 1.3em; 
-    color: #555;
-    margin-top: 10px;
-    text-align: center;
-}
-
-.edit-profile {
-    display: flex;
-    margin-top: 55px;
-    margin-left: -130px;
-    align-self: center;
-}
-
-.random {
-    display: flex;
-    margin-top: 15px;
-    margin-left: -50px;
-    align-self: center;
-}
-
-.random a {
-    text-decoration: none;
-    color: blue;
-}
-
-/* Style the published posts section */
-.published-posts {
-    width: 100%;
-    margin: 50px; 
-
-}
-
-.published-posts h2 {
-    font-size: 1.5em;
-    font-weight: 600;
-    color: #210060;
-    margin-bottom: 15px;
-}
-
-
-/* Style the container for posts */
-.posts-container {
-    width: 70%;
-    margin: 50px;
-}
-
-/* Style the individual post using existing post styles */
-.post {
     position: relative;
     background-color: #fff;
-    margin: 1em 0;
+    margin: 8.6em 0;
     padding: 15px;
     border-radius: 15px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    margin-left: 3%;
+}
+
+.info-container h2 {
+    margin-left: 108px;
+}
+
+/* Style the register form */
+#register-form {
+    text-align: left;
+    width: 80%;
+    margin: 0 auto;
+}
+
+/* Style input boxes within the register form */
+#register-form input[type="text"] {
     width: 100%;
-}
-
-.published-posts a{
-    text-decoration: none;
-    color: #555;
-}
-
-/* Style the user info section */
-.post .user-info {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-}
-
-.post .user-info img {
-    width: 50px; 
-    height: 50px; 
-    border-radius: 50%;
-    margin-right: 10px;
-}
-
-.post .username {
-    font-size: 1.2em;
-    font-weight: 500;
-    color: #555;
-}
-
-/* Style the post title and tags */
-.post .post-title {
-    font-size: 1.5em; 
-    margin-bottom: 8px; 
-    color: #333;
-    display: flex;
-    justify-content: space-between;
-}
-
-.post .post-tag {
-    display: flex;
-    align-items: center;
-}
-
-.post .input-tag,
-.post .input-type {
-    margin-left: 8px; 
-    font-size: 1em; 
-    color: #888;
-}
-
-/* Style the post content */
-.post .post-content {
-    font-size: 1.2em; 
-    line-height: 1.4; 
-    color: #555;
-    margin-bottom: 15px; 
-    background-color: #EFF0F6;
     padding: 10px;
-    border-radius: 10px; 
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
 }
 
-.post .post-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+#register-form input[type="text"]:hover{
+    border-color: #996DEE
 }
 
-.post-actions {
-    display: flex;
-    align-items: center;
+
+/* Style the register button within the register form */
+#register-form button {
+    display: block;
+    margin: 40px auto; /* Set top and bottom margin to 40px, and auto for left and right */
+    width: 40%;
 }
 
-.post .post-actions button {
-    background-color: #E9EAF3;
-    color: #555;
-    padding: 8px 16px; 
-    border: none;
-    border-radius: 30px; 
-    cursor: pointer;
-    margin-right: 8px;
-    font-size: 1em; 
-    transition: background-color 0.3s, color 0.3s;
+/* Style the register button background and text on hover */
+#register-form button:hover {
+    background-color: #996DEE;
 }
 
-.edit-profile a{
-    text-decoration: none;
-    color: #555;
-}
 
-.post .post-actions button:hover {
-    background-color: #555;
+/* Style the register button within the register form */
+#register-form button {
+    display: block;
+    background: #210060;
     color: #fff;
-}
-
-.post .post-stats {
-    margin-right: 8px;
-    align-items: center;
-}
-
-.post .vote-count,
-.post .comment-count {
-    font-size: 1em; 
-    margin-right: 8px; 
-    color: #555;
-}
-
-/* Style the edit and delete buttons with icons */
-.post .edit-delete-buttons {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    display: flex;
-}
-
-.post .edit-delete-buttons a,
-.post .edit-delete-buttons button {
-    background-color: #EFF0F6;
-    color: #555;
-    padding: 8px 12px;
-    border: none;
+    padding: 10px 20px;
     border-radius: 50px;
-    cursor: pointer;
-    margin-right: 8px;
-    font-size: 0.8em;
-    text-decoration: none; 
-}
-
-.post .edit-delete-buttons button.delete-button {
-    background-color: #EFF0F6;
+    text-decoration: none;
+    font-weight: bold;
+    margin: 40px auto; /* Center the button */
+    width: 40%;
+    transition: background 0.3s;
 }
 
 
-.post .edit-delete-buttons button.delete-button:hover {
-    background-color: #555;
-    color: white;
+/* Apply hover effect to the register button */
+#register-form button:hover {
+    background-color: #996DEE;
 }
 
-.post .edit-delete-buttons a:hover {
-    background-color: #555;
-    color: white;
-}
 
 
 
@@ -599,10 +449,14 @@ header .nav-bar {
     }
     
     .profile-header {
+        margin: 2em 0;
         display: flex;
         flex-direction: column; 
         align-items: center;
         margin-bottom: 20px;
+        width: 20%;
+        margin-left: -15px;
+        margin-right: 10px;
     }
     
     .profile-picture {
@@ -635,62 +489,4 @@ header .nav-bar {
         margin-left: -5px;
     }
     
-    .edit-profile {
-        display: flex;
-        margin-top: 55px;
-        margin-left: -15px;
-        align-self: center;
-        white-space: nowrap;
-    }
-
-    .edit-profile a{
-        text-decoration: none;
-        color: #555;
-    }
-
-    /* Style the post title and tags */
-    .post .post-title {
-    font-size: 1em; 
-    margin-bottom: 8px; 
-    color: #333;
-    display: flex;
-    justify-content: space-between;
-    }
-
-    .post .input-tag,
-    .post .input-type {
-        margin-left: 8px; 
-        font-size: 0.8em; 
-        color: #888;
-    }
-
-    /* Style the post content */
-    .post .post-content {
-        font-size: 1em; 
-        line-height: 1.4; 
-        color: #555;
-        margin-bottom: 15px; 
-        background-color: #EFF0F6;
-        padding: 10px;
-        border-radius: 10px; 
-    }
-
-    /* Style the individual post using existing post styles */
-    .post {
-        position: relative;
-        background-color: #fff;
-        margin: 0 0;
-        padding: 5px;
-        border-radius: 15px;
-        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-        width: 100%;
-        margin-right: 50px;
-        margin-top: 10px;
-    }
-
-    .post .username {
-        font-size: 0.8em;
-        font-weight: 500;
-        color: #555;
-    }
 }

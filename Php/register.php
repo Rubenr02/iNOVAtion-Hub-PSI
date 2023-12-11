@@ -18,6 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['register'])) {
     $lastName = $_POST['last-name'];
     $birthDate = $_POST['birth-date'];
     $occupation = $_POST['occupation'];
+    $code = $_POST['code'];
 
     // Check if the image file is selected
     if (isset($_FILES["user-image"]) && $_FILES["user-image"]["error"] == 0) {
@@ -53,19 +54,51 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['register'])) {
             // Hash the password securely
             $hashedPassword = md5($password);
 
-            // Perform SQL query to insert new user
-            $sql = "INSERT INTO USERS (EMAIL, USERNAME, PASSWORD, FIRSTNAME, LASTNAME, DATE_OF_BIRTH, OCCUPATION, IMAGE) 
-                    VALUES ('$email', '$username', '$hashedPassword', '$firstName', '$lastName', '$birthDate', '$occupation', '$targetImage')";
 
-            if ($conn->query($sql) === TRUE) {
-                // Set the session variable after successful registration
-                $_SESSION['USERID'] = mysqli_insert_id($conn);
+            // Perform SQL query
+            $sqll = "SELECT * FROM CODES WHERE CODE = '$code'";
+            $result = $conn->query($sqll);
 
-                header("Location: /PSI/Loading-html.html");
-                exit();
+            if ($result->num_rows == 1) {
+
+                $sql = "INSERT INTO USERS (EMAIL, USERNAME, PASSWORD, FIRSTNAME, LASTNAME, DATE_OF_BIRTH, OCCUPATION, IMAGE, USERTYPE) 
+                VALUES ('$email', '$username', '$hashedPassword', '$firstName', '$lastName', '$birthDate', '$occupation', '$targetImage', '1')";
+
+                $sqlll = "DELETE FROM CODES
+                WHERE CODE = '$code'";
+
+                if ($conn->query($sqlll) === TRUE) {
+                echo "Record deleted successfully";
+                } else {
+                echo "Error deleting record: " . $conn->error;
+                }
+
+                if ($conn->query($sql) === TRUE) {
+                    // Set the session variable after successful registration
+                    $_SESSION['USERID'] = mysqli_insert_id($conn);
+
+                    header("Location: /PSI/Loading-html.html");
+                    exit();
+                } else {
+                    echo "Error: " . $sql . "<br>" . $conn->error;
+                }
             } else {
-                echo "Error: " . $sql . "<br>" . $conn->error;
+
+                $sql = "INSERT INTO USERS (EMAIL, USERNAME, PASSWORD, FIRSTNAME, LASTNAME, DATE_OF_BIRTH, OCCUPATION, IMAGE) 
+                VALUES ('$email', '$username', '$hashedPassword', '$firstName', '$lastName', '$birthDate', '$occupation', '$targetImage')";
+
+                if ($conn->query($sql) === TRUE) {
+                    // Set the session variable after successful registration
+                    $_SESSION['USERID'] = mysqli_insert_id($conn);
+
+                    header("Location: /PSI/Loading-html.html");
+                    exit();
+                } else {
+                    echo "Error: " . $sql . "<br>" . $conn->error;
+                }
+                
             }
+
         } else {
             echo "Error: There was a problem uploading your image. Please try again.";
         }

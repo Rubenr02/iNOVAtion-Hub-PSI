@@ -36,17 +36,21 @@ if ($profileUserId) {
         // Handle the case where no user is found with the provided ID
     }
 
-    // Fetch posts with or without the filtered tag from both IDEAS and PROBLEMS tables
-    $postQuery = "(SELECT 'idea' as post_type, IDEAID, IDEAS.TITLE, IDEAS.TAGID, TEXT, IMAGE, IDEAS.USERID, VOTESCORE
+    // Fetch posts with or without the filtered tag from both  and PROBLEMS tables
+    $postQuery = "(SELECT 'idea' as post_type, IDEAID as post_id, IDEAS.TITLE, IDEAS.TAGID, IDEAS.TEXT, IDEAS.IMAGE as post_image, IDEAS.USERID, IDEAS.VOTESCORE
                     FROM IDEAS
                     INNER JOIN TAGS ON IDEAS.TAGID = TAGS.TAGID
-                    WHERE IDEAS.USERID = '$profileUserId')
+                    INNER JOIN USERS ON IDEAS.USERID = USERS.USERID
+                    WHERE IDEAS.USERID = '$profileUserId' AND USERS.USERNAME != 'anonymous' AND IDEAS.ISANONYMOUS = 0)
                     UNION
-                    (SELECT 'problem' as post_type, PROBLEMID, PROBLEMS.TITLE, PROBLEMS.TAGID, TEXT, IMAGE, PROBLEMS.USERID, VOTESCORE
+                    (SELECT 'problem' as post_type, PROBLEMID as post_id, PROBLEMS.TITLE, PROBLEMS.TAGID, PROBLEMS.TEXT, PROBLEMS.IMAGE as post_image, PROBLEMS.USERID, PROBLEMS.VOTESCORE
                     FROM PROBLEMS
                     INNER JOIN TAGS ON PROBLEMS.TAGID = TAGS.TAGID
-                    WHERE PROBLEMS.USERID = '$profileUserId')
+                    INNER JOIN USERS ON PROBLEMS.USERID = USERS.USERID
+                    WHERE PROBLEMS.USERID = '$profileUserId' AND USERS.USERNAME != 'anonymous' AND PROBLEMS.ISANONYMOUS = 0)
                     ORDER BY VOTESCORE DESC";
+
+
 
     $postResult = $conn->query($postQuery);
 
@@ -55,11 +59,10 @@ if ($profileUserId) {
     if ($postResult->num_rows > 0) {
         while ($postRow = $postResult->fetch_assoc()) {
             $postType = $postRow["post_type"];
-            $post_id = ($postType == 'idea') ? $postRow["IDEAID"] : (isset($postRow["PROBLEMID"]) ? $postRow["PROBLEMID"] : null);
+            $post_id = $postRow["post_id"];
             $postTitle = $postRow['TITLE'];
             $tagID = $postRow['TAGID'];
             $postContent = $postRow['TEXT'];
-            $postImage = $postRow['IMAGE'];
             $postUserID = $postRow['USERID'];  // Change variable name to avoid conflict
             $votescore = $postRow['VOTESCORE'];
 
@@ -95,13 +98,29 @@ if ($profileUserId) {
                 'votescore' => $votescore,
                 'userName' => $userName,
                 'userId' => $postUserID,  // Use the new variable name
-                'userImage' => $userImage
+                'userImage' => $userImage,
+                'postType' => $postType,  
             ];
         }
-    } else {
-        echo "";
+    } 
+}
+
+// Check if the user is of usertype 2
+$usertypeQuery = "SELECT USERTYPE FROM USERS WHERE USERID = '$visitorid'";
+$usertypeResult = $conn->query($usertypeQuery);
+
+if ($usertypeResult->num_rows == 1) {
+    $usertypeRow = $usertypeResult->fetch_assoc();
+    $usertype = $usertypeRow['USERTYPE'];
+
+    // Display the "Generate Code" button for usertype 2
+    if ($usertype == 2) {
+        echo '<form class="generate-code" action = "send-email/generate_code.php" method = "post">
+                <button type ="submit" name ="generate">Generate Code</button>
+              </div>';
     }
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -146,6 +165,9 @@ if ($profileUserId) {
                         <i class="uil uil-edit"></i> Edit Profile
                     </a>
                 </div>
+                <div class="random" id="open-code-page">
+                    <a href="Insert Code-html.php">Have a reviewer code?</a>
+                </div>
                 <img src="<?php echo $userImage; ?>" alt="User Profile Picture" class="profile-picture" id="profilePicture">
                 <div class="profile-info" id="profileInfo">
                     <h1 class="username" id="username"><?php echo $username; ?></h1>
@@ -153,77 +175,97 @@ if ($profileUserId) {
                 </div>
             </div>
 
-            <div class="published-posts">
-                <h2>Your Published Posts</h2>
-                <!-- Check if the user has published posts -->
-                <?php if (!empty($posts)) : ?>
-                    <?php $postIndex = 0; ?>
-                    <?php while ($postIndex < count($posts)) : ?>
-                        <?php $post = $posts[$postIndex]; ?>
-                        <div class="post">
-                            <div class="post-header">
-                                <div class="user-info">
-                                    <img src="<?php echo $post['userImage']; ?>" alt="User Profile Picture">
-                                    <span class="username"><?php echo $post['userName']; ?></span>
-                                </div>
-                                <a href="ViewPost-html.php?post_id=<?php echo $post['postId']; ?>">
-                                    <h2 class="post-title"><?php echo $post['postTitle']; ?></h2>
-                                    <p class="post-tag"><?php echo $post['tagName']; ?></p>
-                                    <br>
-                                    <p class="post-content"><?php echo $post['postContent']; ?></p>
-                                </a>
-                            </div>
-                            <div class="post-footer">
-                                <div class="post-actions">
-                                    <form method="post" action="Php/vote.php">
-                                        <input type="hidden" name="post_id" value="<?php echo $post['postId']; ?>">
-                                        <button name="upvote" type="submit" class="upvote-button">
-                                            <i class="uil uil-arrow-up"></i>
-                                        </button>
-                                        <span class="post-stats"><?php echo $post['votescore']; ?></span>
-                                        <button name="downvote" type="submit" class="downvote-button">
-                                            <i class="uil uil-arrow-down"></i>
-                                        </button>
-                                    </form>
-                                    <a href="ViewPost-html.html#comments" class="post-link">
-                                        <button class="comment-button"><i class="uil uil-comment"></i></button>
-                                    </a>
-                                </div>
-                                <?php if ($visitorid == $profileUserId) : ?>
-                                    <div class="edit-delete-buttons">
+            <?php if (!empty($posts)) : ?>
+    <div class="published-posts">
+        <h2>Your Published Posts</h2>
 
-                                        <!-- Submit Form button with icon -->
-                                        <a href="Submit_Form-html.php?edit_post_id=<?php echo $post['postId']; ?>">
-                                            <i class="uil uil-file-edit-alt"></i> Submit Form
-                                        </a>
+        <?php foreach($posts as $post) : ?>
+            <div class='post'>
+                <div class='post-header'>
+                    <div class='user-info'>
+                        <img src="<?= $post['userImage'] ?>" alt="User Profile Picture">
+                        <span class="username"><?= $post['userName'] ?></span>
+                    </div>
+                    <a href="ViewPost-html.php?post_id=<?php echo $post['postId']; ?>&post_type=<?php echo $post['postType']; ?>">
+                        <h2 class="post-title"><?= $post['postTitle'] ?></h2>
+                        <p class="post-tag"><?= $post['tagName'] ?></p>
+                        <br>
+                        <p class="post-content"><?= $post['postContent'] ?></p>
+                    </a>
+                </div>
+                <div class='post-footer'>
+                    <div class='post-actions'>
+                        <form method='post' action='Php/vote.php'>
+                            <input type='hidden' name='post_id' value='<?= $post['postId'] ?>'>
+                            <button name='upvote' type='submit' class='upvote-button'>
+                                <i class='uil uil-arrow-up'></i>
+                            </button>
+                            <span class='post-stats'><?= $post['votescore'] ?></span>
+                            <button name='downvote' type='submit' class='downvote-button'>
+                                <i class='uil uil-arrow-down'></i>
+                            </button>
+                        </form>
+                        <a href='ViewPost-html.html#comments' class='post-link'>
+                            <button class='comment-button'><i class='uil uil-comment'></i></button>
+                        </a>
+                    </div>
+                    <?php if ($visitorid == $profileUserId) : ?>
+                        <div class='edit-delete-buttons'>
 
-                                        <!-- Edit button with icon -->
-                                        <a href="Create Post-html.php?edit_post_id=<?php echo $post['postId']; ?>">
-                                            <i class="uil uil-pen"></i> Edit
-                                        </a>
-                            
-                                        <!-- Delete button with icon -->
-                                        <form method="post" action="Php/deletepost.php">
-                                            <input type="hidden" name="post_id" value="<?php echo $post['postId']; ?>">
-                                            <button name="delete-button" type="submit" class="delete-button">
-                                                <i class="uil uil-trash-alt"></i> Delete
-                                            </button>
-                                        </form>
+                            <!-- Submit Form button with icon -->
+                            <a href='Submit_Form-html.php?edit_post_id=<?= $post['postId'] ?>'>
+                                <i class='uil uil-file-edit-alt'></i> Submit Form
+                            </a>
 
-                                    </div>
-                                <?php endif; ?>
-                            </div>
+                            <!-- Edit button with icon -->
+                            <a href='Create Post-html.php?edit_post_id=<?= $post['postId'] ?>'>
+                                <i class='uil uil-pen'></i> Edit
+                            </a>
+
+                            <!-- Delete button with icon -->
+                            <form method='post' action='Php/deletepost.php'>
+                                <input type='hidden' name='post_id' value='<?= $post['postId'] ?>'>
+                                <input type="hidden" name="post_type" value="<?php echo $post['postType']; ?>">
+                                <button name='delete-button' type='submit' class='delete-button'>
+                                    <i class='uil uil-trash-alt'></i> Delete
+                                </button>
+                            </form>
                         </div>
-                        <?php $postIndex++; ?>
-                    <?php endwhile; ?>
-                <?php else : ?>
-                    <p>No Posts Yet to Show!</p>
-                <?php endif; ?>
+                    <?php endif; ?>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    </div>
+<?php else : ?>
+    <p>No Posts Yet to Show!</p>
+<?php endif; ?>
             </div>
         </div>
     </body>
 
-<script type="text/javascript" src="Scripts/iNOVAtion-js.js"></script>
+<script type="text/javascript" src="Scripts/Profile-js.js"></script>
+
+<script>
+function generateCode() {
+    // Assuming you have a JavaScript function to handle code generation on the client side
+    // You can generate a random code and then send it to the server to be inserted into the database
+
+    // For example, you can use AJAX to send a request to the server
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "generate_code.php", true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            // Handle the response if needed
+            console.log(xhr.responseText);
+        }
+    };
+
+    // Send the request
+    xhr.send();
+}
+</script>
 
 </body>
 </html>

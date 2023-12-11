@@ -17,45 +17,39 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete-button'])) {
     if (isset($_SESSION['USERID'])) {
         $userid = $_SESSION['USERID'];
 
-        // Get the post ID from the form
+        // Get the post ID and post type from the form
         $postIDToDelete = isset($_POST['post_id']) ? $_POST['post_id'] : '';
+        $postType = isset($_POST['post_type']) ? $_POST['post_type'] : '';
 
-        // Ensure the post ID is not empty
-        if (!empty($postIDToDelete)) {
+        // Debug: Output post ID and type
+        echo "Post ID: $postIDToDelete<br>";
+        echo "Post Type: $postType<br>";
 
-            // Determine the table (IDEAS or PROBLEMS) based on the post ID
-            $tableQuery = "SELECT TABLE_NAME, COLUMN_NAME FROM (
-                                SELECT 'IDEAS' AS TABLE_NAME, IDEAID AS COLUMN_NAME FROM IDEAS
-                                UNION ALL
-                                SELECT 'PROBLEMS' AS TABLE_NAME, PROBLEMID AS COLUMN_NAME FROM PROBLEMS
-                            ) AS AllPosts
-                            WHERE COLUMN_NAME = '$postIDToDelete'";
+        // Ensure the post ID and type are not empty
+        if (!empty($postIDToDelete) && !empty($postType)) {
 
-            $tableResult = $conn->query($tableQuery);
+            // Debug: Output table and column names
+            echo "Table Name: $tableName<br>";
+            echo "Column Name: $columnName<br>";
 
-            if ($tableResult->num_rows == 1) {
-                $tableRow = $tableResult->fetch_assoc();
-                $tableName = $tableRow['TABLE_NAME'];
-                $columnName = $tableRow['COLUMN_NAME'];
+            // Determine the table (IDEAS or PROBLEMS) based on the post type
+            $tableName = ($postType == 'idea') ? 'IDEAS' : 'PROBLEMS';
+            $columnName = ($postType == 'idea') ? 'IDEAID' : 'PROBLEMID';
 
-                
-                // Perform SQL query to delete the post (use prepared statements to prevent SQL injection)
-                $deleteQuery = $conn->prepare("DELETE FROM $tableName WHERE $columnName = ? AND USERID = ?");
-                $deleteQuery->bind_param("ss", $postIDToDelete, $userid);
+            // Perform SQL query to delete the post (use prepared statements to prevent SQL injection)
+            $deleteQuery = $conn->prepare("DELETE FROM $tableName WHERE $columnName = ? AND USERID = ?");
+            $deleteQuery->bind_param("ss", $postIDToDelete, $userid);
 
-                if ($deleteQuery->execute()) {
-                    header("Location: /PSI/Loading-html.html");
-                        exit();
-                } else {
-                    echo "Error deleting post: " . $conn->error;
-                }
-
-                $deleteQuery->close();
+            if ($deleteQuery->execute()) {
+                header("Location: /PSI/Loading-html.html");
+                exit();
             } else {
-                echo "Error: Invalid post ID.";
+                echo "Error deleting post: " . $conn->error;
             }
+
+            $deleteQuery->close();
         } else {
-            echo "Error: Invalid post ID.";
+            echo "Error: Invalid post ID or post type.";
         }
     } else {
         echo "Error: User not logged in.";

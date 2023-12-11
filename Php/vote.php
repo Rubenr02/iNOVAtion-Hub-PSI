@@ -14,7 +14,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION['USERID'])) {
     $post_id = trim($_POST['post_id']);
 
     // Initialize $checkVoteResult before using it
-    $checkVoteResult = null;
+    $checkVoteResultIdeas = null;
+    $checkVoteResultProblems = null;
 
     // For Ideas
     $checkVoteQueryIdeas = "SELECT * FROM VOTES WHERE USERID = ? AND IDEAID = ?";
@@ -31,74 +32,82 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION['USERID'])) {
     $checkVoteResultProblems = $checkVoteStmtProblems->get_result();
 
     // Use correct variable names in update queries
-    $updateVoteQueryIdeas = "UPDATE IDEAS SET VOTESCORE = VOTESCORE + 1 WHERE IDEAID = ?";
-    $updateVoteQueryProblems = "UPDATE PROBLEMS SET VOTESCORE = VOTESCORE + 1 WHERE PROBLEMID = ?";
+    $updateVoteQueryIdeas = "UPDATE IDEAS SET VOTESCORE = VOTESCORE + ? WHERE IDEAID = ?";
+    $updateVoteQueryProblems = "UPDATE PROBLEMS SET VOTESCORE = VOTESCORE + ? WHERE PROBLEMID = ?";
 
     // Initialize the statements outside the conditional blocks
     $updateVoteStmt = null;
     $insertVoteStmt = null;
 
-    if ($checkIdeaResult->num_rows == 1) {
-        // IDEAID exists, proceed with the vote
-        if ($checkVoteResultIdeas->num_rows == 0) {
-            if (isset($_POST['upvote'])) {
-                // Update VOTESCORE for upvote
-                $updateVoteStmt = $conn->prepare($updateVoteQueryIdeas);
-                $updateVoteStmt->bind_param("i", $post_id);
-                $updateVoteStmt->execute();
-            } elseif (isset($_POST['downvote'])) {
-                // Update VOTESCORE for downvote
-                $updateVoteStmt = $conn->prepare($updateVoteQueryIdeas);
-                $updateVoteStmt->bind_param("i", $post_id);
-                $updateVoteStmt->execute();
-            }
-
-            // Insert the vote record
-            $insertVoteQuery = "INSERT INTO VOTES (USERID, IDEAID, CREATEDON) VALUES (?, ?, NOW())";
-            $insertVoteStmt = $conn->prepare($insertVoteQuery);
-            $insertVoteStmt->bind_param("ii", $userid, $post_id);
-            $insertVoteStmt->execute();
+    if ($checkVoteResultIdeas->num_rows == 0 && $checkVoteResultProblems->num_rows == 0) {
+        if (isset($_POST['upvote']) || isset($_POST['downvote'])) {
+            $votescore = isset($_POST['upvote']) ? 1 : -1;
+            $upvote = isset($_POST['upvote']) ? 1 : 0;
+            $downvote = isset($_POST['downvote']) ? 1 : 0;
         } else {
-            // User has already voted
-            echo "User has already voted for this idea.";
+            // Handle the case where neither upvote nor downvote is set
+            echo "Invalid request: Missing upvote or downvote";
+            exit();
         }
 
-    } elseif ($checkProblemResult->num_rows == 1) {
-        if ($checkVoteResultProblems->num_rows == 0) {
-            if (isset($_POST['upvote'])) {
-                // Update VOTESCORE for upvote
+        // Determine the post type
+        $postTypeQuery = "SELECT post_type FROM (SELECT 'idea' as post_type, IDEAID FROM IDEAS WHERE IDEAID = ?
+                          UNION
+                          SELECT 'problem' as post_type, PROBLEMID FROM PROBLEMS WHERE PROBLEMID = ?) AS post_types";
+        $postTypeStmt = $conn->prepare($postTypeQuery);
+        $postTypeStmt->bind_param("ii", $post_id, $post_id);
+        $postTypeStmt->execute();
+        $postTypeResult = $postTypeStmt->get_result();
+
+        if ($postTypeResult->num_rows == 1) {
+            $postTypeRow = $postTypeResult->fetch_assoc();
+            $postType = $postTypeRow['post_type'];
+
+            // Execute the appropriate update query based on the post type
+            if ($postType == 'idea') {
+                $updateVoteStmt = $conn->prepare($updateVoteQueryIdeas);
+                $updateVoteStmt->bind_param("ii", $votescore, $post_id);
+            } elseif ($postType == 'problem') {
                 $updateVoteStmt = $conn->prepare($updateVoteQueryProblems);
-                $updateVoteStmt->bind_param("i", $post_id);
-                $updateVoteStmt->execute();
-            } elseif (isset($_POST['downvote'])) {
-                // Update VOTESCORE for downvote
-                $updateVoteStmt = $conn->prepare($updateVoteQueryProblems);
-                $updateVoteStmt->bind_param("i", $post_id);
-                $updateVoteStmt->execute();
+                $updateVoteStmt->bind_param("ii", $votescore, $post_id);
+            } else {
+                // Handle the case where the post type is unknown
+                echo "Invalid request: Unknown post type";
+                exit();
             }
 
+            // Execute the update query
+            $updateVoteStmt->execute();
+
             // Insert the vote record
-            $insertVoteQuery = "INSERT INTO VOTES (USERID, PROBLEMID, CREATEDON) VALUES (?, ?, NOW())";
+            $insertVoteQuery = "INSERT INTO VOTES (USERID, " . $postType . "ID, UPVOTE, DOWNVOTE, CREATEDON) VALUES (?, ?, ?, ?, NOW())";
             $insertVoteStmt = $conn->prepare($insertVoteQuery);
-            $insertVoteStmt->bind_param("ii", $userid, $post_id);
+            $insertVoteStmt->bind_param("iiii", $userid, $post_id, $upvote, $downvote);
+
+            // Execute the insert query
             $insertVoteStmt->execute();
         } else {
-            // User has already voted
-            echo "User has already voted for this problem.";
+            // Handle the case where the post type is not found
+            echo "Invalid request: Post type not found";
+            exit();
         }
     } else {
-        // IDEAID or PROBLEMID doesn't exist in IDEAS or PROBLEMS table
-        echo "Invalid IDEAID or PROBLEMID.";
+        // User has already voted
+        echo "User has already voted for this post.";
     }
 
-// Close the prepared statements if they are not null
-if ($updateVoteStmt != null) {
-    $updateVoteStmt->close();
+    // Close the prepared statements
+    if ($updateVoteStmt != null) {
+        $updateVoteStmt->close();
+    }
+    if ($insertVoteStmt != null) {
+        $insertVoteStmt->close();
+    }
 }
-if ($insertVoteStmt != null) {
-    $insertVoteStmt->close();
-}
-}
+
+// Close the database connection
+$conn->close();
+
 // Redirect back to the previous page or wherever you want
 header("Location: " . $_SERVER["HTTP_REFERER"]);
 exit();
