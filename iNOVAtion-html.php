@@ -448,7 +448,10 @@ function searchPosts() {
     }
 }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 8cae762a8fe53a614f20b1927725e193f5bed13a
 // Function to update the votescore in real time using ajax     
 $(document).ready(function() {
   $(".vote-form button").on("click", function(e) {
