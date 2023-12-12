@@ -101,7 +101,10 @@ if ($profileUserId) {
                     <option value="Professor">Professor</option>
                     <option value="Others">Others</option>
                 </select>
-
+                <br><br>
+                <div class="random" id="open-code-page">
+                    <a href="Insert Code-html.php">Have a reviewer code?</a>
+                </div>
                 
                 <input type="file" id="user-image" name="user-image" accept="image/*">
 
