@@ -27,6 +27,16 @@ if (isset($_SESSION['USERID'])) {
 $tagQuery = "SELECT TAGS FROM TAGS";
 $tagResult = $conn->query($tagQuery);
 
+// Fetch the usertype
+$usertypeQuery = "SELECT USERTYPE FROM USERS WHERE USERID = '$userid'";
+                $usertypeResult = $conn->query($usertypeQuery);
+
+                if ($usertypeResult->num_rows == 1) {
+                    $usertypeRow = $usertypeResult->fetch_assoc();
+                    $usertype = $usertypeRow['USERTYPE'];
+                }
+                
+
 // Fetch the filtered tag (if any)
 $filteredTag = isset($_GET['tag']) ? $_GET['tag'] : null;
 
@@ -234,7 +244,8 @@ if ($postResult->num_rows > 0) {
             UNION
             (SELECT 'problem' as post_type, PROBLEMID as POSTID, TITLE, TAGID, TEXT, IMAGE, USERID, VOTESCORE, ISANONYMOUS
             FROM PROBLEMS)
-            ORDER BY VOTESCORE DESC";
+            ORDER BY VOTESCORE DESC
+            LIMIT 5";
 
 
         $postResult = $conn->query($postQuery);
@@ -353,10 +364,139 @@ if ($postResult->num_rows > 0) {
     
     </div>
     
+    <!-- Other Posts Section -->
+    <div class="other-posts">
+
+      <div class="other-posts-section">
+        <div class="other-posts-title">
+            <span>Other Posts <i class=""></i></span>
+        </div>
+      </div>
+
+      <?php
+    // Fetch the remaining posts (excluding the top 5)
+    $remainingPostQuery = "(SELECT 'idea' as post_type, IDEAID as POSTID, TITLE, TAGID, TEXT, IMAGE, USERID, VOTESCORE, ISANONYMOUS
+                            FROM IDEAS)
+                            UNION
+                            (SELECT 'problem' as post_type, PROBLEMID as POSTID, TITLE, TAGID, TEXT, IMAGE, USERID, VOTESCORE, ISANONYMOUS
+                            FROM PROBLEMS)
+                            ORDER BY VOTESCORE DESC
+                            LIMIT 5, 100"; // Starting from the 6th post, limit to 100 posts
+
+    $remainingPostResult = $conn->query($remainingPostQuery);
+
+    if ($remainingPostResult->num_rows > 0) {
+        while ($postRow = $remainingPostResult->fetch_assoc()) {
+            $postType = $postRow['post_type'];
+                if ($postType == 'idea') {
+                    $post_id = $postRow["POSTID"];
+                } elseif ($postType == 'problem' && isset($postRow["POSTID"])) {
+                    $post_id = $postRow["POSTID"];
+                } else {
+                    // Handle the case where the post type is unknown or POSTID is not set
+                    $post_id = null;
+                }
+                $postTitle = $postRow['TITLE'];
+                $tagID = $postRow['TAGID'];
+                $postContent = $postRow['TEXT'];
+                $postImage = $postRow['IMAGE'];
+                $userID = $postRow['USERID']; 
+                $votescore = $postRow['VOTESCORE'];
+                $isAnonymous = $postRow['ISANONYMOUS'];
+
+                // Fetch tag information from TAGS table
+                $tagQuery = "SELECT TAGS FROM tags WHERE TAGID = '$tagID'";
+                $tagResult = $conn->query($tagQuery);
+
+                if ($tagResult->num_rows == 1) {
+                    $tagRow = $tagResult->fetch_assoc();
+                    $tagName = $tagRow['TAGS'];
+                } else {
+                    echo "Error fetching tag information.";
+                }
+
+                // Display the post for when the user selects to post as nonymous. 
+                // This will display a predefined image and username = Anonymous
+                // You also cannot check the user profile as it should be for extra security
+                echo '<section class="post">';
+                echo '<div class="post-header">';
+                echo '<div class="user-info">';
+                if ($isAnonymous) {
+                    echo '<img src="Images/picture.jpg" alt="Anonymous User" class="user-image">';
+                    echo '<span class="username">Anonymous</span>';
+                } else {
+
+                    // Fetch Username information from USERS table (for the post)
+                    $userQuery = "SELECT USERNAME, IMAGE AS USER_IMAGE FROM users WHERE USERID = '$userID'";
+                    $userResult = $conn->query($userQuery);
+
+                    if ($userResult->num_rows == 1) {
+                        $userRow = $userResult->fetch_assoc();
+                        $userName = $userRow['USERNAME'];
+                        $userImage = $userRow['USER_IMAGE'];
+                        // Display username and image for non-anonymous posts
+                        // In this case you can visit the user´s profile wich id corresponds to the post
+                        // You can visit its profile and see its posts but not edit or delet them(ofc)
+                        echo '<a href="Profile-html.php?user_id=' . $userID . '" class="user-link">';
+                        echo '<img src="' . $userImage . '" alt="User Profile Picture" class="user-image">';
+                        echo '</a>';
+                        echo '<a href="Profile-html.php?user_id=' . $userID . '" class="user-link">';
+                        echo '<span class="username">' . $userName . '</span>';
+                        echo '</a>';
+                    } else {
+                        echo "Error fetching User information.";
+                    }
+                }
+                echo '</div>';
+                echo '<h2 class="post-title">' . $postTitle . '</h2>';
+                echo '<div class="post-tag">';
+                echo '<span class="input-tag">' . $tagName . '</span>';
+                echo '<br><br>';
+                echo '</div>';
+                echo '</div>';
+                echo '<a href="ViewPost-html.php?post_id=' . $post_id . '&post_type=' . $postType . '" class="post-link">';
+                echo '<div class="post-content">';
+                echo '<p>' . $postContent . '</p>';
+                echo '</div>';
+                echo '<img src="' . $postImage . '" class="post-image">';
+                echo '</a>';
+                echo '<div class="post-footer">';
+                echo '<div class="post-actions">';
+                echo '<div class="vote-container" data-post-id="' . $post_id . '">';
+                echo '<form class="vote-form" method="post" action="Php/vote.php">';
+                echo '<input type="hidden" name="post_id" value="' . $post_id . '">';
+                echo '<input type="hidden" name="upvote" value="0">';
+                echo '<input type="hidden" name="downvote" value="0">';
+                echo '<button name="upvote" type="button" class="upvote-button">';
+                echo '<i class="uil uil-arrow-up"></i>';
+                echo '</button>';
+                echo '<span class="post-stats">' . $votescore . '</span>';
+                echo '<button name="downvote" type="button" class="downvote-button">';
+                echo '<i class="uil uil-arrow-down"></i>';
+                echo '</button>';
+                echo '</form>';
+                echo '</div>';
+                echo '<a href="ViewPost-html.php?post_id=' . $post_id . '&post_type=' . $postType . '#comments" class="post-link">';
+                echo '<button class="comment-button"><i class="uil uil-comment"></i></button>';
+                echo '</a>';
+                echo '</div>';
+                echo '</div>';
+                echo '</section>';
+                $foundPosts = true;
+            }
+
+            if (!$foundPosts) {
+                echo "";
+            }
+        } else {
+            echo "";
+        }
+        ?>
+    
+    </div>
 
 <!-- JavaScript for the Landing Page-->
 <script type="text/javascript" src="Scripts/iNOVAtion-js.js"></script>
-
 
 <script>
 function toggleFilterSection() {
@@ -448,10 +588,7 @@ function searchPosts() {
     }
 }
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 8cae762a8fe53a614f20b1927725e193f5bed13a
 // Function to update the votescore in real time using ajax     
 $(document).ready(function() {
   $(".vote-form button").on("click", function(e) {
