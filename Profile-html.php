@@ -63,7 +63,7 @@ if ($profileUserId) {
             $postTitle = $postRow['TITLE'];
             $tagID = $postRow['TAGID'];
             $postContent = $postRow['TEXT'];
-            $postUserID = $postRow['USERID'];  // Change variable name to avoid conflict
+            $postUserID = $postRow['USERID'];  
             $votescore = $postRow['VOTESCORE'];
 
             // Fetch tag information from TAGS table
@@ -89,7 +89,6 @@ if ($profileUserId) {
                 echo "Error fetching User information.";
             }
 
-            // Store each post in the $posts array
             $posts[] = [
                 'postId' => $post_id,
                 'postTitle' => $postTitle,
@@ -97,7 +96,7 @@ if ($profileUserId) {
                 'tagName' => $tagName,
                 'votescore' => $votescore,
                 'userName' => $userName,
-                'userId' => $postUserID,  // Use the new variable name
+                'userId' => $postUserID,  
                 'userImage' => $userImage,
                 'postType' => $postType,  
             ];
@@ -149,7 +148,26 @@ if ($profileUserId) {
                         <a href="Edit Profile-html.php" class="edit-profile-button">
                             <i class="uil uil-edit"></i> Edit Profile
                         </a>
-                    <?php endif; ?>
+                    <?php endif; ?> 
+                    
+                    <?php
+                    // Check if the user is of usertype 2
+                    $usertypeQuery = "SELECT USERTYPE FROM USERS WHERE USERID = '$visitorid'";
+                    $usertypeResult = $conn->query($usertypeQuery);
+
+                    if ($usertypeResult->num_rows == 1) {
+                        $usertypeRow = $usertypeResult->fetch_assoc();
+                        $usertype = $usertypeRow['USERTYPE'];
+
+                        // Display the "Generate Code" button for usertype 2
+                        if ($usertype == 2) {
+                            echo '<form class="generate-code" action="send-email/generate_code.php" method="post">
+                                    <button type="submit" name="generate" class="generate-code-button">Generate Code</button>
+                                </form>';
+                        }
+                    }
+                    ?>
+
                 </div>
                 
                 <img src="<?php echo $userImage; ?>" alt="User Profile Picture" class="profile-picture" id="profilePicture">
@@ -193,6 +211,8 @@ if ($profileUserId) {
                             <button class='comment-button'><i class='uil uil-comment'></i></button>
                         </a>
                     </div>
+
+
                     <?php if ($visitorid == $profileUserId) : ?>
                         <div class='edit-delete-buttons'>
 

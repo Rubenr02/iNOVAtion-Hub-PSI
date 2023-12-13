@@ -1,0 +1,6 @@
+This is a file I found on GitHub that provides me with a license that allows me to send emails.
+The code I wrote is on src/generate_code.php.
+It generates a random code with letters and numbers and sends an email to the corresponding userid selected. At the same time it inserts the code into the db.
+Once the user inserts the code inside the app it will verify the code and if it corresponds to the one sent to him and is on the database it changes his usertype to type 1, reviewer, and deletes the code so it cannot be shared and used more then once.
+
+-- Ruben Rodrigues
