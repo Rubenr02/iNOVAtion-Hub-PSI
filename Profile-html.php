@@ -149,6 +149,7 @@ if ($profileUserId) {
                             <i class="uil uil-edit"></i> Edit Profile
                         </a>
                     <?php endif; ?> 
+<<<<<<< HEAD
                     
                     <?php
                     // Check if the user is of usertype 2
@@ -167,6 +168,25 @@ if ($profileUserId) {
                         }
                     }
                     ?>
+=======
+                    <?php
+                // Check if the user is of usertype 2
+                $usertypeQuery = "SELECT USERTYPE FROM USERS WHERE USERID = '$visitorid'";
+                $usertypeResult = $conn->query($usertypeQuery);
+
+                if ($usertypeResult->num_rows == 1) {
+                    $usertypeRow = $usertypeResult->fetch_assoc();
+                    $usertype = $usertypeRow['USERTYPE'];
+
+                    // Display the "Generate Code" button for usertype 2
+                    if ($usertype == 2) {
+                        echo '<form class="generate-code" action="send-email/generate_code.php" method="post">
+                                <button type="submit" name="generate" class="generate-code-button">Generate Code</button>
+                            </form>';
+                    }
+                }
+                ?>
+>>>>>>> 5b52f9783ce6009c0c8f200f4e1dfecc4043cb20
 
                 </div>
                 

@@ -626,6 +626,38 @@ header .nav-bar {
 
 
 
+/*======= Other Posts Styling =======*/
+
+
+.other-posts {
+    padding-top: 3.5em; /* Adjust the top padding to push down the content below the fixed header */
+}
+
+.other-posts-section {
+    background: white;
+    border-radius: 20px;
+    width: 140px;
+    margin: -2em 15% 0; /* Adjusted margin to bring the top-posts closer to the post */
+    padding: 3px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.other-posts-title {
+    color: #000;
+    padding: 2px;
+    border-radius: 10px;
+    text-align: left;
+    margin-left: 10px;
+    margin-bottom: 1px;
+}
+
+.other-posts-title span {
+    font-size: 1em;
+    display: flex;
+    align-items: center; /
+}
+
+
 /*======= Post Template Styling =======*/
 
 /* Style the post container */

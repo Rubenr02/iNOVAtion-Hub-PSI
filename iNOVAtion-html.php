@@ -36,7 +36,20 @@ if ($usertypeResult->num_rows == 1) {
 $tagQuery = "SELECT TAGS FROM TAGS";
 $tagResult = $conn->query($tagQuery);
 
+<<<<<<< HEAD
                 
+=======
+// Fetch the usertype
+$usertypeQuery = "SELECT USERTYPE FROM USERS WHERE USERID = '$userid'";
+                $usertypeResult = $conn->query($usertypeQuery);
+
+                if ($usertypeResult->num_rows == 1) {
+                    $usertypeRow = $usertypeResult->fetch_assoc();
+                    $usertype = $usertypeRow['USERTYPE'];
+                }
+                
+
+>>>>>>> 5b52f9783ce6009c0c8f200f4e1dfecc4043cb20
 // Fetch the filtered tag (if any)
 $filteredTag = isset($_GET['tag']) ? $_GET['tag'] : null;
 
