@@ -36,25 +36,12 @@ if ($usertypeResult->num_rows == 1) {
 $tagQuery = "SELECT TAGS FROM TAGS";
 $tagResult = $conn->query($tagQuery);
 
-<<<<<<< HEAD
                 
-=======
-// Fetch the usertype
-$usertypeQuery = "SELECT USERTYPE FROM USERS WHERE USERID = '$userid'";
-                $usertypeResult = $conn->query($usertypeQuery);
-
-                if ($usertypeResult->num_rows == 1) {
-                    $usertypeRow = $usertypeResult->fetch_assoc();
-                    $usertype = $usertypeRow['USERTYPE'];
-                }
-                
-
->>>>>>> 5b52f9783ce6009c0c8f200f4e1dfecc4043cb20
 // Fetch the filtered tag (if any)
 $filteredTag = isset($_GET['tag']) ? $_GET['tag'] : null;
 
 // Fetch posts with or without the filtered tag from both IDEAS and PROBLEMS tables
-$postQuery = "(SELECT 'idea' as post_type, IDEAID, IDEAS.TITLE, IDEAS.TAGID, TEXT, IMAGE, IDEAS.USERID, VOTESCORE
+$postQuery = "(SELECT 'idea' as post_type, IDEAID, IDEAS.TITLE, IDEAS.TAGID, TEXT, IMAGE, IDEAS.USERID, VOTESCORE 
               FROM IDEAS
               INNER JOIN TAGS ON IDEAS.TAGID = TAGS.TAGID
               " . ($filteredTag ? "WHERE TAGS.TAGS = '$filteredTag'" : "") . ")
@@ -186,7 +173,6 @@ if ($postResult->num_rows > 0) {
                   <button class="plus-icon">+</button>
               </a>
           </div>
-
       </div>
       
       <div class="custom-dropdown" id="customDropdown">
@@ -208,14 +194,16 @@ if ($postResult->num_rows > 0) {
             }
             ?>
         </div>
+    </div>              
     </div>
 
-    </div>
+    <button id="toggleLayoutBtn" class="fixed-button"><i class="uil uil-apps"></i></button>
+
 
     <!-- Container for Top Posts and Review Posts -->
     <div class="top-posts-container">
         <!-- Top Posts Section -->
-        <div class="top-posts">
+        <div class="top-posts" id="topPosts">
             <div class="top-posts-section">
                 <div class="top-posts-title">
                     <span>Top Posts <i class="uil uil-fire"></i></span>
@@ -240,6 +228,7 @@ if ($postResult->num_rows > 0) {
 
     
   <!-- Carousel Container -->
+  
   <div class="carousel-container">  
     <button class="prev" onclick="plusSlides(-1)">&#10094;</button>
   
@@ -268,13 +257,13 @@ if ($postResult->num_rows > 0) {
     }
 
         // Fetch posts from both IDEAS and PROBLEMS tables
-        $postQuery = "(SELECT 'idea' as post_type, IDEAID as POSTID, TITLE, TAGID, TEXT, IMAGE, USERID, VOTESCORE, ISANONYMOUS
-            FROM IDEAS)
-            UNION
-            (SELECT 'problem' as post_type, PROBLEMID as POSTID, TITLE, TAGID, TEXT, IMAGE, USERID, VOTESCORE, ISANONYMOUS
-            FROM PROBLEMS)
-            ORDER BY VOTESCORE DESC
-            LIMIT 5";
+        $postQuery = "(SELECT 'idea' as post_type, IDEAID as POSTID, TITLE, TAGID, TEXT, IMAGE, USERID, VOTESCORE, ISANONYMOUS, LEVEL
+              FROM IDEAS)
+              UNION
+              (SELECT 'problem' as post_type, PROBLEMID as POSTID, TITLE, TAGID, TEXT, IMAGE, USERID, VOTESCORE, ISANONYMOUS, LEVEL
+              FROM PROBLEMS)
+              ORDER BY VOTESCORE DESC
+              LIMIT 5";
 
 
         $postResult = $conn->query($postQuery);
@@ -299,6 +288,8 @@ if ($postResult->num_rows > 0) {
                 $userID = $postRow['USERID']; 
                 $votescore = $postRow['VOTESCORE'];
                 $isAnonymous = $postRow['ISANONYMOUS'];
+                $level = $postRow['LEVEL'];
+
 
                 // Fetch tag information from TAGS table
                 $tagQuery = "SELECT TAGS FROM tags WHERE TAGID = '$tagID'";
@@ -314,7 +305,7 @@ if ($postResult->num_rows > 0) {
                 // Display the post for when the user selects to post as nonymous. 
                 // This will display a predefined image and username = Anonymous
                 // You also cannot check the user profile as it should be for extra security
-                echo '<section class="post">';
+                echo '<section class="post top-post">';
                 echo '<div class="post-header">';
                 echo '<div class="user-info">';
                 if ($isAnonymous) {
@@ -346,11 +337,11 @@ if ($postResult->num_rows > 0) {
                 echo '</div>';
                 echo '<h2 class="post-title">' . $postTitle . '</h2>';
                 echo '<div class="post-tag">';
-                echo '<span class="input-tag">' . $tagName . '</span>';
+                echo '<span class="input-tag">' . $tagName . ' | Level: ' . $postRow['LEVEL'] . '</span>';
                 echo '<br><br>';
                 echo '</div>';
                 echo '</div>';
-                echo '<a href="ViewPost-html.php?post_id=' . $post_id . '&post_type=' . $postType . '" class="post-link">';
+                echo '<a href="ViewPost-html.php?post_id=' . $post_id .  '&post_type=' . $postType . '" class="post-link">';
                 echo '<div class="post-content">';
                 echo '<p>' . $postContent . '</p>';
                 echo '</div>';
@@ -394,29 +385,31 @@ if ($postResult->num_rows > 0) {
     </div>
     
     <!-- Other Posts Section -->
-    <div class="other-posts">
+<div class="other-posts">
 
-      <div class="other-posts-section">
-        <div class="other-posts-title">
-            <span>Other Posts <i class=""></i></span>
-        </div>
-      </div>
+<div class="other-posts-section">
+    <div class="other-posts-title">
+        <span>Other Posts <i class=""></i></span>
+    </div>
+</div>
+</div>
 
-      <?php
-    // Fetch the remaining posts (excluding the top 5)
-    $remainingPostQuery = "(SELECT 'idea' as post_type, IDEAID as POSTID, TITLE, TAGID, TEXT, IMAGE, USERID, VOTESCORE, ISANONYMOUS
-                            FROM IDEAS)
-                            UNION
-                            (SELECT 'problem' as post_type, PROBLEMID as POSTID, TITLE, TAGID, TEXT, IMAGE, USERID, VOTESCORE, ISANONYMOUS
-                            FROM PROBLEMS)
-                            ORDER BY VOTESCORE DESC
-                            LIMIT 5, 100"; // Starting from the 6th post, limit to 100 posts
+<div class="scrollable-posts-container">
+<?php
+// Fetch the remaining posts (excluding the top 5)
+$remainingPostQuery = "(SELECT 'idea' as post_type, IDEAID as POSTID, TITLE, TAGID, TEXT, IMAGE, USERID, VOTESCORE, ISANONYMOUS, LEVEL
+                        FROM IDEAS)
+                        UNION
+                        (SELECT 'problem' as post_type, PROBLEMID as POSTID, TITLE, TAGID, TEXT, IMAGE, USERID, VOTESCORE, ISANONYMOUS, LEVEL
+                        FROM PROBLEMS)
+                        ORDER BY VOTESCORE DESC
+                        LIMIT 5, 100"; // Starting from the 6th post, limit to 100 posts
 
-    $remainingPostResult = $conn->query($remainingPostQuery);
+$remainingPostResult = $conn->query($remainingPostQuery);
 
-    if ($remainingPostResult->num_rows > 0) {
-        while ($postRow = $remainingPostResult->fetch_assoc()) {
-            $postType = $postRow['post_type'];
+if ($remainingPostResult->num_rows > 0) {
+    while ($postRow = $remainingPostResult->fetch_assoc()) {
+        $postType = $postRow['post_type'];
                 if ($postType == 'idea') {
                     $post_id = $postRow["POSTID"];
                 } elseif ($postType == 'problem' && isset($postRow["POSTID"])) {
@@ -432,6 +425,7 @@ if ($postResult->num_rows > 0) {
                 $userID = $postRow['USERID']; 
                 $votescore = $postRow['VOTESCORE'];
                 $isAnonymous = $postRow['ISANONYMOUS'];
+                $level = $postRow['LEVEL'];
 
                 // Fetch tag information from TAGS table
                 $tagQuery = "SELECT TAGS FROM tags WHERE TAGID = '$tagID'";
@@ -447,7 +441,7 @@ if ($postResult->num_rows > 0) {
                 // Display the post for when the user selects to post as nonymous. 
                 // This will display a predefined image and username = Anonymous
                 // You also cannot check the user profile as it should be for extra security
-                echo '<section class="post">';
+                echo '<section class="other-post">';
                 echo '<div class="post-header">';
                 echo '<div class="user-info">';
                 if ($isAnonymous) {
@@ -479,7 +473,7 @@ if ($postResult->num_rows > 0) {
                 echo '</div>';
                 echo '<h2 class="post-title">' . $postTitle . '</h2>';
                 echo '<div class="post-tag">';
-                echo '<span class="input-tag">' . $tagName . '</span>';
+                echo '<span class="input-tag">' . $tagName . ' | Level: ' . $postRow['LEVEL'] . '</span>';
                 echo '<br><br>';
                 echo '</div>';
                 echo '</div>';
@@ -515,14 +509,15 @@ if ($postResult->num_rows > 0) {
             }
 
             if (!$foundPosts) {
-                echo "";
+                echo "No posts found.";
             }
         } else {
-            echo "";
+            echo "No posts found.";
         }
-        ?>
-    
-    </div>
+
+?>
+</div>
+
 
 <!-- JavaScript for the Landing Page-->
 <script type="text/javascript" src="Scripts/iNOVAtion-js.js"></script>
@@ -541,6 +536,56 @@ function selectTag(tagName) {
     console.log("Selected Tag: " + tagName);
     filterPostsByTag(tagName); 
     toggleFilterSection(); 
+}
+
+
+// Function to allow the sliding carousel
+var slideIndex = 0;
+var topPosts;
+var slideInterval;
+
+document.addEventListener("DOMContentLoaded", function() {
+    topPosts = document.getElementsByClassName("top-post");
+    showTopPosts();
+    startSlideInterval();
+});
+
+function showTopPosts() {
+    var i;
+    for (i = 0; i < topPosts.length; i++) {
+        topPosts[i].style.display = "none";
+    }
+    if (slideIndex >= topPosts.length) {
+        slideIndex = 0;
+    }
+    if (slideIndex < 0) {
+        slideIndex = topPosts.length - 1;
+    }
+    topPosts[slideIndex].style.display = "block";
+}
+
+function startSlideInterval() {
+    slideInterval = setInterval(function() {
+        slideIndex++;
+        showTopPosts();
+    }, 5000); 
+}
+
+// Allow the sliding
+function nextTopPost() {
+    clearInterval(slideInterval); 
+    slideIndex++;
+    showTopPosts();
+    startSlideInterval(); 
+}
+
+
+// Slide Interval resets when slide button is pressed so it doesnt inter
+function prevTopPost() {
+    clearInterval(slideInterval); 
+    slideIndex--;
+    showTopPosts();
+    startSlideInterval();
 }
 
 // Need to comment
@@ -656,6 +701,27 @@ $(document).ready(function() {
 });
  
 </script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const toggleLayoutBtn = document.getElementById('toggleLayoutBtn');
+    const postsContainer = document.querySelector('.scrollable-posts-container');
+
+    toggleLayoutBtn.addEventListener('click', function () {
+        postsContainer.classList.toggle('column-layout');
+
+        // Change the icon based on the layout state
+        const isColumnLayout = postsContainer.classList.contains('column-layout');
+        const icon = isColumnLayout ? "uil-list-ul" : "uil-apps";
+
+        // Update the icon class
+        toggleLayoutBtn.querySelector('i').className = "uil " + icon;
+    });
+});
+
+</script>
+
+
 
 </body>
 </html>

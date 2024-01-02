@@ -17,7 +17,7 @@ session_start();
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Create Post</title>
+  <title>Submit Form</title>
   <link rel="stylesheet" href="Styling/Submit Form-css.css">
   <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
 

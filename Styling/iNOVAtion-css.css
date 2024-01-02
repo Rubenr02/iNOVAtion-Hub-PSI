@@ -594,6 +594,7 @@ header .nav-bar {
     align-items: center;
 }
 
+
 /*======= Other Posts Styling =======*/
 .other-posts {
     padding-top: 0em;
@@ -626,42 +627,21 @@ header .nav-bar {
 
 
 
-/*======= Other Posts Styling =======*/
-
-
-.other-posts {
-    padding-top: 3.5em; /* Adjust the top padding to push down the content below the fixed header */
-}
-
-.other-posts-section {
-    background: white;
-    border-radius: 20px;
-    width: 140px;
-    margin: -2em 15% 0; /* Adjusted margin to bring the top-posts closer to the post */
-    padding: 3px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-}
-
-.other-posts-title {
-    color: #000;
-    padding: 2px;
-    border-radius: 10px;
-    text-align: left;
-    margin-left: 10px;
-    margin-bottom: 1px;
-}
-
-.other-posts-title span {
-    font-size: 1em;
-    display: flex;
-    align-items: center; /
-}
-
-
 /*======= Post Template Styling =======*/
 
 /* Style the post container */
 .post {
+    background-color: #fff;
+    margin: 1em auto; /* Adjusted margin to make it closer to the top-posts */
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    width: 70%;
+    margin-left: 15%;
+}
+
+/* Style the post container */
+.other-post {
     background-color: #fff;
     margin: 1em auto; /* Adjusted margin to make it closer to the top-posts */
     padding: 20px;
@@ -791,6 +771,9 @@ header .nav-bar {
     text-decoration: none; /* Add underline on hover if needed */
 }
 
+
+/*======= Side Buttons Styling =======*/
+
 /* Style the previous and next buttons */
 .prev, .next {
     position: absolute;
@@ -801,10 +784,15 @@ header .nav-bar {
     background-color: transparent;
     border: none;
     transition: color 0.3s;
+    width: 40px; 
+    height: 40px; 
 }
 
 .prev:hover, .next:hover {
-    color: #ff4500;
+    color: #fff;
+    border-radius: 50%; 
+    background-color: #555;
+    font-size: 22px;
 }
 
 .prev {
@@ -814,3 +802,91 @@ header .nav-bar {
 .next {
     right: 7%;
 }
+
+
+/*======= Different Styling =======*/
+/* Container for the column layout with 15% padding */
+.scrollable-posts-container.column-layout {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 0 15%;
+}
+
+/* Style for each post within the column layout */
+.scrollable-posts-container.column-layout .post,
+.scrollable-posts-container.column-layout .other-post {
+    width: calc(50.33% - 1em);
+    margin: 0.25em 0; /* Adjust the vertical margin */
+    margin-top: 1em;
+}
+
+/* Style the post title and tags */
+.scrollable-posts-container.column-layout .post-title {
+    font-size: 1.2em;
+}
+
+/* Style the post content */
+.scrollable-posts-container.column-layout .post-content {
+    font-size: 1em;
+}
+
+/* Style the post image */
+.scrollable-posts-container.column-layout .post-image {
+    width: 100%;
+    height: 250px; /* Set a reduced height for the image */
+    object-fit: cover;
+    border-radius: 15px;
+    margin-top: 10px;
+    margin-bottom: 0.25em; /* Reduce the bottom margin */
+}
+
+/* Style the user info section */
+.scrollable-posts-container.column-layout .user-info img {
+    width: 40px;
+    height: 40px;
+    margin-right: 8px;
+}
+
+/* Style the post actions and stats */
+.scrollable-posts-container.column-layout .post-actions button {
+    padding: 5px 10px;
+    font-size: 0.8em;
+}
+
+.scrollable-posts-container.column-layout .post-stats {
+    font-size: 0.8em;
+}
+
+#toggleLayoutBtn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    border: none;
+    color: #333;
+    font-size: 24px;
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  #toggleLayoutBtn:hover {
+    color: #ddd;
+  }
+  
+  .column-layout #toggleLayoutBtn i::before {
+    content: '\e9c8'; /* Unicode for grid icon */
+  }
+  
+  .fixed-button {
+    z-index: 999;
+  }
+  
+  .scrollable-posts-container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .column-layout .scrollable-posts-container {
+    column-count: 2;
+  }
+  

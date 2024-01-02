@@ -79,7 +79,6 @@ if ($profileUserId) {
                 <img src="<?php echo $userImage; ?>" alt="User Profile Picture" class="profile-picture" id="profilePicture">
                 <div class="profile-info" id="profileInfo">
                     <h1 class="username" id="username"><?php echo $username; ?></h1>
-                    <input type="text" id="description" name="description" placeholder="Add Your description here!" required>
                 </div>
             </div>
 

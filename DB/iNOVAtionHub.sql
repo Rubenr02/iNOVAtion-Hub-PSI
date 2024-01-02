@@ -67,6 +67,8 @@ create table FORMS
    ACCEPTED             bool,
    FILE                 varchar(255),
    IMAGE                varchar(255),
+   TEXT1                text not null,
+   TEXT2                text not null,
    primary key (FORMID)
 );
 
@@ -81,7 +83,6 @@ create table IDEAS
    FORMID               int,
    USERID               int not null,
    PROBLEMID            int,
-   TAGS                 varchar(1024),
    VOTESCORE            int not null,
    CREATEDON            datetime not null,
    COMPLEXITYLEVEL      int not null,
@@ -90,6 +91,7 @@ create table IDEAS
    IMAGE                varchar(255),
    FILE                 varchar(255),
    ISANONYMOUS          bool not null,
+   LEVEL                int not null,
    primary key (IDEAID)
 );
 
@@ -246,6 +248,9 @@ alter table REVIEWS add constraint FK_REVIEWS_IDEAS foreign key (IDEAID)
 
 alter table REVIEWS add constraint FK_REVIEWS_USERS foreign key (USERID)
       references USERS (USERID) on delete restrict on update restrict;
+
+alter table REVIEWS add constraint FK_COMMENTS_IDEAS foreign key (IDEAID)
+      references IDEAS (IDEAID) on delete restrict on update restrict;
 
 alter table TAGS add constraint FK_TAGS_USERS foreign key (USERID)
       references USERS (USERID) on delete restrict on update restrict;

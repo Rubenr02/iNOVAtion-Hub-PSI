@@ -86,6 +86,10 @@ if ($postResult->num_rows > 0) {
           echo "Error fetching tag information.";
       }
 
+    // Fetch and display forms
+    $formsQuery = "SELECT * FROM FORMS";
+    $formsResult = $conn->query($formsQuery);
+
     // Fetch Username information from USERS table (for the post)
     $userQuery = "SELECT USERNAME, IMAGE AS USER_IMAGE FROM users WHERE USERID = '$userID'";
     $userResult = $conn->query($userQuery);
@@ -102,9 +106,7 @@ if ($postResult->num_rows > 0) {
 } else {
     echo "No posts found.";
 }
-
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -114,7 +116,7 @@ if ($postResult->num_rows > 0) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Display Forms</title>
-    <link rel="stylesheet" href="Styling/iNOVAtion-css.css">  
+    <link rel="stylesheet" href="Styling/Form_Review-css.css">  
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
@@ -213,6 +215,7 @@ if ($postResult->num_rows > 0) {
 
     <!-- Review Posts Section -->
     <?php
+
     if ($usertype == 1) {
         echo '<div class="review-posts">';
         echo '<div class="review-posts-section">';
@@ -226,123 +229,86 @@ if ($postResult->num_rows > 0) {
     </div>
 
     <?php
-    // Fetch the remaining posts (excluding the top 5)
-    $remainingPostQuery = "(SELECT 'idea' as post_type, IDEAID as POSTID, TITLE, TAGID, TEXT, IMAGE, USERID, VOTESCORE, ISANONYMOUS
-                            FROM IDEAS)
-                            UNION
-                            (SELECT 'problem' as post_type, PROBLEMID as POSTID, TITLE, TAGID, TEXT, IMAGE, USERID, VOTESCORE, ISANONYMOUS
-                            FROM PROBLEMS)
-                            ORDER BY VOTESCORE DESC
-                            "; // Starting from the 6th post, limit to 100 posts
+    // Fetch forms from the database with corresponding idea information
+    $formsQuery = "SELECT FORMS.FORMID, FORMS.IDEAID, FORMS.USERID, FORMS.CREATEDON, FORMS.ACCEPTED, FORMS.FILE, FORMS.IMAGE AS FORM_IMAGE, FORMS.TEXT1, FORMS.TEXT2, IDEAS.TITLE, IDEAS.TAGID, IDEAS.LEVEL, TAGS.TAGS
+                FROM FORMS
+                INNER JOIN IDEAS ON FORMS.IDEAID = IDEAS.IDEAID
+                INNER JOIN TAGS ON IDEAS.TAGID = TAGS.TAGID";
 
-    $remainingPostResult = $conn->query($remainingPostQuery);
+    $formsResult = $conn->query($formsQuery);
 
-    if ($remainingPostResult->num_rows > 0) {
-        while ($postRow = $remainingPostResult->fetch_assoc()) {
-            $postType = $postRow['post_type'];
-                if ($postType == 'idea') {
-                    $post_id = $postRow["POSTID"];
-                } elseif ($postType == 'problem' && isset($postRow["POSTID"])) {
-                    $post_id = $postRow["POSTID"];
-                } else {
-                    // Handle the case where the post type is unknown or POSTID is not set
-                    $post_id = null;
-                }
-                $postTitle = $postRow['TITLE'];
-                $tagID = $postRow['TAGID'];
-                $postContent = $postRow['TEXT'];
-                $postImage = $postRow['IMAGE'];
-                $userID = $postRow['USERID']; 
-                $votescore = $postRow['VOTESCORE'];
-                $isAnonymous = $postRow['ISANONYMOUS'];
+    // Display forms with corresponding idea information
+    if ($formsResult->num_rows > 0) {
+        while ($formRow = $formsResult->fetch_assoc()) {
+            $formId = $formRow['FORMID'];
+            $ideaId = $formRow['IDEAID'];
+            $userId = $formRow['USERID'];
+            $createdOn = $formRow['CREATEDON'];
+            $accepted = $formRow['ACCEPTED'];
+            $file = $formRow['FILE'];
+            $formImage = $formRow['FORM_IMAGE'];
+            $text1 = $formRow['TEXT1'];
+            $text2 = $formRow['TEXT2'];
+            $ideaTitle = $formRow['TITLE'];
+            $tagId = $formRow['TAGID'];
+            $tagName = $formRow['TAGS'];
+            $level = $formRow['LEVEL'];
 
-                // Fetch tag information from TAGS table
-                $tagQuery = "SELECT TAGS FROM tags WHERE TAGID = '$tagID'";
-                $tagResult = $conn->query($tagQuery);
+        // Fetch Username information from USERS table (for the form)
+        $userQuery = "SELECT USERNAME, IMAGE AS USER_IMAGE FROM users WHERE USERID = '$userId'";
+        $userResult = $conn->query($userQuery);
 
-                if ($tagResult->num_rows == 1) {
-                    $tagRow = $tagResult->fetch_assoc();
-                    $tagName = $tagRow['TAGS'];
-                } else {
-                    echo "Error fetching tag information.";
-                }
+        if ($userResult->num_rows == 1) {
+            $userRow = $userResult->fetch_assoc();
+            $userName = $userRow['USERNAME'];
+            $userImage = $userRow['USER_IMAGE'];
 
-                // Display the post for when the user selects to post as nonymous. 
-                // This will display a predefined image and username = Anonymous
-                // You also cannot check the user profile as it should be for extra security
-                echo '<section class="post">';
-                echo '<div class="post-header">';
-                echo '<div class="user-info">';
-                if ($isAnonymous) {
-                    echo '<img src="Images/picture.jpg" alt="Anonymous User" class="user-image">';
-                    echo '<span class="username">Anonymous</span>';
-                } else {
-
-                    // Fetch Username information from USERS table (for the post)
-                    $userQuery = "SELECT USERNAME, IMAGE AS USER_IMAGE FROM users WHERE USERID = '$userID'";
-                    $userResult = $conn->query($userQuery);
-
-                    if ($userResult->num_rows == 1) {
-                        $userRow = $userResult->fetch_assoc();
-                        $userName = $userRow['USERNAME'];
-                        $userImage = $userRow['USER_IMAGE'];
-                        // Display username and image for non-anonymous posts
-                        // In this case you can visit the user´s profile wich id corresponds to the post
-                        // You can visit its profile and see its posts but not edit or delet them(ofc)
-                        echo '<a href="Profile-html.php?user_id=' . $userID . '" class="user-link">';
-                        echo '<img src="' . $userImage . '" alt="User Profile Picture" class="user-image">';
-                        echo '</a>';
-                        echo '<a href="Profile-html.php?user_id=' . $userID . '" class="user-link">';
-                        echo '<span class="username">' . $userName . '</span>';
-                        echo '</a>';
-                    } else {
-                        echo "Error fetching User information.";
-                    }
-                }
-                echo '</div>';
-                echo '<h2 class="post-title">' . $postTitle . '</h2>';
-                echo '<div class="post-tag">';
-                echo '<span class="input-tag">' . $tagName . '</span>';
-                echo '<br><br>';
-                echo '</div>';
-                echo '</div>';
-                echo '<a href="ViewPost-html.php?post_id=' . $post_id . '&post_type=' . $postType . '" class="post-link">';
-                echo '<div class="post-content">';
-                echo '<p>' . $postContent . '</p>';
-                echo '</div>';
-                echo '<img src="' . $postImage . '" class="post-image">';
-                echo '</a>';
-                echo '<div class="post-footer">';
-                echo '<div class="post-actions">';
-                echo '<div class="vote-container" data-post-id="' . $post_id . '">';
-                echo '<form class="vote-form" method="post" action="Php/vote.php">';
-                echo '<input type="hidden" name="post_id" value="' . $post_id . '">';
-                echo '<input type="hidden" name="upvote" value="0">';
-                echo '<input type="hidden" name="downvote" value="0">';
-                echo '<button name="upvote" type="button" class="upvote-button">';
-                echo '<i class="uil uil-arrow-up"></i>';
-                echo '</button>';
-                echo '<span class="post-stats">' . $votescore . '</span>';
-                echo '<button name="downvote" type="button" class="downvote-button">';
-                echo '<i class="uil uil-arrow-down"></i>';
-                echo '</button>';
-                echo '</form>';
-                echo '</div>';
-                echo '<a href="ViewPost-html.php?post_id=' . $post_id . '&post_type=' . $postType . '#comments" class="post-link">';
-                echo '<button class="comment-button"><i class="uil uil-comment"></i></button>';
-                echo '</a>';
-                echo '</div>';
-                echo '</div>';
-                echo '</section>';
-                $foundPosts = true;
-            }
-
-            if (!$foundPosts) {
-                echo "";
-            }
+            // Display form information with corresponding idea details
+            echo '<section class="post">';
+            echo '<div class="post-header">';
+            echo '<div class="user-info">';
+            echo '<a href="Profile-html.php?user_id=' . $userId . '" class="user-link">';
+            echo '<img src="' . $userImage . '" alt="User Profile Picture" class="user-image">';
+            echo '</a>';
+            echo '<a href="Profile-html.php?user_id=' . $userId . '" class="user-link">';
+            echo '<span class="username">' . $userName . '</span>';
+            echo '</a>';
+            echo '</div>';
+            echo '<h2 class="post-title">' . $ideaTitle . '</h2>';
+            echo '<div class="post-tag">';
+            echo '<span class="input-tag">' . $tagName . ' | Level: ' . $level . '</span>';
+            echo '<br><br>';
+            echo '</div>';
+            echo '</div>';
+            echo '<a href="ViewPost-html.php?post_id=' . $ideaId . '&post_type=idea" class="post-link">';
+            echo '<div class="post-content">';
+            echo '<p>' . $text1 . '</p>';
+            echo '</div>';
+            echo '<div class="post-content">';  
+            echo '<p>' . $text2 . '</p>';
+            echo '</div>';
+            echo '<img src="' . $formImage . '" class="post-image">';
+            echo '</a>';
+            echo '<div class="post-footer">';
+            echo '<div class="post-actions">';
+            echo '<div class="vote-container" data-post-id="' . $ideaId . '">';
+            echo '</div>';
+            echo '<a href="ViewPost-html.php?post_id=' . $ideaId . '&post_type=idea#comments" class="post-link">';
+            echo '</a>';
+            echo '</div>';
+            echo '<a href="Review-html.php?post_id=' . $ideaId . '" class="review-button">Review <i class="uil uil-check-circle"></i></a>';
+            echo '</div>';
+            echo '</section>';
         } else {
-            echo "";
+            echo "Error fetching User information.";
         }
-        ?>
-    
+        }
+    } else {
+        echo "No forms found.";
+    }
+
+
+    ?>
     </div>
+    <script src="Scripts/iNOVAtion-js.js"></script>
+

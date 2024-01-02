@@ -18,6 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['post-button'])) {
     $postType = $_POST['post-type'];
     $postPDF = $_FILES['post-pdf']['name'];
     $isAnonymous = isset($_POST['hide-real-name']) ? 1 : 0;
+    
 
     // Check if the user is logged in and retrieve the user ID
     if (isset($_SESSION['USERID'])) {
@@ -66,8 +67,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['post-button'])) {
                     $tableName = ($postType == 'idea') ? 'IDEAS' : 'PROBLEMS';
 
                     // Do a SQL query to insert a new post in the corresponding desired table
-                    $sql = "INSERT INTO $tableName (USERID, TAGID, TITLE, TEXT, IMAGE, FILE, CREATEDON, ISANONYMOUS) 
-                            VALUES ('$userid', '$tagID', '$postTitle', '$postText', '$targetImage', '$postPDF', NOW(), '$isAnonymous')";
+                    $sql = "INSERT INTO $tableName (USERID, TAGID, TITLE, TEXT, IMAGE, FILE, CREATEDON, ISANONYMOUS, LEVEL) 
+                            VALUES ('$userid', '$tagID', '$postTitle', '$postText', '$targetImage', '$postPDF', NOW(), '$isAnonymous','1')";
 
                     if ($conn->query($sql) === TRUE) {
                         header("Location: /PSI/Loading-html.html");

@@ -1,4 +1,5 @@
 <?php
+
 // Start or resume the session
 session_start();
 
