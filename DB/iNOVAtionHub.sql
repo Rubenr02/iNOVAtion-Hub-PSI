@@ -92,6 +92,7 @@ create table IDEAS
    FILE                 varchar(255),
    ISANONYMOUS          bool not null,
    LEVEL                int not null,
+   REPORT               tinyint(4),
    primary key (IDEAID)
 );
 
@@ -112,6 +113,8 @@ create table PROBLEMS
    IMAGE                varchar(255),
    FILE                 varchar(255),
    ISANOUNYMOUS         bool,
+   LEVEL                int not null,
+   REPORT               tinyint(4),
    primary key (PROBLEMID)
 );
 
@@ -192,6 +195,24 @@ CREATE TABLE votes (
     FOREIGN KEY (IDEAID) REFERENCES ideas(IDEAID) ON DELETE CASCADE,
     FOREIGN KEY (PROBLEMID) REFERENCES problems(PROBLEMID) ON DELETE CASCADE
 );
+
+
+/*==============================================================*/
+/* Table: CHATS                                                 */
+/*==============================================================*/
+
+CREATE TABLE CHATS
+(
+   CHATID               INT NOT NULL AUTO_INCREMENT,
+   SENDERID             INT NOT NULL,
+   RECEIVERID           INT NOT NULL,
+   MESSAGE              TEXT NOT NULL,
+   SENT_ON              DATETIME NOT NULL,
+   PRIMARY KEY (CHATID),
+   FOREIGN KEY (SENDERID) REFERENCES USERS (USERID) ON DELETE CASCADE ON UPDATE CASCADE,
+   FOREIGN KEY (RECEIVERID) REFERENCES USERS (USERID) ON DELETE CASCADE ON UPDATE CASCADE
+);
+      
 
 -- Foreign Keys for the tables
 

@@ -486,6 +486,23 @@ header .nav-bar {
     color: darkgrey;
 }
 
+/* Add this to your existing CSS file or create a new one */
+
+.report-button {
+    background-color: transparent; /* Coral color, you can change this */
+    color: #555; /* White text */
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9em;
+}
+
+.report-button:hover {
+    color: red; /* Darker coral color on hover, you can change this */
+}
+
+
 .report {
     font-size: 1.1em;
     color: red;

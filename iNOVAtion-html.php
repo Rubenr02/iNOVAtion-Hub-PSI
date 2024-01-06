@@ -13,6 +13,7 @@ session_start();
 if (isset($_SESSION['USERID'])) {
     // Retrieve the user ID from the session
     $userid = $_SESSION['USERID'];
+    $senderID = $_SESSION['USERID'];
 
     // Fetch the username from the database based on the USERID
     $sql = "SELECT USERNAME FROM USERS WHERE USERID = '$userid'";
@@ -37,7 +38,7 @@ $tagQuery = "SELECT TAGS FROM TAGS";
 $tagResult = $conn->query($tagQuery);
 
                 
-// Fetch the filtered tag (if any)
+// Fetch the filtered tags
 $filteredTag = isset($_GET['tag']) ? $_GET['tag'] : null;
 
 // Fetch posts with or without the filtered tag from both IDEAS and PROBLEMS tables
@@ -97,11 +98,60 @@ if ($postResult->num_rows > 0) {
     } else {
         echo "Error fetching User information.";
     }
-    
+
+    $currentUserQuery = "SELECT USERNAME, IMAGE AS USER_IMAGE FROM users WHERE USERID = '$userid'";
+    $currentUserResult = $conn->query($currentUserQuery);
+
+    if ($currentUserResult->num_rows == 1) {
+        $currentUserRow = $currentUserResult->fetch_assoc();
+        $currentUserName = $currentUserRow['USERNAME'];
+        $currentUserImage = $currentUserRow['USER_IMAGE'];
+    } else {
+        echo "Error fetching current user information.";
+    }
+
+    // Check if the form is submitted to handle the message sending
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $senderID = $userid;
+        $receiverID = $_POST['receiverID'];
+        $message = $_POST['message'];
+
+        // Insert into the database
+        $sql = "INSERT INTO CHATS (SENDERID, RECEIVERID, MESSAGE, SENT_ON) VALUES ($senderID, $receiverID, '$message', NOW())";
+        
+        if ($conn->query($sql) === TRUE) {
+            echo 'Message sent successfully';
+        } else {
+            echo 'Error sending message: ' . $conn->error;
+        }
+        exit; 
+    }
+
+    // Fetch messages from the database
+    $sql2 = "SELECT * FROM CHATS ORDER BY SENT_ON ASC"; 
+
+    $result = $conn->query($sql2);
+
+    if ($result) {
+        $messages = array();
+
+        while ($row = $result->fetch_assoc()) {
+            $messages[] = array(
+                'senderID' => $row['SENDERID'],
+                'message' => $row['MESSAGE'],
+                'sentOn' => $row['SENT_ON']
+            );
+        }
+    } else {
+        echo 'Error fetching messages: ' . $conn->error;
+    }
+
+
   }
 } else {
     echo "No posts found.";
 }
+
 
 }
 
@@ -116,6 +166,11 @@ if ($postResult->num_rows > 0) {
     <link rel="stylesheet" href="Styling/iNOVAtion-css.css">  
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script>
+        var senderID = <?php echo json_encode($userid); ?>;
+    </script>
+    <script type="text/javascript" src="Scripts/message-js.js"></script>
 </head>
 
 <body>
@@ -196,8 +251,137 @@ if ($postResult->num_rows > 0) {
         </div>
     </div>              
     </div>
+    
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
 
-    <button id="toggleLayoutBtn" class="fixed-button"><i class="uil uil-apps"></i></button>
+<button id="openChatBtn" onclick="toggleChat()">
+    <i class="uil uil-comment"></i> 
+</button>
+
+
+<div id="chatbox">
+	<div id="friendslist">
+        <div id="topmenu">
+        <div id="close-button" onclick="closeChat()">&#10006;</div>
+
+            <?php 
+                // Display the current users details in the chatbox header
+                echo '<div class="user-avatar">';
+                echo '<img src="' . $currentUserImage . '" alt="">';
+                echo '</div>';
+                echo '<div class="user-details">';
+                echo '<span>' . $currentUserName . '</span>';
+                echo '<span> Active Now </span>';
+                echo '</div>';
+            ?>
+        </div>
+
+        <div id="search">
+	            <input type="text" id="searchfield" value="Search contacts..." />
+            </div>
+        
+        <div id="friends">
+
+            <?php
+            $sql = "
+                SELECT
+                    USERID,
+                    FIRSTNAME,
+                    LASTNAME,
+                    IMAGE,
+                    EMAIL
+                FROM
+                    USERS
+                WHERE
+                USERID != '$userid'
+                LIMIT 5;
+                ";
+
+            $result = $conn->query($sql);
+
+            if ($result) {
+                // Display the friends in the HTML 
+                while ($row = $result->fetch_assoc()) {
+                    echo '<div class="friend" onclick="selectFriend(' . $row['USERID'] . ')">';
+                    echo '<img src="' . $row['IMAGE'] . '" alt="Friend Image">';
+                    echo '<p> <strong>' . $row['FIRSTNAME']  . '</strong>';
+                    echo '<br>';
+                    echo '<span>' . $row['EMAIL'] . '</span></p>';
+                    echo '</div>';
+                }
+
+                // Free the result set
+                $result->free();
+            } else {
+                // Display an error message if the query fails
+                echo "Error: " . $sql . "<br>" . $conn->error;
+            }
+
+            ?>
+            
+            
+        </div>                
+        
+    </div>	
+    
+    <div id="chatview" class="p1">    	
+        <div id="profile">
+
+            <div id="close">
+                <div class="cy"></div>
+                <div class="cx"></div>
+            </div>
+            <p></p>
+            <span></span>
+        </div>
+
+        <div id="chat-messages">
+            <?php
+            $currentDate = ''; // Variable to store the current date
+
+            foreach ($messages as $message) {
+                // Extract the date from the message
+                $messageDate = date('M d', strtotime($message['sentOn']));
+            
+                // Check if the date has changed
+                if ($messageDate != $currentDate) {
+                    echo '<div class="message-date">' . $messageDate . '</div>';
+                    $currentDate = $messageDate;
+                }
+            
+                $messageClass = $message['senderID'] == $senderID ? 'right' : '';
+            
+                echo '<div class="message ' . $messageClass . '">';
+                echo '<img src="' . $currentUserImage . '" alt="">';
+                echo '<div class="bubble">';
+                echo $message['message'];
+                echo '<div class="corner"></div>';
+                echo '</div>';
+                echo '</div>';
+            }
+            
+            ?>
+        </div>
+
+    	
+    	
+        <div id="sendmessage">
+            <input type="text" id="messageInput" placeholder="Send message..." />
+            <button id="send" onclick="Message()"></button>
+        </div>
+    
+    </div>        
+</div>	
+
+<script>
+    var receiverID = null; // Initialize receiverID
+
+    function selectFriend(selectedUserID) {
+        receiverID = selectedUserID;
+        console.log('Selected Friend ID: ' + receiverID);
+        // You can add visual indicators or other actions as needed
+    }
+</script>    
 
 
     <!-- Container for Top Posts and Review Posts -->
@@ -213,12 +397,23 @@ if ($postResult->num_rows > 0) {
 
         <!-- Review Posts Section -->
         <?php
-        if ($usertype == 1) {
+        if ($usertype == 1 || $usertype == 2) {
             echo '<div class="review-posts">';
             echo '<div class="review-posts-section">';
             echo '<div class="review-posts-title">';
             echo '</div>';
             echo '<a href="Form_Review-html.php"><i class="uil uil-newspaper"></i> Posts to Review</a>';
+            echo '</div>';
+            echo '</div>';
+        }
+        ?>
+        <?php
+        if($usertype == 2 || $usertype == 3) {
+            echo '<div class="reported-posts">';
+            echo '<div class="reported-posts-section">';
+            echo '<div class="reported-posts-title">';
+            echo '</div>';
+            echo '<a href="Reports-html.php"><i class="uil uil-exclamation-circle"></i> Reported Posts</a>';
             echo '</div>';
             echo '</div>';
         }
@@ -385,7 +580,8 @@ if ($postResult->num_rows > 0) {
     </div>
     
     <!-- Other Posts Section -->
-<div class="other-posts">
+<div class="other-posts">   
+
 
 <div class="other-posts-section">
     <div class="other-posts-title">
@@ -393,6 +589,9 @@ if ($postResult->num_rows > 0) {
     </div>
 </div>
 </div>
+<button id="toggleLayoutBtn" class="fixed-button"><i class="uil uil-apps"></i></button> 
+
+
 
 <div class="scrollable-posts-container">
 <?php
@@ -702,26 +901,123 @@ $(document).ready(function() {
  
 </script>
 
+
 <script>
+
+function toggleChat() {
+    var chatbox = document.getElementById("chatbox");
+    if (chatbox.style.display === "block") {
+        chatbox.style.display = "none";
+    } else {
+        chatbox.style.display = "block";
+    }
+}
+
+function closeChat() {
+        document.getElementById('chatbox').style.display = 'none';	               
+    }
+
 document.addEventListener('DOMContentLoaded', function () {
-    const toggleLayoutBtn = document.getElementById('toggleLayoutBtn');
-    const postsContainer = document.querySelector('.scrollable-posts-container');
+const toggleLayoutBtn = document.getElementById('toggleLayoutBtn');
+const postsContainer = document.querySelector('.scrollable-posts-container');
 
-    toggleLayoutBtn.addEventListener('click', function () {
-        postsContainer.classList.toggle('column-layout');
+toggleLayoutBtn.addEventListener('click', function () {
+postsContainer.classList.toggle('column-layout');
 
-        // Change the icon based on the layout state
-        const isColumnLayout = postsContainer.classList.contains('column-layout');
-        const icon = isColumnLayout ? "uil-list-ul" : "uil-apps";
+// Change the icon based on the layout state
+const isColumnLayout = postsContainer.classList.contains('column-layout');
+const icon = isColumnLayout ? "uil-list-ul" : "uil-apps";
 
-        // Update the icon class
-        toggleLayoutBtn.querySelector('i').className = "uil " + icon;
+// Update the icon class
+toggleLayoutBtn.querySelector('i').className = "uil " + icon;
     });
 });
 
+
+
+$(document).ready(function(){
+	
+    var preloadbg = document.createElement("img");
+    preloadbg.src = "https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/timeline1.png";
+    
+      $("#searchfield").focus(function(){
+          if($(this).val() == "Search contacts..."){
+              $(this).val("");
+          }
+      });
+      $("#searchfield").focusout(function(){
+          if($(this).val() == ""){
+              $(this).val("Search contacts...");
+              
+          }
+      });
+      
+      $("#sendmessage input").focus(function(){
+          if($(this).val() == "Send message..."){
+              $(this).val("");
+          }
+      });
+      $("#sendmessage input").focusout(function(){
+          if($(this).val() == ""){
+              $(this).val("Send message...");
+              
+          }
+      });
+          
+      
+      $(".friend").each(function(){		
+          $(this).click(function(){
+              var childOffset = $(this).offset();
+              var parentOffset = $(this).parent().parent().offset();
+              var childTop = childOffset.top - parentOffset.top;
+              var clone = $(this).find('img').eq(0).clone();
+              var top = childTop+12+"px";
+              
+              $(clone).css({'top': top}).addClass("floatingImg").appendTo("#chatbox");									
+              
+              setTimeout(function(){$("#profile p").addClass("animate");$("#profile").addClass("animate");}, 100);
+              setTimeout(function(){
+                  $("#chat-messages").addClass("animate");
+                  $('.cx, .cy').addClass('s1');
+                  setTimeout(function(){$('.cx, .cy').addClass('s2');}, 100);
+                  setTimeout(function(){$('.cx, .cy').addClass('s3');}, 200);			
+              }, 150);														
+              
+              $('.floatingImg').animate({
+                  'width': "68px",
+                  'left':'108px',
+                  'top':'20px'
+              }, 200);
+              
+              var name = $(this).find("p strong").html();
+              var email = $(this).find("p span").html();														
+              $("#profile p").html(name);
+              $("#profile span").html(email);			
+              
+              $(".message").not(".right").find("img").attr("src", $(clone).attr("src"));									
+              $('#friendslist').fadeOut();
+              $('#chatview').fadeIn();
+          
+              
+              $('#close').unbind("click").click(function(){				
+                  $("#chat-messages, #profile, #profile p").removeClass("animate");
+                  $('.cx, .cy').removeClass("s1 s2 s3");
+                  $('.floatingImg').animate({
+                      'width': "40px",
+                      'top':top,
+                      'left': '12px'
+                  }, 200, function(){$('.floatingImg').remove()});				
+                  
+                  setTimeout(function(){
+                      $('#chatview').fadeOut();
+                      $('#friendslist').fadeIn();				
+                  }, 50);
+              });
+              
+          });
+      });			
+  });
 </script>
-
-
 
 </body>
 </html>

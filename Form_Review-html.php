@@ -214,19 +214,30 @@ if ($postResult->num_rows > 0) {
     </div>
 
     <!-- Review Posts Section -->
+    <!-- Review Posts Section -->
     <?php
-
-    if ($usertype == 1) {
-        echo '<div class="review-posts">';
-        echo '<div class="review-posts-section">';
-        echo '<div class="review-posts-title">';
-        echo '</div>';
-        echo '<a href="Form_Review-html.php"><i class="uil uil-newspaper"></i> Posts to Review</a>';
-        echo '</div>';
-        echo '</div>';
-    }
-    ?>
-    </div>
+            if ($usertype == 1 || $usertype == 2) {
+                echo '<div class="review-posts">';
+                echo '<div class="review-posts-section">';
+                echo '<div class="review-posts-title">';
+                echo '</div>';
+                echo '<a href="Form_Review-html.php"><i class="uil uil-newspaper"></i> Posts to Review</a>';
+                echo '</div>';
+                echo '</div>';
+            }
+            ?>
+            <?php
+            if($usertype == 2 || $usertype == 3) {
+                echo '<div class="reported-posts">';
+                echo '<div class="reported-posts-section">';
+                echo '<div class="reported-posts-title">';
+                echo '</div>';
+                echo '<a href="Reports-html.php"><i class="uil uil-exclamation-circle"></i> Reported Posts</a>';
+                echo '</div>';
+                echo '</div>';
+            }
+            ?>
+        </div>
 
     <?php
     // Fetch forms from the database with corresponding idea information

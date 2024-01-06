@@ -111,6 +111,7 @@ $commentsResult = $conn->query($fetchCommentsQuery);$commentsResult = $conn->que
     <title>iNOVAtion Hub</title>
     <link rel="stylesheet" href="Styling/Post-css.css">
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 
 <body>
@@ -221,16 +222,39 @@ $commentsResult = $conn->query($fetchCommentsQuery);$commentsResult = $conn->que
                     <button class="upvote-button"><i class="uil uil-arrow-up"></i></button>
                     <button class="downvote-button"><i class="uil uil-arrow-down"></i></button>
                     <button class="comment-button"><i class="uil uil-comment"></i></button>
-                </div>
-                <div class="post-stats">
-                    <span class="upvote-count"><?php echo $votescore; ?></span>
-                </div>
-                <div class="report">
-                    <a href=""><i class="uil uil-exclamation-circle"></i>Report</a>
-                </div>
                 </form>
-
+            </div>
+            <div class="post-stats">
+                <span class="upvote-count"><?php echo $votescore; ?></span>
+            </div>
+            <div class="report">
+                <button type="button" class="report-button">
+                    <i class="uil uil-exclamation-circle"></i> Report
+                </button>
+            </div>
         </div>
+
+        <script>
+        $(document).ready(function() {
+            $('.report-button').on('click', function() {
+                var postID = <?php echo json_encode($post_id); ?>;
+                var postType = <?php echo json_encode($postType); ?>;
+
+                $.ajax({
+                    type: 'POST',
+                    url: 'Php/report.php',
+                    data: { post_id: postID, post_type: postType },
+                    success: function(response) {
+                        alert(response); // Display the server response (you can replace this with your own handling logic)
+                    },
+                    error: function() {
+                        alert('Error submitting report.');
+                    }
+                });
+            });
+        });
+        </script>
+
 
         <br><br>
 
