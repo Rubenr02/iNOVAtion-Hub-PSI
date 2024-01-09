@@ -619,110 +619,61 @@ header .nav-bar {
     }
 
     .profile-container {
-        display: flex;
-        align-items: flex-start;
-        max-width: 100%;
-        width: 100%;
-        margin: 0;
-        background: #EFF0F6;
-        padding: 30px;
-        border-radius: 10px;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    }
-    
-    .profile-header {
-        display: flex;
-        flex-direction: column; 
+        flex-direction: column;
         align-items: center;
-        margin-bottom: 20px;
     }
-    
+
+    .profile-header {
+        margin-bottom: 10px;
+    }
+
     .profile-picture {
-        width: 100%; 
-        height: 100%; 
-        border-radius: 50%;
-        margin-right: 0px;
-        margin-top: 2em;
-        margin-left: -10px;
+        margin: 0;
+
     }
-    
+
     .profile-info {
-        flex-grow: 1;
-    }
-    
-    .username {
-        font-size: 1.2em; 
-        font-weight: 600;
-        color: #210060;
-        margin-top: 0;
-        margin-left: -5px;
-        text-align: center;
-    }
-    
-    .description {
-        font-size: 0.8em; 
-        color: #555;
-        margin-top: 1px;
-        text-align: center;
-        margin-left: -5px;
-    }
-    
-    .edit-profile {
-        display: flex;
-        margin-top: 55px;
-        margin-left: -15px;
-        align-self: center;
-        white-space: nowrap;
-    }
-
-    .edit-profile a{
-        text-decoration: none;
-        color: #555;
-    }
-
-    /* Style the post title and tags */
-    .post .post-title {
-    font-size: 1em; 
-    margin-bottom: 8px; 
-    color: #333;
-    display: flex;
-    justify-content: space-between;
-    }
-
-    .post .input-tag,
-    .post .input-type {
-        margin-left: 8px; 
-        font-size: 0.8em; 
-        color: #888;
-    }
-
-    /* Style the post content */
-    .post .post-content {
-        font-size: 1em; 
-        line-height: 1.4; 
-        color: #555;
-        margin-bottom: 15px; 
-        background-color: #EFF0F6;
-        padding: 10px;
-        border-radius: 10px; 
-    }
-
-    /* Style the individual post using existing post styles */
-    .post {
-        position: relative;
-        background-color: #fff;
-        margin: 0 0;
-        padding: 5px;
-        border-radius: 15px;
-        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
         width: 100%;
-        margin-right: 50px;
-        margin-top: 10px;
+        margin-top: 0px;
     }
 
-    .post .username {
-        font-size: 0.8em;
-        font-weight: 500;
-        color: #555;
+    .edit-profile-button {
+        margin-top: 20px;
+        margin-left: -270px;
+    }
+
+    /* Published posts section */
+    .published-posts {
+        margin: 30px;
+    }
+
+    /* Container for posts */
+    .posts-container {
+        width: 90%;
+        margin: 30px;
+    }
+
+    /* Individual post styles */
+    .post .user-info img {
+        width: 40px;
+        height: 40px;
+    }
+
+    .post .post-title {
+        font-size: 1.2em;
+    }
+
+    .post .post-content {
+        font-size: 1em;
+    }
+
+    .post .edit-delete-buttons {
+        top: 5px;
+        right: 5px;
+    }
+
+    .generate-code-button {
+        margin-left: -125       px;
+        margin-top: 50px;
     }
 }

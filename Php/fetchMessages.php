@@ -12,19 +12,30 @@ if (!empty($senderID) && !empty($receiverID)) {
 
     if ($stmt->execute()) {
         $result = $stmt->get_result();
+        $messages = array();
 
         while ($row = $result->fetch_assoc()) {
-            echo '<div class="message">' . $row['SENDERID'] . ': ' . $row['MESSAGE'] . '</div>';
+            // Add each message to the $messages array
+            $messages[] = array(
+                'senderID' => $row['SENDERID'],
+                'message' => $row['MESSAGE']
+            );
         }
+
+        // Return the $messages array as JSON
+        header('Content-Type: application/json');
+        echo json_encode(array('messages' => $messages));
     } else {
+        // Return an error response as JSON
         header('HTTP/1.1 500 Internal Server Error');
-        echo "Error fetching messages: " . $stmt->error;
+        echo json_encode(array('error' => 'Error fetching messages: ' . $stmt->error));
     }
 
     $stmt->close();
 } else {
+    // Return an error response as JSON
     header('HTTP/1.1 400 Bad Request');
-    echo "Invalid data received";
+    echo json_encode(array('error' => 'Invalid data received'));
 }
 
 $conn->close();

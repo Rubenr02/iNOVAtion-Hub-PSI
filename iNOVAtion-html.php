@@ -202,8 +202,8 @@ if ($postResult->num_rows > 0) {
             <div class="nav-items">
                 <i class="uil uil-times nav-close-btn"></i>
                 <a href="iNOVAtion-html.php"><i class="uil uil-home"></i> Home</a>
-                <a href="About.html"><i class="uil uil-info-circle"></i> About</a>
-                <a href="Contact.html"><i class="uil uil-envelope"></i> Contact</a>
+                <a href="About-html.html"><i class="uil uil-info-circle"></i> About</a>
+                <a href="Contact-html.html"><i class="uil uil-envelope"></i> Contact</a>
                 <a href="landing-html.html"><i class="uil uil-signout"></i> Sign Out</a>
             </div>
           </div>
@@ -278,7 +278,7 @@ if ($postResult->num_rows > 0) {
 
         <div id="search">
 	            <input type="text" id="searchfield" value="Search contacts..." />
-            </div>
+        </div>
         
         <div id="friends">
 
@@ -369,6 +369,7 @@ if ($postResult->num_rows > 0) {
             <input type="text" id="messageInput" placeholder="Send message..." />
             <button id="send" onclick="Message()"></button>
         </div>
+        <div id="searchResults"></div>
     
     </div>        
 </div>	
@@ -382,6 +383,116 @@ if ($postResult->num_rows > 0) {
         // You can add visual indicators or other actions as needed
     }
 </script>    
+
+<!-- Include jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<!-- Add this script at the end of your HTML body or in the head section -->
+<script>
+    // Function to fetch and update messages
+    function fetchMessages() {
+        // Check if receiverID is selected
+        if (receiverID !== null) {
+            // Send an AJAX request to fetch messages
+            $.ajax({
+                type: 'POST',
+                url: 'Php/fetchMessages.php', // Replace with the actual path to your PHP script
+                data: { receiverID: receiverID },
+                dataType: 'json',
+                success: function (response) {
+                    // Update the chat messages on success
+                    updateChat(response.messages);
+                },
+                error: function (xhr, status, error) {
+                    // Handle errors
+                    console.error('Error fetching messages:', error);
+                }
+            });
+        }
+    }
+
+    // Function to update chat messages
+    function updateChat(messages) {
+        // Clear existing messages
+        $('#chat-messages').empty();
+
+        // Update messages in the chat
+        messages.forEach(function (message) {
+            var messageClass = message.senderID == <?php echo $senderID; ?> ? 'right' : '';
+
+            // Create HTML for the message
+            var html = '<div class="message ' + messageClass + '">';
+            html += '<img src="' + '<?php echo $currentUserImage; ?>' + '" alt="">';
+            html += '<div class="bubble">';
+            html += message.message;
+            html += '<div class="corner"></div>';
+            html += '</div>';
+            html += '</div>';
+
+            // Append the message to the chat
+            $('#chat-messages').append(html);
+        });
+
+        // Scroll to the bottom of the chat messages
+        var chatMessages = document.getElementById('chat-messages');
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    // Function to send a message
+    function sendMessage() {
+    }
+
+    // Poll for new messages every 5 seconds (adjust as needed)
+    setInterval(fetchMessages, 1000);
+
+    // Call fetchMessages initially
+    fetchMessages();
+</script>
+
+<script>
+    // Function to search for users
+    function searchUsers() {
+        var searchTerm = $('#searchfield').val();
+
+        // Send an AJAX request to the server
+        $.ajax({
+            type: 'POST',
+            url: 'Php/search_users.php', // Change the path to your search_users.php script
+            data: { searchTerm: searchTerm },
+            dataType: 'json',
+            success: function (response) {
+                // Update the friends list or display search results
+                updateFriendsList(response.users);
+            },
+            error: function (xhr, status, error) {
+                // Handle errors
+                console.error('Error searching users:', error);
+            }
+        });
+    }
+
+    // Function to update the friends list or display search results
+    function updateFriendsList(users) {
+        // Clear existing friends or search results
+        $('#friends').empty();
+
+        // Update friends or display search results in the HTML
+        users.forEach(function (user) {
+            var html = '<div class="friend" onclick="selectFriend(' + user.userID + ')">';
+            html += '<img src="' + user.image + '" alt="Friend Image">';
+            html += '<p><strong>' + user.firstName + ' ' + user.lastName + '</strong><br>';
+            html += '<span>' + user.email + '</span></p>';
+            html += '</div>';
+
+            // Append the friend or search result to the container
+            $('#friends').append(html);
+        });
+    }
+
+    // Call searchUsers function on input change
+    $('#searchfield').on('input', searchUsers);
+</script>
+
 
 
     <!-- Container for Top Posts and Review Posts -->
@@ -518,7 +629,7 @@ if ($postResult->num_rows > 0) {
                         $userImage = $userRow['USER_IMAGE'];
                         // Display username and image for non-anonymous posts
                         // In this case you can visit the user´s profile wich id corresponds to the post
-                        // You can visit its profile and see its posts but not edit or delet them(ofc)
+                        // You can visit its profile and see its posts but not edit or delete them(ofc)
                         echo '<a href="Profile-html.php?user_id=' . $userID . '" class="user-link">';
                         echo '<img src="' . $userImage . '" alt="User Profile Picture" class="user-image">';
                         echo '</a>';

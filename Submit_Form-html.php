@@ -50,8 +50,8 @@ session_start();
         <div class="nav-items">
           <i class="uil uil-times nav-close-btn"></i>
           <a href="iNOVAtion-html.php"><i class="uil uil-home"></i> Home</a>
-          <a href="About.html"><i class="uil uil-info-circle"></i> About</a>
-          <a href="Contact.html"><i class="uil uil-envelope"></i> Contact</a>
+          <a href="About-html.html"><i class="uil uil-info-circle"></i> About</a>
+          <a href="Contact-html.html"><i class="uil uil-envelope"></i> Contact</a>
           <a href="landing-html.html"><i class="uil uil-signout"></i> Sign Out</a>
         </div>
       </div>
