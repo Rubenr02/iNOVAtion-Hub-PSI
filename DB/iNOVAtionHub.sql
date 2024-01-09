@@ -290,7 +290,11 @@ alter table VOTES add constraint FK_VOTES_USERS foreign key (USERID)
 
 alter table CHATS add constraint FK_CHATS_USERS foreign key (USERID)
       references USERS (USERID) on delete restrict on update restrict;
+<<<<<<< HEAD
       
+=======
+
+>>>>>>> d28e949a6e923cd6cabb2b1ec27d0e8f2d1d462f
 -- Adding a column to codes to check if the cide has been emailed 
 
 ALTER TABLE CODES
