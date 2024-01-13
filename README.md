@@ -28,6 +28,8 @@ Universidade NOVA de Lisboa is a distinguished and renowned public research univ
 Together with representatives from NOVA FCT (School of Science and Technology), UNL presented us with this challenge. This initiative signifies the university's commitment to fostering innovation and problem-solving while actively engaging with the broader academic and global community.
 
 Challenges presented by academic institutions like UNL and NOVA FCT are often at the forefront of innovation. They serve as catalysts for creative thinking and problem-solving, pushing the boundaries of knowledge and encouraging novel solutions. These challenges provide a platform for researchers, students, and external collaborators to explore new ideas and test groundbreaking concepts.
+![unl](https://github.com/Rubenr02/iNOVAtion-Hub-PSI/assets/105732827/de36a6cf-60fa-4335-be03-d8858b713550)
+
 
 # Requirements and Functionalities
 To determine the functionalities required for a software, the initial step involves accurately identifying these functionalities, often referred to as functional requirements. Functional requirements outline what the software performs or is expected to accomplish.
