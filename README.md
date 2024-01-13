@@ -3,7 +3,9 @@
     The main focus of this platform is to create a community where the users can make posts related to problems that might affect the community, or come up with ideas for projects that can bring benefits to the community.
     After creating a post, community members can express their support or opposition through upvotes or downvotes. The most popular ideas rise to the top of the platform. 
   It's worth noting that users have the option to make posts anonymously, fostering an environment of free expression and privacy.
+  
   The platform includes a team of reviewers, appointed by Nova University, who assess the community's posts. Their job will be to review the problems and ideias the users post on the platform, by writing a comment and assign a classification on a scale of 1 to 5 stars, with one being the lowest and five the highest. Their attention is particularly directed towards the top-voted ideas.  
+  
   Ultimately, the most voted ideas that passed all levels are subject to funding from interested investors, and from Nova University, and finally made reality.
 
   Our mission is to establish a platform that empowers users to freely express their imagination by creating ideas for the benefit of the community and addressing the challenges related to the University. The ultimate objective is to turn these user-generated ideas into reality, providing solutions to problems and fostering a continuous cycle of innovation
