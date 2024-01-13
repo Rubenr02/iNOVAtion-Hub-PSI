@@ -32,7 +32,6 @@ Challenges presented by academic institutions like UNL and NOVA FCT are often at
 
 
 # Requirements and Functionalities
-To determine the functionalities required for a software, the initial step involves accurately identifying these functionalities, often referred to as functional requirements. Functional requirements outline what the software performs or is expected to accomplish.
 
 -The administrator will be able to access a back office where they can manage the platform and have all the privileges all the users have.
  
